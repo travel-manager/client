@@ -15,12 +15,12 @@ export class ContactDetailsComponent {
   constructor (private contactService: ContactService) {}
 
   createContact(contact: Contact) {
-    var contact: Contact = {
+    /* var contact: Contact = {
       firstname: 'Teuvo',
       lastname: 'Toinen',
       username: 'Toka',
       password: '12345'
-      };
+      }; */
     this.contactService.createContact(contact).then((newContact: Contact) => {
       this.createHandler(newContact);
     });
