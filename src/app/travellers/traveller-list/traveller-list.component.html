@@ -6,7 +6,7 @@
         *ngFor="let traveller of travellers"
         (click)="selectTraveller(traveller)"
         [class.active]="traveller === selectedTraveller">
-        {{traveller.lastname}}
+        {{traveller.username}}
       </li>
     </ul>
     <button class="btn btn-warning" (click)="createNewTraveller()">New</button>
