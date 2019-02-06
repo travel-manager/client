@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class MeanContactlistAngular2Page {
+export class MeanTravellerlistAngular2Page {
   navigateTo() {
     return browser.get('/');
   }

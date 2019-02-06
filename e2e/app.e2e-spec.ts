@@ -1,10 +1,10 @@
-import { MeanContactlistAngular2Page } from './app.po';
+import { MeanTravellerlistAngular2Page } from './app.po';
 
-describe('mean-contactlist-angular2 App', () => {
-  let page: MeanContactlistAngular2Page;
+describe('mean-travellerlist-angular2 App', () => {
+  let page: MeanTravellerlistAngular2Page;
 
   beforeEach(() => {
-    page = new MeanContactlistAngular2Page();
+    page = new MeanTravellerlistAngular2Page();
   });
 
   it('should display message saying app works', () => {

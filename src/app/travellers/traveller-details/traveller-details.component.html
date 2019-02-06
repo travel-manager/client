@@ -1,0 +1,36 @@
+<div *ngIf="traveller" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="traveller._id">Traveller Details</h2>
+    <h2 *ngIf="!traveller._id">New Traveller</h2>
+  </div>
+</div>
+<div *ngIf="traveller" class="row">
+  <form class="col-md-12">
+
+    <div class="form-group">
+      <label for="traveller-forename">First name</label>
+      <input class="form-control" name="traveller-forename" [(ngModel)]="traveller.forename" placeholder="Eino"/>
+    </div>
+    <div class="form-group">
+      <label for="traveller-lastname">Last Name</label>
+      <input class="form-control" name="traveller-lastname" [(ngModel)]="traveller.lastname" placeholder="Ensimmainen"/>
+    </div>
+    <div class="form-group">
+      <label for="traveller-username">Username</label>
+      <input class="form-control" name="traveller-username" [(ngModel)]="traveller.username" placeholder="Eka"/>
+    </div>
+    <div class="form-group">
+      <label for="traveller-password">Password</label>
+      <input class="form-control" name="traveller-password" [(ngModel)]="traveller.password" placeholder="12345"/>
+    </div>
+    <button class="btn btn-primary" *ngIf="!traveller._id" (click)="createTraveller(traveller)">Create</button>
+    <button class="btn btn-info" *ngIf="traveller._id" (click)="updateTraveller(traveller)">Update</button>
+    <button class="btn btn-danger" *ngIf="traveller._id" (click)="deleteTraveller(traveller._id)">Delete</button>
+  </form>
+
+<!-- <code>forename = {{ traveller.forename }}</code><br>
+<code>lastname = {{ traveller.lastname }}</code><br>
+<code>username = {{ traveller.username }}</code><br>
+<code>password = {{ traveller.password }}</code> -->
+
+</div>

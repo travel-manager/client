@@ -1,6 +1,6 @@
 {
-  "name": "MEAN Contact List",
-  "description": "Example contact list app using MEAN",
+  "name": "MEAN Traveller List",
+  "description": "Example traveller list app using MEAN",
   "keywords": [
     "MEAN",
     "Angular",
@@ -8,7 +8,7 @@
     "MongoDB",
     "mLab"
   ],
-  "repository": "https://github.com/chrisckchang/mean-contactlist-angular2",
+  "repository": "https://github.com/chrisckchang/mean-travellerlist-angular2",
   "success_url": "/",
   "formation": {
     "web": {
