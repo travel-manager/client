@@ -38,7 +38,7 @@ export class ContactListComponent implements OnInit {
   }
 
   createNewContact() {
-    var contact: Contact = {
+    const contact: Contact = {
       firstname: '',
       lastname: '',
       username: '',
@@ -50,7 +50,7 @@ export class ContactListComponent implements OnInit {
     }
 
   deleteContact = (contactId: String) => {
-    var idx = this.getIndexOfContact(contactId);
+    const idx = this.getIndexOfContact(contactId);
     if (idx !== -1) {
       this.contacts.splice(idx, 1);
       this.selectContact(null);
@@ -65,7 +65,7 @@ export class ContactListComponent implements OnInit {
   }
 
   updateContact = (contact: Contact) => {
-    var idx = this.getIndexOfContact(contact._id);
+    const idx = this.getIndexOfContact(contact._id);
     if (idx !== -1) {
       this.contacts[idx] = contact;
       this.selectContact(contact);
