@@ -26,21 +26,6 @@ export class ContactListComponent implements OnInit {
       });
   }
 
-  private getIndexOfContact = (contactId: String) => {
-    return this.contacts.findIndex((contact) => {
-      return contact._id === contactId;
-    });
-  }
-
-  createNewContact() {
-    var contact: Contact = {
-      firstname: '',
-      lastname: '',
-      username: '',
-      password: ''
-      };
-    }
-
   addContact = (contact: Contact) => {
     this.contacts.push(contact);
     return this.contacts;
