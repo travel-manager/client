@@ -22,12 +22,6 @@ export class ContactListComponent implements OnInit {
       .getContacts()
       .then((contacts: Contact[]) => {
         this.contacts = contacts.map((contact) => {
-          if (!contact.phone) {
-            contact.phone = {
-              mobile: '',
-              work: ''
-            }
-          }
           return contact;
         });
       });
@@ -45,17 +39,15 @@ export class ContactListComponent implements OnInit {
 
   createNewContact() {
     var contact: Contact = {
-      name: '',
-      email: '',
-      phone: {
-        work: '',
-        mobile: ''
-      }
-    };
+      firstname: '',
+      lastname: '',
+      username: '',
+      password: ''
+      };
 
     // By default, a newly-created contact will have the selected state.
     this.selectContact(contact);
-  }
+    }
 
   deleteContact = (contactId: String) => {
     var idx = this.getIndexOfContact(contactId);
