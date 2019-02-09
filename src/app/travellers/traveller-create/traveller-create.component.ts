@@ -23,11 +23,5 @@ export class TravellerCreateComponent {
 
   createTraveller(traveller: Traveller) {
     this.travellerService.createTraveller(traveller);
-    traveller = {
-      lastname: '',
-      username: '',
-      password: '',
-      forename: '',
-    };
     };
 }

@@ -1,10 +1,10 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <h2>Create New Traveller</h2>
   </div>
 </div>
 <div class="row">
-  <form class="col-md-12">
+  <form #createForm="ngForm" class="col-md-5">
 
     <div class="form-group">
       <label for="traveller-forename">First name</label>
@@ -22,7 +22,7 @@
       <label for="traveller-password">Password</label>
       <input class="form-control" name="traveller-password" [(ngModel)]="traveller.password" placeholder="12345"/>
     </div>
-    <button class="btn btn-primary" (click)="createTraveller(traveller)">Create</button>
+    <button class="btn btn-primary" (click)="createTraveller(traveller); createForm.reset()">Create</button>
 
   </form>
 
