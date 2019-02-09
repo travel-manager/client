@@ -57,19 +57,19 @@ app.get("/api/travellers", function(req, res) {
 });
 
 app.get("/api/travellers/username/:username", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).insertOne( {params: req.params.id });
   db.collection(TRAVELLERS_COLLECTION).findOne({username: new ObjectID(req.params.id)}, function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
-      handleError(res, err.message, "params = " + req.params.id);
-      //res.status(200).json(docs);
+      res.status(200).json(docs);
     }
   });
 });
 
 app.post("/api/travellers", function(req, res) {
   var newTraveller = req.body;
-  newTraveller.createDate = new Date();
+  //newTraveller.createDate = new Date();
   db.collection(TRAVELLERS_COLLECTION).insertOne(newTraveller, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new traveller.");
