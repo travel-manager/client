@@ -9,7 +9,7 @@
 
     <div class="form-group">
       <label for="login-password">Password</label>
-      <input type="text" #loginpassword="ngModel"; pattern="[a-zA-Z0-9]*" class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
+      <input type="text" #loginpassword="ngModel" pattern="[a-zA-Z0-9]*" class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
     </div>
     <button class="btn btn-primary" [disabled]="!loginForm.valid">Log in</button>
     <div *ngIf="loginsuccess === 1" class="alert alert-success">
