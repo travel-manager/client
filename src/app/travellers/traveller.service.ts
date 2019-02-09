@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 @Injectable()
 export class TravellerService {
     private travellersUrl = '/api/travellers';
+    private usernameUrl = '/username';
 
     constructor (private http: Http) {}
 
@@ -25,9 +26,9 @@ export class TravellerService {
                  .catch(this.handleError);
     }
 
-    // get("/api/travellers/:username")
+    // get("/api/travellers/username/:username")
     getTraveller(getTravellerUsername: String): Promise<Traveller> {
-      return this.http.get(this.travellersUrl + '/' + getTravellerUsername)
+      return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
                  .toPromise()
                  .then(response => response.json() as Traveller[])
                  .catch(this.handleError);
