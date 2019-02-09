@@ -57,7 +57,7 @@ app.get("/api/travellers", function(req, res) {
 });
 
 app.get("/api/travellers/username/:username", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).findOne({username: new ObjectID(req.params.id)}, function(err, docs) {
+  db.collection(TRAVELLERS_COLLECTION).findOne({username: req.params.username}, function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
