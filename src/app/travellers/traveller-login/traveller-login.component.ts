@@ -11,12 +11,12 @@ import { Login } from '../login';
 })
 export class TravellerLoginComponent {
 
-  loginuser: Login = {
+  loginTraveller: Login = {
     username: '',
     password: ''
   };
 
-  loginCompare: Traveller = {
+  dbTraveller: Traveller = {
     firstname: '',
     lastname: '',
     username: '',
@@ -27,16 +27,16 @@ export class TravellerLoginComponent {
   constructor(private travellerService: TravellerService) { }
 
   loginAttempt() {
-    this.travellerService.getTraveller(this.loginuser.username).then((traveller: Traveller) => {
-      this.loginCompare = traveller;
+    this.travellerService.getTraveller(this.loginTraveller.username).then((traveller: Traveller) => {
+      this.dbTraveller = traveller;
+       if (this.loginTraveller.password === this.dbTraveller.password) {
+        this.loginsuccess = 1;
+      } else {
+        this.loginsuccess = -1;
+      }
+      setTimeout(function() {
+        this.loginsuccess = 0;
+      }.bind(this), 3000);
     });
-    if (this.loginuser.password === this.loginCompare.password) {
-      this.loginsuccess = 1;
-    } else {
-      this.loginsuccess = -1;
-    }
-    setTimeout(function() {
-      this.loginsuccess = 0;
-    }.bind(this), 3000);
   }
 }
