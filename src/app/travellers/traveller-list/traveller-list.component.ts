@@ -45,7 +45,7 @@ export class TravellerListComponent implements OnInit {
       lastname: '',
       username: '',
       password: '',
-      forename: '',
+      firstname: '',
     };
 
     // By default, a newly-created traveller will have the selected state.

@@ -16,7 +16,7 @@ export class TravellerCreateComponent {
     lastname: '',
     username: '',
     password: '',
-    forename: '',
+    firstname: '',
   };
 
   constructor (private travellerService: TravellerService) {}

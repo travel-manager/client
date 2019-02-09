@@ -3,6 +3,6 @@ export class Traveller {
   lastname: string;
   username: string;
   password: string;
-  forename: string;
+  firstname: string;
 }
 
