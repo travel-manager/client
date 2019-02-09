@@ -6,12 +6,14 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TravellerDetailsComponent } from './travellers/traveller-details/traveller-details.component';
 import { TravellerListComponent } from './travellers/traveller-list/traveller-list.component';
+import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TravellerDetailsComponent,
-    TravellerListComponent
+    TravellerListComponent,
+    TravellerCreateComponent
   ],
   imports: [
     BrowserModule,

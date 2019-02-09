@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Traveller } from '../traveller';
 import { TravellerService } from '../traveller.service';
 import { TravellerDetailsComponent } from '../traveller-details/traveller-details.component';
+import { TravellerCreateComponent } from '../traveller-create/traveller-create.component';
 
 @Component({
   // tslint:disable-next-line:component-selector
