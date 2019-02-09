@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var CONTACTS_COLLECTION = "travellers";
+var TRAVELLERS_COLLECTION = "travellers";
 
 var app = express();
 app.use(bodyParser.json());
@@ -16,7 +16,7 @@ app.use(express.static(distDir));
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:13645/t7rosa00", function (err, client) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://phe2:mlab88@ds213755.mlab.com:13755/mlab", function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -27,13 +27,13 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://localhost:1364
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
+  var server = app.listen(process.env.PORT || 4000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
 });
 
-// CONTACTS API ROUTES BELOW
+// TRAVELLERS API ROUTES BELOW
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -47,7 +47,7 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/api/travellers", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+  db.collection(TRAVELLERS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
@@ -59,7 +59,7 @@ app.get("/api/travellers", function(req, res) {
 app.post("/api/travellers", function(req, res) {
   var newTraveller = req.body;
   newTraveller.createDate = new Date();
-  db.collection(CONTACTS_COLLECTION).insertOne(newTraveller, function(err, doc) {
+  db.collection(TRAVELLERS_COLLECTION).insertOne(newTraveller, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new traveller.");
     } else {
@@ -75,7 +75,7 @@ app.post("/api/travellers", function(req, res) {
  */
 
 app.get("/api/travellers/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(TRAVELLERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get traveller");
     } else {
@@ -88,7 +88,7 @@ app.put("/api/travellers/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(TRAVELLERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update traveller");
     } else {
@@ -99,7 +99,7 @@ app.put("/api/travellers/:id", function(req, res) {
 });
 
 app.delete("/api/travellers/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  db.collection(TRAVELLERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete traveller");
     } else {
