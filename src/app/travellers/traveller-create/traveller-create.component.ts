@@ -12,11 +12,13 @@ import { componentFactoryName } from '@angular/compiler';
 })
 
 export class TravellerCreateComponent {
+
+  public success = false;
   traveller: Traveller = {
+    firstname: '',
     lastname: '',
     username: '',
-    password: '',
-    firstname: '',
+    password: ''
   };
 
   constructor (private travellerService: TravellerService) {}
@@ -24,4 +26,11 @@ export class TravellerCreateComponent {
   createTraveller(traveller: Traveller) {
     this.travellerService.createTraveller(traveller);
     };
+
+  createSuccess() {
+    this.success = true;
+    setTimeout(function() {
+      this.success = false;
+  }.bind(this), 3000);
+  }
 }

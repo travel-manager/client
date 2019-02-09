@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { TravellerDetailsComponent } from './travellers/traveller-details/traveller-details.component';
 import { TravellerListComponent } from './travellers/traveller-list/traveller-list.component';
 import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
+import { TravellerLoginComponent } from './travellers/traveller-login/traveller-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TravellerDetailsComponent,
     TravellerListComponent,
-    TravellerCreateComponent
+    TravellerCreateComponent,
+    TravellerLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,7 @@ export class TravellerService {
                  .catch(this.handleError);
     }
 
+
     // post("/api/travellers")
     createTraveller(newTraveller: Traveller): Promise<Traveller> {
       return this.http.post(this.travellersUrl, newTraveller)
@@ -24,7 +25,13 @@ export class TravellerService {
                  .catch(this.handleError);
     }
 
-    // get("/api/travellers/:id") endpoint not used by Angular app
+    // get("/api/travellers/:username")
+    getTraveller(getTravellerUsername: String): Promise<Traveller> {
+      return this.http.get(this.travellersUrl + '/' + getTravellerUsername)
+                 .toPromise()
+                 .then(response => response.json() as Traveller[])
+                 .catch(this.handleError);
+    }
 
     // delete("/api/travellers/:id")
     deleteTraveller(delTravellerId: String): Promise<String> {

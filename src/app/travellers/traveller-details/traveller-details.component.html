@@ -8,8 +8,8 @@
   <form class="col-md-12">
 
     <div class="form-group">
-      <label for="traveller-forename">First name</label>
-      <input class="form-control" name="traveller-forename" [(ngModel)]="traveller.forename" placeholder="Eino"/>
+      <label for="traveller-firstname">First name</label>
+      <input class="form-control" name="traveller-firstname" [(ngModel)]="traveller.firstname" placeholder="Eino"/>
     </div>
     <div class="form-group">
       <label for="traveller-lastname">Last Name</label>
@@ -28,7 +28,7 @@
     <button class="btn btn-danger" *ngIf="traveller._id" (click)="deleteTraveller(traveller._id)">Delete</button>
   </form>
 
-<!-- <code>forename = {{ traveller.forename }}</code><br>
+<!-- <code>firstname = {{ traveller.forename }}</code><br>
 <code>lastname = {{ traveller.lastname }}</code><br>
 <code>username = {{ traveller.username }}</code><br>
 <code>password = {{ traveller.password }}</code> -->
