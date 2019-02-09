@@ -24,12 +24,15 @@ export class TravellerLoginComponent {
   };
   loginsuccess = 0;
 
+  private loginpw: String = '';
+
   constructor(private travellerService: TravellerService) { }
 
   loginAttempt() {
+    this.loginpw = this.loginTraveller.password;
     this.travellerService.getTraveller(this.loginTraveller.username).then((traveller: Traveller) => {
       this.dbTraveller = traveller;
-       if (this.loginTraveller.password === this.dbTraveller.password) {
+       if (this.loginpw === this.dbTraveller.password) {
         this.loginsuccess = 1;
       } else {
         this.loginsuccess = -1;
