@@ -57,7 +57,7 @@ app.get("/api/travellers", function(req, res) {
 });
 
 app.get("/api/travellers/username", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).find({username}).toArray(function(err, docs) {
+  db.collection(TRAVELLERS_COLLECTION).find({username: "VilleViides"}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
