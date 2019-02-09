@@ -61,7 +61,8 @@ app.get("/api/travellers/username/:username", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
-      res.status(200).json(docs);
+      handleError(res, err.message, "params = " + req.params.id);
+      //res.status(200).json(docs);
     }
   });
 });
