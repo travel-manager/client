@@ -57,7 +57,7 @@ app.get("/api/travellers", function(req, res) {
 });
 
 app.get("/api/travellers/username/:username", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).insertOne( {req: String(req.body)});
+  db.collection(TRAVELLERS_COLLECTION).insertOne( {req: String(req)});
   db.collection(TRAVELLERS_COLLECTION).findOne({username: new ObjectID(req.body.id)}, function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
@@ -87,6 +87,8 @@ app.post("/api/travellers", function(req, res) {
 
 
 app.get("/api/travellers/:id", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).insertOne( {req: String(req)});
+  db.collection(TRAVELLERS_COLLECTION).insertOne( {req: String(req.params.id)});
   db.collection(TRAVELLERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get traveller");
