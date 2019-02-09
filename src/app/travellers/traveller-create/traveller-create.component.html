@@ -1,6 +1,6 @@
 <div class="col-md-6">
   <h2 class="col-md-8">Create New Traveller</h2>
-  <form #createForm="ngForm" (ngSubmit)="createSuccess(); createForm.reset(); createTraveller(traveller)" class="col-md-8">
+  <form #createForm="ngForm" (ngSubmit)="createTraveller(traveller); createForm.reset();" class="col-md-8">
 
     <div class="form-group">
       <label for="traveller-firstname">First name</label>

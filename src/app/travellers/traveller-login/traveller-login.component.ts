@@ -16,7 +16,7 @@ export class TravellerLoginComponent {
     password: ''
   };
 
-  traveller: Traveller = {
+  loginCompare: Traveller = {
     firstname: '',
     lastname: '',
     username: '',
@@ -28,9 +28,9 @@ export class TravellerLoginComponent {
 
   loginAttempt() {
     this.travellerService.getTraveller(this.loginuser.username).then((traveller: Traveller) => {
-      this.traveller = traveller;
+      this.loginCompare = traveller;
     });
-    if (this.loginuser.password === this.traveller.password) {
+    if (this.loginuser.password === this.loginCompare.password) {
       this.loginsuccess = 1;
     } else {
       this.loginsuccess = -1;

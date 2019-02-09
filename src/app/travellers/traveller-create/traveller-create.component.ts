@@ -25,12 +25,9 @@ export class TravellerCreateComponent {
 
   createTraveller(traveller: Traveller) {
     this.travellerService.createTraveller(traveller);
-    };
-
-  createSuccess() {
     this.success = true;
     setTimeout(function() {
       this.success = false;
-  }.bind(this), 3000);
+    }.bind(this), 3000);
   }
 }
