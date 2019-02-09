@@ -11,7 +11,6 @@
       <label for="login-password">Last Name</label>
       <input class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginuser.password" placeholder="Password"/>
     </div>
-    <br><br>
     <button class="btn btn-primary" [disabled]="!loginForm.valid">Create</button>
     <div *ngIf="loginsuccess === 1" class="alert alert-success">
     Logged in successfully
@@ -19,7 +18,7 @@
     <div *ngIf="loginsuccess === -1" class="alert alert-danger">
     Incorrect password
     </div>
-    <br>
+    <br><br>
     <code>loginusername = {{ this.loginuser.username }}</code><br>
     <code>loginpassword = {{ this.loginuser.password }}</code><br>
     <code>db password = {{ this.loginCompare.password }}</code><br>

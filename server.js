@@ -73,6 +73,15 @@ app.post("/api/travellers", function(req, res) {
  *    PUT: update traveller by id
  *    DELETE: deletes traveller by id
  */
+app.get("/api/travellers/:username", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).findOne({ username: new ObjectID(req.params.username) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get traveller");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
 
 app.get("/api/travellers/:id", function(req, res) {
   db.collection(TRAVELLERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {

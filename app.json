@@ -1,14 +1,9 @@
 {
-  "name": "MEAN Traveller List",
-  "description": "Example traveller list app using MEAN",
+  "name": "Travel Manager",
+  "description": "",
   "keywords": [
-    "MEAN",
-    "Angular",
-    "Node",
-    "MongoDB",
-    "mLab"
   ],
-  "repository": "https://github.com/chrisckchang/mean-travellerlist-angular2",
+  "repository": "",
   "success_url": "/",
   "formation": {
     "web": {

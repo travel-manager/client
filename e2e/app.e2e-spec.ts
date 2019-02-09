@@ -1,6 +1,6 @@
 import { MeanTravellerlistAngular2Page } from './app.po';
 
-describe('mean-travellerlist-angular2 App', () => {
+describe('travel-manager App', () => {
   let page: MeanTravellerlistAngular2Page;
 
   beforeEach(() => {
