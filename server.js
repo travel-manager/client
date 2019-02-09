@@ -86,7 +86,6 @@ app.post("/api/travellers", function(req, res) {
 
 
 app.get("/api/travellers/:id", function(req, res) {
-  //db.collection(TRAVELLERS_COLLECTION).insertOne( {req: String(req.params.id)});
   db.collection(TRAVELLERS_COLLECTION).findOne({ username: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get traveller");
