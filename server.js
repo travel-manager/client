@@ -56,6 +56,16 @@ app.get("/api/travellers", function(req, res) {
   });
 });
 
+app.get("/api/travellers/username", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).find({username}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get travellers.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 app.post("/api/travellers", function(req, res) {
   var newTraveller = req.body;
   newTraveller.createDate = new Date();
@@ -74,8 +84,9 @@ app.post("/api/travellers", function(req, res) {
  *    DELETE: deletes traveller by id
  */
 
-app.get("/api/travellers/:username", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).findOne({ username: new ObjectID(req.params.username) }, function(err, doc) {
+
+app.get("/api/travellers/:id", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get traveller");
     } else {
