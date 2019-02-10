@@ -11,6 +11,7 @@
     "e2e": "ng e2e",
     "postinstall": "ng build --output-path dist"
   },
+
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.2.4",
@@ -49,5 +50,11 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~3.2.4"
-  }
+  },
+  "engines": {
+    "node": "10.15.",
+    "npm": "6.x"
+}
+
+
 }
