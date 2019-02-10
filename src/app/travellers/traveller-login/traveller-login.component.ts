@@ -23,23 +23,31 @@ export class TravellerLoginComponent {
     password: ''
   };
   loginsuccess = 0;
-
-  private loginpw: String = '';
+  public loggedInUser: Traveller;
 
   constructor(private travellerService: TravellerService) { }
 
-  loginAttempt() {
-    this.loginpw = this.loginTraveller.password;
-    this.travellerService.getTraveller(this.loginTraveller.username).then((traveller: Traveller) => {
-      this.dbTraveller = traveller;
-       if (this.loginpw === this.dbTraveller.password) {
+  loginAttempt(loginTraveller: Traveller) {
+      this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
+      if (loginTraveller.password === dbtraveller.password) {
         this.loginsuccess = 1;
+        this.loggedInUser = dbtraveller;
+        console.log('loggedin: ', this.loggedInUser);
+        this.loginTraveller = {
+          username: '',
+          password: ''
+        };
       } else {
         this.loginsuccess = -1;
+        this.loginTraveller.password = '';
       }
       setTimeout(function() {
         this.loginsuccess = 0;
       }.bind(this), 3000);
     });
+  }
+
+  logOut = () => {
+    this.loggedInUser = null;
   }
 }

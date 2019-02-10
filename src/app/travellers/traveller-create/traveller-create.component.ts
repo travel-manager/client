@@ -13,7 +13,7 @@ import { componentFactoryName } from '@angular/compiler';
 
 export class TravellerCreateComponent {
 
-  public success = false;
+  public createsuccess = 0;
   traveller: Traveller = {
     firstname: '',
     lastname: '',
@@ -24,10 +24,23 @@ export class TravellerCreateComponent {
   constructor (private travellerService: TravellerService) {}
 
   createTraveller(traveller: Traveller) {
-    this.travellerService.createTraveller(traveller);
-    this.success = true;
+    this.travellerService.getTraveller(traveller.username).then((dbreturn: Traveller) => {
+      if (dbreturn == null) {
+        this.travellerService.createTraveller(traveller);
+        this.createsuccess = 1;
+        this.traveller = {
+          firstname: '',
+          lastname: '',
+          username: '',
+          password: ''
+        };
+      } else {
+        this.traveller.username = '';
+        this.createsuccess = -1;
+      }
+    });
     setTimeout(function() {
-      this.success = false;
-    }.bind(this), 3000);
+      this.createsuccess = false;
+      }.bind(this), 3000);
   }
 }

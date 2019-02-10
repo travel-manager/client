@@ -16,7 +16,7 @@ app.use(express.static(distDir));
 var db;
 
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://phe2:mlab88@ds213755.mlab.com:13755/mlab", function (err, client) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukumauku@ds213645.mlab.com:13645/t7rosa00", function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -27,7 +27,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://phe2:mlab88@ds
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 4000, function () {
+  var server = app.listen(process.env.PORT || 4200, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });

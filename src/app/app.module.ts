@@ -6,12 +6,14 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
 import { TravellerLoginComponent } from './travellers/traveller-login/traveller-login.component';
+import { TravellerLogoutComponent } from './travellers/traveller-logout/traveller-logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TravellerCreateComponent,
-    TravellerLoginComponent
+    TravellerLoginComponent,
+    TravellerLogoutComponent
   ],
   imports: [
     BrowserModule,
