@@ -52,7 +52,7 @@
     "typescript": "~3.2.4"
   },
   "engines": {
-    "node": "10.15.",
+    "node": "10.15.0",
     "npm": "6.x"
 }
 
