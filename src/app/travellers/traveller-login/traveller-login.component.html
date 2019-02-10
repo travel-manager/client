@@ -15,10 +15,6 @@
     <div *ngIf="loginsuccess === -1" class="alert alert-danger">
     Incorrect password
     </div>
-    <!--
-    <code>loginusername = {{ this.loginTraveller.username }}</code><br>
-    <code>loginpassword = {{ this.loginTraveller.password }}</code><br>
-    <code>db password = {{ this.loginTraveller.password }}</code><br> -->
   </form>
 </div>
 <div *ngIf="loggedInUser != null" class="col-md-6">
@@ -29,3 +25,5 @@
     [logoutHandler]="logOut">
     </app-traveller-logout>
 </div>
+<br>
+<br>

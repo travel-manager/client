@@ -42,19 +42,23 @@ function handleError(res, reason, message, code) {
 }
 
 /*  "/api/travellers"
- *    GET: finds all travellers
  *    POST: creates a new traveller
  */
 
-app.get("/api/travellers", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).find({}).toArray(function(err, docs) {
+app.post("/api/travellers", function(req, res) {
+  var newTraveller = req.body;
+  db.collection(TRAVELLERS_COLLECTION).insertOne(newTraveller, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to get travellers.");
+      handleError(res, err.message, "Failed to create new traveller.");
     } else {
-      res.status(200).json(docs);
+      res.status(201).json(doc.ops[0]);
     }
   });
 });
+
+/*  "/api/travellers/username"
+ *    GET: find traveller by username
+ */
 
 app.get("/api/travellers/username/:username", function(req, res) {
   db.collection(TRAVELLERS_COLLECTION).findOne({username: req.params.username}, function(err, docs) {
@@ -66,55 +70,4 @@ app.get("/api/travellers/username/:username", function(req, res) {
   });
 });
 
-app.post("/api/travellers", function(req, res) {
-  var newTraveller = req.body;
-  //newTraveller.createDate = new Date();
-  db.collection(TRAVELLERS_COLLECTION).insertOne(newTraveller, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new traveller.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-});
 
-/*  "/api/travellers/:id"
- *    GET: find traveller by id
- *    PUT: update traveller by id
- *    DELETE: deletes traveller by id
- */
-
-
-app.get("/api/travellers/:id", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).findOne({ username: new ObjectID(req.params.id) }, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to get traveller");
-    } else {
-      res.status(200).json(doc);
-    }
-  });
-});
-
-app.put("/api/travellers/:id", function(req, res) {
-  var updateDoc = req.body;
-  delete updateDoc._id;
-
-  db.collection(TRAVELLERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to update traveller");
-    } else {
-      updateDoc._id = req.params.id;
-      res.status(200).json(updateDoc);
-    }
-  });
-});
-
-app.delete("/api/travellers/:id", function(req, res) {
-  db.collection(TRAVELLERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
-    if (err) {
-      handleError(res, err.message, "Failed to delete traveller");
-    } else {
-      res.status(200).json(req.params.id);
-    }
-  });
-});
