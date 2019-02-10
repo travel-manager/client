@@ -1,0 +1,57 @@
+{
+  "name": "travel-manager",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "node server.js",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "postinstall": "ng build --output-path dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^7.2.4",
+    "@angular/cli": "^7.3.1",
+    "@angular/common": "^7.2.4",
+    "@angular/compiler": "^7.2.4",
+    "@angular/compiler-cli": "^7.2.4",
+    "@angular/core": "^7.2.4",
+    "@angular/forms": "^7.2.4",
+    "@angular/http": "^7.2.4",
+    "@angular/platform-browser": "^7.2.4",
+    "@angular/platform-browser-dynamic": "^7.2.4",
+    "@angular/router": "^7.2.4",
+    "body-parser": "^1.18.3",
+    "core-js": "^2.5.4",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.13",
+    "rxjs": "^6.0.0",
+    "zone.js": "^0.8.26"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.13.1",
+    "@angular/language-service": "^7.2.4",
+    "@types/jasmine": "~2.8.6",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "~4.2.1",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "^4.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "^5.4.2",
+    "ts-node": "~5.0.1",
+    "tslint": "~5.9.1",
+    "typescript": "~3.2.4"
+  },
+  "engines": {
+    "node": "10.15.0",
+    "npm": "6.x"
+  }
+}

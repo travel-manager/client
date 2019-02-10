@@ -1,0 +1,41 @@
+<div class="col-md-6">
+  <h2 class="col-md-8">Create New Traveller</h2>
+  <form #createForm="ngForm" (ngSubmit)="createTraveller(traveller);" class="col-md-8">
+
+    <div class="form-group">
+      <label for="traveller-firstname">First name</label>
+      <input type="text" pattern="[a-zA-Z]*" class="form-control" #firstname="ngModel" required name="traveller-firstname" [(ngModel)]="traveller.firstname" placeholder="First Name"/>
+    </div>
+
+    <div class="form-group">
+      <label for="traveller-lastname">Last Name</label>
+      <input type="text" pattern="[a-zA-Z]*" class="form-control" #lastname="ngModel" required name="traveller-lastname" [(ngModel)]="traveller.lastname" placeholder="Last Name"/>
+    </div>
+
+    <div class="form-group">
+      <label for="traveller-username">Username</label>
+      <input type="text" pattern="[a-zA-Z0-9]*" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="traveller.username" placeholder="Username"/>
+    </div>
+
+    <div class="form-group">
+      <label for="traveller-password">Password</label>
+      <input type="text" pattern="[a-zA-Z0-9]*" class="form-control" #password="ngModel" required name="traveller-password" [(ngModel)]="traveller.password" placeholder="Password"/>
+    </div>
+    <button class="btn btn-primary" [disabled]="!createForm.valid">Create</button>
+    <div *ngIf="createsuccess === 1" class="alert alert-success">
+    Traveller successfully created
+    </div>
+    <div *ngIf="createsuccess === -1" class="alert alert-danger">
+      Username unavailable
+      </div>
+      <div *ngIf="createsuccess === -2" class="alert alert-danger">
+      Failed to create user
+      </div>
+    <!-- <br>
+    <br>
+    <code>firstname = {{ traveller.firstname }}</code><br>
+    <code>lastname = {{ traveller.lastname }}</code><br>
+    <code>username = {{ traveller.username }}</code><br>
+    <code>password = {{ traveller.password }}</code> -->
+  </form>
+</div>
