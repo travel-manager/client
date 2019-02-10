@@ -21,3 +21,11 @@
     <code>db password = {{ this.loginTraveller.password }}</code><br> -->
   </form>
 </div>
+<div *ngIf="loggedInUser != null" class="col-md-6">
+  <br>
+  <br>
+    <app-traveller-logout
+    [loggedInUser]="loggedInUser"
+    [logoutHandler]="logOut">
+    </app-traveller-logout>
+</div>
