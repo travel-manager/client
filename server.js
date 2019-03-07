@@ -4,6 +4,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var TRAVELLERS_COLLECTION = "travellers";
+var TRIPS_COLLECTION = "trips";
 
 var app = express();
 app.use(bodyParser.json());
@@ -27,7 +28,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukuma
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 4200, function () {
+  var server = app.listen(process.env.PORT || 4300, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
@@ -66,6 +67,23 @@ app.get("/api/travellers/username/:username", function(req, res) {
       handleError(res, err.message, "Failed to get travellers.");
     } else {
       res.status(200).json(docs);
+    }
+  });
+});
+
+// TRIPS API ROUTES BELOW
+
+/*  "/api/trips"
+ *    POST: creates a new trip
+ */
+
+app.post("/api/trips", function(req, res) {
+  var newTrip = req.body;
+  db.collection(TRIPS_COLLECTION).insertOne(newTrip, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new trip.");
+    } else {
+      res.status(201).json(doc.ops[0]);
     }
   });
 });

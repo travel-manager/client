@@ -1,5 +1,5 @@
-<div class="col-sm-6">
-  Welcome to Travel Manager, {{ loggedInUser.firstname }}!
+<div class="col-md-6">
+  Welcome to Travel Manager, {{ _userData.getUserData().firstname }}!
   <br>
   <br>
   <button class="btn btn-danger" (click)="logOut()">Log Out</button>

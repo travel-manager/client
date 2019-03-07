@@ -1,0 +1,37 @@
+
+<div class="col-md-6">
+    <h2 class="col-md-8">Create New Trip</h2>
+
+    <form #createForm="ngForm" (ngSubmit)="createTrip(trip);" class="col-md-8">
+
+      <app-datepicker
+        [dateupdateHandler]="updateDates">
+      </app-datepicker>
+      <div class="form-group">
+        <label for="trip-name">Name</label>
+        <input type="text" pattern="[a-zA-Z ]*" class="form-control" #firstname="ngModel" required name="trip-name" [(ngModel)]="trip.name" placeholder="Name"/>
+      </div>
+
+      <div class="form-group">
+        <label for="trip-location">Location</label>
+        <input type="text" class="form-control" #location="ngModel" required name="trip-location" [(ngModel)]="trip.location" placeholder="Location"/>
+      </div>
+
+      <div class="form-group">
+          <label for="trip-description">Description</label>
+          <input type="text" class="form-control" #description="ngModel" name="trip-description" [(ngModel)]="trip.description" placeholder="Description"/>
+      </div>
+
+
+
+     <!--  <pre>From: {{ this.trip.datestart }} </pre>
+      <pre>To: {{ this.trip.dateend }} </pre> -->
+
+      <button class="btn btn-primary" [disabled]="!createForm.valid">Create</button>
+      <div *ngIf="createsuccess === 1" class="alert alert-success">
+      Trip successfully created
+      </div>
+
+
+    </form>
+  </div>
