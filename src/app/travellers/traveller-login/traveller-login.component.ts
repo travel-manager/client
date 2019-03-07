@@ -41,6 +41,7 @@ export class TravellerLoginComponent {
           username: '',
           password: ''
         };
+        this._userData.setView('start');
       } else {
         this.loginsuccess = -1;
         this.loginTraveller.password = '';

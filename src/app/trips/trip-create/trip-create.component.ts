@@ -1,55 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from '../trip';
 import { TripService } from '../trip.service';
-import { DatepickerComponent } from './datepicker.component'
 import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import {GeoProvider } from './geoProvider';
+import {UserDataService} from 'app/app.component.service';
 
 @Component({
   selector: 'app-trip-create',
   templateUrl: './trip-create.component.html',
   styleUrls: ['./trip-create.component.css'],
-  providers: [TripService]
+  providers: [TripService, GeoProvider]
 })
 
 export class TripCreateComponent implements OnInit {
 
   public createsuccess = 0;
-  trip: Trip = {
+  public trip: Trip = {
     location: null,
     name: null,
     datestart: null,
+    coords: null,
     dateend: null,
-    members: null,
+    members: [],
     owner: null,
-    description: null
+    description: ''
   };
 
   constructor (
-    private tripService: TripService) {}
+    private gp: GeoProvider,
+    private tripService: TripService,
+    public _userData: UserDataService) {}
 
   ngOnInit() {
+
   }
 
   updateDates = (startdate: NgbDate, enddate: NgbDate) => {
-    this.trip.datestart = new Date(startdate.year, startdate.month - 1, startdate.day);
-    this.trip.dateend = new Date(enddate.year, enddate.month - 1, enddate.day);
-    console.log(this.trip);
+    this.trip.datestart =  String(startdate.day) + '.' + String(startdate.month - 1) + '.' + String(startdate.year);
+    this.trip.dateend = String(enddate.day) + '.' + String(enddate.month - 1) + '.' + String(enddate.year);
   }
 
-  createTrip(trip: Trip) {
-    this.tripService.createTrip(trip);
-    this.createsuccess = 1;
-    this.trip = {
-      location: null,
-      name: null,
-      datestart: null,
-      dateend: null,
-      members: null,
-      owner: null,
-      description: null
-    };
-    setTimeout(function() {
-      this.createsuccess = false;
-      }.bind(this), 3000);
+  createTrip() {
+
+    let lat: number;
+    let lng: number;
+    this.gp.getCoords(this.trip.location).then(data => {
+      lat = data['lat'];
+      lng = data['lng'];
+      if (lat != null && this.trip.datestart != null && this.trip.dateend != null) {
+        this.trip.coords = [lat, lng];
+        this.trip.owner = this._userData.getUserData();
+        this.trip.members.push(this.trip.owner);
+
+        this.tripService.createTrip(this.trip);
+
+        this._userData.setTripData(this.trip);
+        this._userData.setView('trip');
+      } else {
+        this.createsuccess = -1;
+        this.trip.location = null;
+        setTimeout(function() {
+          this.createsuccess = 0;
+          }.bind(this), 3000);
+      }
+    });
   }
 }

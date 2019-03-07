@@ -1,13 +1,72 @@
-TESTI 12
-<app-trip-create></app-trip-create>
-<!-- <div class="container">
-    <div *ngIf="_userData.getUserData() == null">
-        <app-traveller-create></app-traveller-create>
-        <app-traveller-login></app-traveller-login>
+    <mat-toolbar color="primary">
+     <div fxHide.gt-xs>
+       <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
     </div>
-    <div *ngIf="_userData.getUserData() != null">
-        <app-trip-create></app-trip-create>
-        <app-traveller-logout></app-traveller-logout>
+     <div>
+       <a>
+          <img src="../assets/appiconsmall.png">
+          TravelManager
+       </a>
+     </div>
+     <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+
+            <li>
+                <a>
+                  <mat-icon class="icon">map</mat-icon>
+                  <span class="label" (click)="setView('findtrips');">Find Trips</span>
+                </a>
+            </li>
+            <li *ngIf="this._userData.getUserData() != null">
+                <a>
+                    <mat-icon class="icon" disabled (click)="setView('mytrips');">flight_takeoff</mat-icon>
+                    <span class="label" disabled (click)="setView('mytrips');"><s>My Trips</s></span>
+                </a>
+              </li>
+            <li *ngIf="this._userData.getUserData() == null">
+                <a>
+                  <mat-icon class="icon" (click)="setView('createtraveller');">person_add</mat-icon>
+                  <span class="label" (click)="setView('createtraveller');">Create Account</span>
+                 </a>
+            </li>
+            <li *ngIf="this._userData.getUserData() == null">
+              <a>
+                <mat-icon class="icon" (click)="setView('login');">lock_open</mat-icon>
+                <span class="label" (click)="setView('login');">Log In</span>
+               </a>
+            </li>
+            <li *ngIf="this._userData.getUserData() != null">
+              <a>
+                <mat-icon class="icon" (click)="logOut();">lock</mat-icon>
+                <span class="label" (click)="logOut();">Log Out</span>
+               </a>
+            </li>
+        </ul>
+     </div>
+    </mat-toolbar>
+
+<div *ngIf="this._userData.getView() == 'findtrips'">
+    <app-public-trips></app-public-trips>
+</div>
+<div class="container">
+    <div *ngIf="this._userData.getView() == 'trip'">
+        <app-trip-hub
+            [trip]="_userData.getTripData()"
+            [user]="_userData.getUserData()">
+        </app-trip-hub>
     </div>
 
-</div> -->
+    <div *ngIf="this._userData.getView() == 'createtraveller'">
+        <app-traveller-create></app-traveller-create>
+    </div>
+
+    <div *ngIf="this._userData.getView() == 'createtrip'">
+        <app-trip-create></app-trip-create>
+    </div>
+
+    <div *ngIf="this._userData.getView() == 'login'">
+        <app-traveller-login></app-traveller-login>
+    </div>
+</div>

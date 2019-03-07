@@ -3,10 +3,11 @@ import { Traveller } from 'app/travellers/traveller';
 export class Trip {
   _id?: string;
   location: string;
+  coords: Array<number>;
   name: string;
-  datestart: Date;
-  dateend: Date;
-  members: Traveller[];
+  datestart: string;
+  dateend: string;
+  members: Array<Traveller>;
   owner: Traveller;
   description: string;
 }

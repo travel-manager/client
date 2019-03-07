@@ -28,7 +28,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukuma
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 4300, function () {
+  var server = app.listen(process.env.PORT || 4200, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
@@ -73,9 +73,25 @@ app.get("/api/travellers/username/:username", function(req, res) {
 
 // TRIPS API ROUTES BELOW
 
-/*  "/api/trips"
- *    POST: creates a new trip
- */
+app.get("/api/trips", function(req, res) {
+  db.collection(TRIPS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/trips/:id", function(req, res) {
+  db.collection(TRIPS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trip");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
 
 app.post("/api/trips", function(req, res) {
   var newTrip = req.body;
@@ -84,6 +100,16 @@ app.post("/api/trips", function(req, res) {
       handleError(res, err.message, "Failed to create new trip.");
     } else {
       res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.get("/api/trips/owner/:owner", function(req, res) {
+  db.collection(TRIPS_COLLECTION).find({owner: req.params.owner}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
+    } else {
+      res.status(200).json(docs);
     }
   });
 });
