@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TravellerService } from '../traveller.service';
 import { Traveller } from '../traveller';
 import { Login } from '../login';
+import {UserDataService} from 'app/app.component.service';
 
 @Component({
   selector: 'app-traveller-login',
@@ -23,31 +24,32 @@ export class TravellerLoginComponent {
     password: ''
   };
   loginsuccess = 0;
-  public loggedInUser: Traveller;
-
-  constructor(private travellerService: TravellerService) { }
+  constructor(
+    private travellerService: TravellerService,
+    public _userData: UserDataService) { }
 
   loginAttempt(loginTraveller: Traveller) {
       this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
       console.log('login: ', loginTraveller, ' db: ', dbtraveller)
+      // console.log('login: ', loginTraveller.password, ' db: ', dbtraveller.password)
       if (dbtraveller == null) {
         this.loginsuccess = -1;
         this.loginTraveller.password = '';
       } else if (loginTraveller.password === dbtraveller.password) {
         this.loginsuccess = 1;
-        this.loggedInUser = dbtraveller;
+        this._userData.setUserData(dbtraveller);
         this.loginTraveller = {
           username: '',
           password: ''
         };
+        this._userData.setView('start');
+      } else {
+        this.loginsuccess = -1;
+        this.loginTraveller.password = '';
       }
       setTimeout(function() {
         this.loginsuccess = 0;
       }.bind(this), 3000);
     });
-  }
-
-  logOut = () => {
-    this.loggedInUser = null;
   }
 }

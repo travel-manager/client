@@ -1,15 +1,15 @@
-<div *ngIf="loggedInUser == null" class="col-md-6">
+<div class="col-md-6">
   <h2 class="col-md-8">Log In</h2>
   <form #loginForm="ngForm" (ngSubmit)="loginAttempt(loginTraveller);" class="col-md-8">
 
     <div class="form-group">
       <label for="login-username">Username</label>
-      <input type="text" pattern="[a-zA-Z0-9_]*" class="form-control" #loginusername="ngModel" required name="login-username" [(ngModel)]="loginTraveller.username" placeholder="Username"/>
+      <input type="text" class="form-control" #loginusername="ngModel" required name="login-username" [(ngModel)]="loginTraveller.username" placeholder="Username"/>
     </div>
 
     <div class="form-group">
       <label for="login-password">Password</label>
-      <input type="text" #loginpassword="ngModel" pattern="[a-zA-Z0-9]*" class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
+      <input type="text" #loginpassword="ngModel" class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
     </div>
     <button class="btn btn-primary" [disabled]="!loginForm.valid">Log in</button>
     <div *ngIf="loginsuccess === -1" class="alert alert-danger">
@@ -17,13 +17,3 @@
     </div>
   </form>
 </div>
-<div *ngIf="loggedInUser != null" class="col-md-6">
-  <br>
-  <br>
-    <app-traveller-logout
-    [loggedInUser]="loggedInUser"
-    [logoutHandler]="logOut">
-    </app-traveller-logout>
-</div>
-<br>
-<br>
