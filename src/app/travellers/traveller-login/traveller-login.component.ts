@@ -29,17 +29,17 @@ export class TravellerLoginComponent {
 
   loginAttempt(loginTraveller: Traveller) {
       this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
-      if (loginTraveller.password === dbtraveller.password) {
+      console.log('login: ', loginTraveller, ' db: ', dbtraveller)
+      if (dbtraveller == null) {
+        this.loginsuccess = -1;
+        this.loginTraveller.password = '';
+      } else if (loginTraveller.password === dbtraveller.password) {
         this.loginsuccess = 1;
         this.loggedInUser = dbtraveller;
-        console.log('loggedin: ', this.loggedInUser);
         this.loginTraveller = {
           username: '',
           password: ''
         };
-      } else {
-        this.loginsuccess = -1;
-        this.loginTraveller.password = '';
       }
       setTimeout(function() {
         this.loginsuccess = 0;
