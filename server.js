@@ -4,6 +4,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var TRAVELLERS_COLLECTION = "travellers";
+var TRIPS_COLLECTION = "trips";
 
 var app = express();
 app.use(bodyParser.json());
@@ -64,6 +65,49 @@ app.get("/api/travellers/username/:username", function(req, res) {
   db.collection(TRAVELLERS_COLLECTION).findOne({username: req.params.username}, function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get travellers.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+// TRIPS API ROUTES BELOW
+
+app.get("/api/trips", function(req, res) {
+  db.collection(TRIPS_COLLECTION).find({}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/trips/:id", function(req, res) {
+  db.collection(TRIPS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trip");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
+});
+
+app.post("/api/trips", function(req, res) {
+  var newTrip = req.body;
+  db.collection(TRIPS_COLLECTION).insertOne(newTrip, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new trip.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.get("/api/trips/owner/:owner", function(req, res) {
+  db.collection(TRIPS_COLLECTION).find({owner: req.params.owner}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
     } else {
       res.status(200).json(docs);
     }

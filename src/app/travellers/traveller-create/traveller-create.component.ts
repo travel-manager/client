@@ -1,17 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Traveller } from '../traveller';
 import { TravellerService } from '../traveller.service';
-import { componentFactoryName } from '@angular/compiler';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'traveller-create',
+  selector: 'app-traveller-create',
   templateUrl: './traveller-create.component.html',
   styleUrls: ['./traveller-create.component.css'],
   providers: [TravellerService]
 })
 
-export class TravellerCreateComponent {
+export class TravellerCreateComponent implements OnInit {
 
   public createsuccess = 0;
   traveller: Traveller = {
@@ -22,6 +21,9 @@ export class TravellerCreateComponent {
   };
 
   constructor (private travellerService: TravellerService) {}
+
+  ngOnInit() {
+  }
 
   createTraveller(traveller: Traveller) {
     this.travellerService.getTraveller(traveller.username).then((dbreturn: Traveller) => {
