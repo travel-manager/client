@@ -11,7 +11,6 @@ import { TravellerService } from '../traveller.service';
 })
 
 export class TravellerCreateComponent implements OnInit {
-
   public createsuccess = 0;
   traveller: Traveller = {
     firstname: '',
@@ -28,6 +27,10 @@ export class TravellerCreateComponent implements OnInit {
   createTraveller(traveller: Traveller) {
     this.travellerService.getTraveller(traveller.username).then((dbreturn: Traveller) => {
       if (dbreturn == null) {
+        const bcrypt = require('bcryptjs');
+        let salt = bcrypt.genSaltSync(10);
+        traveller.password = bcrypt.hashSync(traveller.password, salt);
+        console.log(traveller.password);
         this.travellerService.createTraveller(traveller);
         this.createsuccess = 1;
         this.traveller = {

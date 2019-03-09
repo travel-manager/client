@@ -30,11 +30,11 @@ export class TravellerLoginComponent {
 
   loginAttempt(loginTraveller: Traveller) {
       this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
-      // console.log('login: ', loginTraveller.password, ' db: ', dbtraveller.password)
+      const bcrypt = require('bcryptjs');
       if (dbtraveller == null) {
         this.loginsuccess = -1;
         this.loginTraveller.password = '';
-      } else if (loginTraveller.password === dbtraveller.password) {
+      } else if (bcrypt.compare(loginTraveller.password, dbtraveller.password)) {
         this.loginsuccess = 1;
         this._userData.setUserData(dbtraveller);
         this.loginTraveller = {
