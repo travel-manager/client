@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Trip } from './trip';
+import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TripService {
     private tripsUrl = '/api/trips';
-    private tripOwnerUrl = '/api/trips/owner/';
+    private tripsOwnerUrl = '/owner';
+    private tripsDatesUrl = '/dates';
 
-    constructor (private http: Http) {}
+    constructor (private http: Http, private http2: HttpClient) {}
 
     // get("/api/trips")
     getTrips(): Promise<Trip[]> {
@@ -23,14 +26,6 @@ export class TripService {
       return this.http.post(this.tripsUrl, newTrip)
                  .toPromise()
                  .then(response => response.json() as Trip)
-                 .catch(this.handleError);
-    }
-
-    // get("/api/trips/username/:id")
-    getTrip(getTripId: String): Promise<Trip> {
-      return this.http.get(this.tripsUrl + this.tripsUrl + '/' + getTripId)
-                 .toPromise()
-                 .then(response => response.json() as Trip[])
                  .catch(this.handleError);
     }
 
@@ -58,11 +53,22 @@ export class TripService {
       return Promise.reject(errMsg);
     }
 
-    // get("/api/trips/username/:id")
-    /* getTripsByOwnerId(id: string): Promise<Trip> {
-      return this.http.get(this.tripsUrl + this.tripsUrl + '/' + getTripId)
+    getTripsByOwner(owner: Traveller): Promise<Trip[]> {
+      const ownerString: string = encodeURI(JSON.stringify(owner));
+      const callString: string = this.tripsUrl + this.tripsOwnerUrl + '/' + ownerString;
+      console.log(callString);
+      return this.http2.get(callString)
                  .toPromise()
-                 .then(response => response.json() as Trip[])
+                 .then(response => response as Trip[])
                  .catch(this.handleError);
-    } */
+    }
+
+    getTripsByDates(startdate: Date): Promise<Trip[]> {
+      const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + encodeURI(startdate.toDateString());
+      console.log(callString);
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Trip[])
+                 .catch(this.handleError);
+    }
 }

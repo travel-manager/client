@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from '../trip';
 import { TripService } from '../trip.service';
+import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+import {UserDataService} from 'app/app.component.service';
 
 declare var google: any;
 
@@ -12,9 +15,12 @@ declare var google: any;
 })
 export class PublicTripsComponent implements OnInit {
 
+  private filterStart: Date;
+  private filterEnd: Date;
   private map;
+  private location;
   trips: Trip[];
-  constructor(private tripService: TripService) { }
+  constructor(public _userData: UserDataService, private tripService: TripService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     let mapProp = {
@@ -37,13 +43,15 @@ export class PublicTripsComponent implements OnInit {
             map: this.map,
             icon: 'http://maps.google.com/mapfiles/kml/paddle/red-stars_maps.png'
           });
+          const startString = this.datepipe.transform(new Date(trip.datestart), 'dd.MM.yy');
+          const endString = this.datepipe.transform(new Date(trip.dateend), 'dd.MM.yy');
           let infoWindowText: String =
             '<b>' + trip.name + '</b><br>' +
             'Created by ' + trip.owner.username + '<br>' +
             trip.location + '<br><br>' +
-            trip.datestart + ' – ' + trip.dateend + '<br><br>' +
-            trip.description + '<br><br>' +
-            '<button disabled class="btn btn-primary">Join trip</button>'
+            startString + ' – ' + endString + '<br><br>' +
+            trip.description + '<br><br>'
+            // + '<button disabled id="joinbtn" class="btn btn-primary">Join trip [Ei käytössä]</button>'
             ;
           const infowindow = new google.maps.InfoWindow({
             content: infoWindowText
@@ -53,5 +61,21 @@ export class PublicTripsComponent implements OnInit {
           });
         }
       });
+  }
+  updateDates = (startdate: NgbDate, enddate: NgbDate) => {
+    this.filterStart =  new Date(startdate.year, startdate.month - 1, startdate.day);
+    this.filterEnd = new Date(enddate.year, enddate.month - 1, enddate.day);
+    console.log('startdate: ', this.filterStart);
+    console.log('result:', this.tripService.getTripsByDates(this.filterStart));
+  }
+
+  filterTrips() {
+
+  }
+
+  goToTrip(trip: Trip) {
+
+    this._userData.setTripData(trip);
+    this._userData.setView('trip');
   }
 }

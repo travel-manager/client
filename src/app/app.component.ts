@@ -10,7 +10,6 @@ import { Traveller } from 'app/travellers/traveller';
 
 export class AppComponent implements OnInit{
   public view: string;
-  fullImagePath: string;
   constructor(public _userData: UserDataService) {
     }
 

@@ -30,7 +30,6 @@ export class TravellerLoginComponent {
 
   loginAttempt(loginTraveller: Traveller) {
       this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
-      console.log('login: ', loginTraveller, ' db: ', dbtraveller)
       // console.log('login: ', loginTraveller.password, ' db: ', dbtraveller.password)
       if (dbtraveller == null) {
         this.loginsuccess = -1;

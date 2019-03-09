@@ -114,4 +114,29 @@ app.get("/api/trips/owner/:owner", function(req, res) {
   });
 });
 
+app.get("/api/trips/dates/:startdate", function(req, res) {
+  let startdate = new Date(req.params.startdate);
+  db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate.toISOString() } }).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.put("/api/trips/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(TRIPS_COLLECTION).replaceOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update trip");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 

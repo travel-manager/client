@@ -1,16 +1,16 @@
     <mat-toolbar color="primary">
-     <div fxHide.gt-xs>
+     <!--<div fxHide.gt-xs>
        <button mat-icon-button>
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-     <div>
+      <div>
        <a>
           <img src="../assets/appiconsmall.png">
           TravelManager
        </a>
-     </div>
-     <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+     </div> -->
+     <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
 
             <li>
@@ -21,8 +21,8 @@
             </li>
             <li *ngIf="this._userData.getUserData() != null">
                 <a>
-                    <mat-icon class="icon" disabled (click)="setView('mytrips');">flight_takeoff</mat-icon>
-                    <span class="label" disabled (click)="setView('mytrips');"><s>My Trips</s></span>
+                    <mat-icon class="icon" (click)="setView('mytrips');">flight_takeoff</mat-icon>
+                    <span class="label" (click)="setView('mytrips');">My Trips</span>
                 </a>
               </li>
               <li *ngIf="this._userData.getUserData() != null">
@@ -58,14 +58,16 @@
 </div>
 <div class="container">
     <div *ngIf="this._userData.getView() == 'trip'">
-        <app-trip-hub
-            [trip]="_userData.getTripData()"
-            [user]="_userData.getUserData()">
+        <app-trip-hub>
         </app-trip-hub>
     </div>
 
     <div *ngIf="this._userData.getView() == 'createtraveller'">
         <app-traveller-create></app-traveller-create>
+    </div>
+
+    <div *ngIf="this._userData.getView() == 'mytrips'">
+        <app-my-trips></app-my-trips>
     </div>
 
     <div *ngIf="this._userData.getView() == 'createtrip'">

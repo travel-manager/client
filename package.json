@@ -28,6 +28,7 @@
     "@angular/router": "^7.2.8",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
     "@types/google-maps": "^3.2.0",
+    "api-query-params": "^4.9.0",
     "body-parser": "^1.18.3",
     "core-js": "^2.5.4",
     "express": "^4.16.3",

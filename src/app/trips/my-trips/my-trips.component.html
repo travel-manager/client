@@ -1,0 +1,5 @@
+<code>SHOWS ALL TRIPS AT THE MOMENT</code>
+
+<mat-action-list>
+  <button *ngFor="let trip of this.trips" mat-list-item (click)="selectTrip(trip)"> {{ trip.name }} </button>
+</mat-action-list>

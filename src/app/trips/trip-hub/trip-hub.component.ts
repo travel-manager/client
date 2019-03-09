@@ -11,13 +11,11 @@ declare var google: any;
   selector: 'app-trip-hub',
   templateUrl: './trip-hub.component.html',
   styleUrls: ['./trip-hub.component.css'],
-  providers: []
+  providers: [TripService]
 })
 export class TripHubComponent implements OnInit {
-  @Input()
+
   private trip: Trip = this._userData.getTripData();
-  @Input()
-  private user: Traveller = this._userData.getUserData();
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
   private icons = {
@@ -43,18 +41,14 @@ export class TripHubComponent implements OnInit {
       icon: this.iconBase + 'info_circle_maps.png'
     }
   };
-  public tempMarker = new google.maps.Marker({
+  public targetMarker = new google.maps.Marker({
     icon: this.icons['Temp'].icon,
   });
+  public markerType: 'Other';
+  public markerNote: '';
   private map;
-  public marker: Marker = {
-    coords: null,
-    type: 'Other',
-    creator: null,
-    note: null
-  };
 
-  constructor(public _userData: UserDataService) { }
+  constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
     let mapProp = {
@@ -66,35 +60,51 @@ export class TripHubComponent implements OnInit {
     this.map.setOptions({
       disableDefaultUI: true
     });
-    this.tempMarker.setMap(this.map);
+    this.targetMarker.setMap(this.map);
 
     google.maps.event.addListener(this.map, 'click', (event) => {
-      this.tempMarker.setPosition(event.latLng);
+      this.targetMarker.setPosition(event.latLng);
     });
+
+    for (let marker of this.trip.markers) {
+      this.placeMarker(marker);
+    }
   }
   confirmMarker() {
+    let marker: Marker = {
+      coords: { lat: this.targetMarker.getPosition().lat(), lng: this.targetMarker.getPosition().lng() },
+      type: this.markerType,
+      creator: this._userData.getUserData(),
+      note: this.markerNote
+    };
+    this.placeMarker(marker);
+    this.trip = this._userData.getTripData();
+    this.trip.markers.push(marker);
+    console.log(this.trip.markers);
+    this.tripService.updateTrip(this.trip);
+    this.targetMarker.setPosition(null);
+    this.markerNote = '';
+    this.markerType = 'Other';
+  }
 
+  placeMarker(markerParam: Marker) {
     let marker = new google.maps.Marker({
-      position: this.tempMarker.getPosition(),
+      position: markerParam.coords,
       map: this.map,
-      icon: this.icons[this.marker.type].icon,
+      icon: this.icons[markerParam.type].icon,
     });
-    this.marker.creator = this.user;
-    let infoWindowText: String = '<b>Added by ' + this.marker.creator.firstname + '</b>' + '<br><br>' + this.marker.note;
+    let infoWindowText: String = '<b>Added by ' + markerParam.creator.username + '</b>' + '<br><br>' + markerParam.note;
     const infowindow = new google.maps.InfoWindow({
       content: infoWindowText
     });
     marker.addListener('click', function() {
         infowindow.open(this.map, marker);
     });
-    this.tempMarker.setPosition(null);
-    this.marker.note = '';
-    this.marker.type = 'Other';
   }
 
   cancelMarker() {
-    this.tempMarker.setPosition(null);
-    this.marker.note = '';
-    this.marker.type = 'Other';
+    this.targetMarker.setPosition(null);
+    this.markerNote = '';
+    this.markerType = 'Other';
   }
 }

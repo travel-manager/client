@@ -18,10 +18,12 @@ export class TripCreateComponent implements OnInit {
   public trip: Trip = {
     location: null,
     name: null,
+    picture: null,
     datestart: null,
     coords: null,
     dateend: null,
     members: [],
+    markers: [],
     owner: null,
     description: ''
   };
@@ -29,15 +31,15 @@ export class TripCreateComponent implements OnInit {
   constructor (
     private gp: GeoProvider,
     private tripService: TripService,
-    public _userData: UserDataService) {}
+    private _userData: UserDataService) {}
 
   ngOnInit() {
 
   }
 
   updateDates = (startdate: NgbDate, enddate: NgbDate) => {
-    this.trip.datestart =  String(startdate.day) + '.' + String(startdate.month - 1) + '.' + String(startdate.year);
-    this.trip.dateend = String(enddate.day) + '.' + String(enddate.month - 1) + '.' + String(enddate.year);
+    this.trip.datestart =  new Date(startdate.year, startdate.month - 1, startdate.day);
+    this.trip.dateend = new Date(enddate.year, enddate.month - 1, enddate.day);
   }
 
   createTrip() {

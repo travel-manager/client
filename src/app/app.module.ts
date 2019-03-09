@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { DatePipe } from '@angular/common'
 
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { DatepickerComponent } from './trips/trip-create/datepicker.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TripHubComponent } from './trips/trip-hub/trip-hub.component';
 import { PublicTripsComponent } from './trips/public-trips/public-trips.component';
+import { MyTripsComponent } from './trips/my-trips/my-trips.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { PublicTripsComponent } from './trips/public-trips/public-trips.componen
     TripCreateComponent,
     DatepickerComponent,
     TripHubComponent,
-    PublicTripsComponent
+    PublicTripsComponent,
+    MyTripsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ import { PublicTripsComponent } from './trips/public-trips/public-trips.componen
     NgbModule,
     HttpClientModule
   ],
-  providers: [UserDataService],
+  providers: [UserDataService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
