@@ -1,6 +1,5 @@
-<div class="col-md-8" id="googleMap" style="width:500px;height:380px;"></div>
-
-<div class="col-md-4" *ngIf="targetMarker.getPosition() != null">
+<div id="googleMap" style="width:500px;height:380px;"></div>
+<div *ngIf="targetMarker.getPosition() != null">
   <h4>Add New Marker</h4>
 
   <form #addMarkerForm="ngForm">
