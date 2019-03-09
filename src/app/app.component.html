@@ -1,5 +1,5 @@
-<div style="background-color: rgb(173, 203, 211)">
-<mat-toolbar style="height: 10vh" color="primary">
+<div style="background-color: rgb(173, 203, 211); height: 100vh;">
+<mat-toolbar style="height: 10vh;" color="primary">
   <div (click)="setView('start');">
       <img style="height: 8vh; resize: both" src="..\assets\appicon.png">
     <span style="margin-left: 10px">
@@ -10,46 +10,46 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
       <li>
-        <a>
-          <mat-icon class="icon" (click)="setView('findtrips');">map</mat-icon>
-          <span fxHide.xs class="label" (click)="setView('findtrips');">Find Trips</span>
+        <a (click)="setView('findtrips');">
+          <mat-icon class="icon" >map</mat-icon>
+          <span fxHide.lt-md class="label">Find Trips</span>
         </a>
       </li>
       <li *ngIf="this._userData.getUserData() != null">
-        <a>
-          <mat-icon class="icon" (click)="setView('mytrips');">flight_takeoff</mat-icon>
-          <span fxHide.xs class="label" (click)="setView('mytrips');">My Trips</span>
+        <a (click)="setView('mytrips');">
+          <mat-icon class="icon">flight_takeoff</mat-icon>
+          <span fxHide.lt-md class="label">My Trips</span>
         </a>
       </li>
       <li *ngIf="this._userData.getUserData() != null">
-        <a>
-          <mat-icon class="icon" (click)="setView('createtrip');">add_circle_outline</mat-icon>
-          <span fxHide.xs class="label" (click)="setView('createtrip');">Create Trip</span>
+        <a (click)="setView('createtrip');">
+          <mat-icon class="icon">add_circle_outline</mat-icon>
+          <span fxHide.lt-md class="label" >Create Trip</span>
         </a>
       </li>
       <li *ngIf="this._userData.getUserData() == null">
-        <a>
-          <mat-icon class="icon" (click)="setView('createtraveller');">person_add</mat-icon>
-          <span fxHide.xs class="label" (click)="setView('createtraveller');">Create Account</span>
+        <a (click)="setView('createtraveller');">
+          <mat-icon class="icon">person_add</mat-icon>
+          <span fxHide.lt-md class="label">Create Account</span>
         </a>
       </li>
       <li *ngIf="this._userData.getUserData() == null">
-        <a>
-          <mat-icon class="icon" (click)="setView('login');">lock_open</mat-icon>
-          <span fxHide.xs class="label" (click)="setView('login');">Log In</span>
+        <a (click)="setView('login');">
+          <mat-icon class="icon">lock_open</mat-icon>
+          <span fxHide.lt-md class="label">Log In</span>
         </a>
       </li>
       <li *ngIf="this._userData.getUserData() != null">
-        <a>
-          <mat-icon class="icon" (click)="logOut();">lock</mat-icon>
-          <span fxHide.xs class="label" (click)="logOut();">Log Out</span>
+        <a (click)="logOut();">
+          <mat-icon class="icon">lock</mat-icon>
+          <span fxHide.lt-md class="label">Log Out</span>
         </a>
       </li>
     </ul>
   </div>
 </mat-toolbar>
 
-<div style="height: 90vh" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
+<div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
 
   <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
 </div>

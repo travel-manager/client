@@ -18,58 +18,58 @@ export class PublicTripsComponent implements OnInit {
   private filterStart: Date;
   private filterEnd: Date;
   private map;
-  private location;
   trips: Trip[];
   constructor(public _userData: UserDataService, private tripService: TripService, public datepipe: DatePipe) { }
 
   ngOnInit() {
-    let mapProp = {
-      center: new google.maps.LatLng(52.5200, 13.4050),
-      zoom: 3,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
-    this.map.setOptions({
-      disableDefaultUI: true,
-      restriction: {
-        latLngBounds: {
-          north: 84.9,
-          south: -84.9,
-          west: -168.00,
-          east: -168.01,
-        },
-        strictBounds: false
-      }
-    });
-
-    this.tripService
-      .getTrips()
-      .then((trips: Trip[]) => {
-        this.trips = trips;
-        for (let trip of this.trips) {
-          let marker = new google.maps.Marker({
-            position: { lat: trip.coords[0], lng: trip.coords[1] },
-            map: this.map,
-            icon: 'http://maps.google.com/mapfiles/kml/paddle/red-stars_maps.png'
-          });
-          const startString = this.datepipe.transform(new Date(trip.datestart), 'dd.MM.yy');
-          const endString = this.datepipe.transform(new Date(trip.dateend), 'dd.MM.yy');
-          let infoWindowText: String =
-            '<b>' + trip.name + '</b><br>' +
-            'Created by ' + trip.owner.username + '<br>' +
-            trip.location + '<br><br>' +
-            startString + ' – ' + endString + '<br><br>' +
-            trip.description + '<br><br>'
-            // + '<button disabled id="joinbtn" class="btn btn-primary">Join trip [Ei käytössä]</button>'
-            ;
-          const infowindow = new google.maps.InfoWindow({
-            content: infoWindowText
-          });
-          marker.addListener('click', function() {
-              infowindow.open(this.map, marker);
-          });
+    if (this._userData.getView() === 'findtrips') {
+      let mapProp = {
+        center: new google.maps.LatLng(52.5200, 13.4050),
+        zoom: 3,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
+      this.map.setOptions({
+        disableDefaultUI: true,
+        restriction: {
+          latLngBounds: {
+            north: 84.9,
+            south: -84.9,
+            west: -168.00,
+            east: -168.01,
+          },
+          strictBounds: false
         }
       });
+      this.tripService
+        .getTrips()
+        .then((trips: Trip[]) => {
+          this.trips = trips;
+          for (let trip of this.trips) {
+            let marker = new google.maps.Marker({
+              position: { lat: trip.coords[0], lng: trip.coords[1] },
+              map: this.map,
+              icon: 'http://maps.google.com/mapfiles/kml/paddle/red-stars_maps.png'
+            });
+            const startString = this.datepipe.transform(new Date(trip.datestart), 'dd.MM.yy');
+            const endString = this.datepipe.transform(new Date(trip.dateend), 'dd.MM.yy');
+            let infoWindowText: String =
+              '<b>' + trip.name + '</b><br>' +
+              'Created by ' + trip.owner.username + '<br>' +
+              trip.location + '<br><br>' +
+              startString + ' – ' + endString + '<br><br>' +
+              trip.description + '<br><br>'
+              // + '<button disabled id="joinbtn" class="btn btn-primary">Join trip [Ei käytössä]</button>'
+              ;
+            const infowindow = new google.maps.InfoWindow({
+              content: infoWindowText
+            });
+            marker.addListener('click', function() {
+                infowindow.open(this.map, marker);
+            });
+          }
+        });
+    }
   }
   updateDates = (startdate: NgbDate, enddate: NgbDate) => {
     this.filterStart =  new Date(startdate.year, startdate.month - 1, startdate.day);
