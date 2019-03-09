@@ -38,14 +38,14 @@ export class TripHubComponent implements OnInit {
       icon: this.iconBase + 'camera_maps.png'
     },
     Other: {
-      icon: this.iconBase + 'info_circle_maps.png'
+      icon: 'http://maps.google.com/mapfiles/kml/paddle/ylw-stars_maps.png'
     }
   };
   public targetMarker = new google.maps.Marker({
     icon: this.icons['Temp'].icon,
   });
-  public markerType: 'Other';
-  public markerNote: '';
+  public markerType = 'Other';
+  public markerNote = '';
   private map;
 
   constructor(private tripService: TripService, private _userData: UserDataService) { }

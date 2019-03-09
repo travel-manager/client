@@ -1,5 +1,5 @@
-<div id="googleMap" style="width:500px;height:380px;"></div>
-<div *ngIf="targetMarker.getPosition() != null">
+<div class="col-md-6" id="googleMap" style="width:60vw;height:70vh;"></div>
+<div class="col-md-4" style="width:30vw;" *ngIf="targetMarker.getPosition() != null">
   <h4>Add New Marker</h4>
 
   <form #addMarkerForm="ngForm">
@@ -27,4 +27,3 @@
     </div>
   </form>
 </div>
-
