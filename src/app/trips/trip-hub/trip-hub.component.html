@@ -1,5 +1,6 @@
-<div class="col-md-6" id="googleMap" style="width:60vw;height:70vh;"></div>
-<div class="col-md-4" style="width:30vw;" *ngIf="targetMarker.getPosition() != null">
+<div fxLayoutAlign="center center" style="height:90vh; width: 100%">
+<div class="col-md-1" id="googleMap" style="height: 100%; width: 500px"></div>
+<div class="col-md-1" style="height: 100%; width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">
   <h4>Add New Marker</h4>
 
   <form #addMarkerForm="ngForm">
@@ -11,6 +12,7 @@
 
     <div class="form-group">
       <label for="marker-type">Type  </label>
+
       <select #type="ngModel" [(ngModel)]="markerType"  name="marker-type">
         <option>Lodging</option>
         <option>Dining</option>
@@ -21,9 +23,9 @@
       </select>
     </div>
     <div>
-      <button class="btn btn-primary col-md-3" (click)="confirmMarker();">Add</button>
-      <span class=col-md-6></span>
-      <button class="btn btn-danger col-md-3" (click)="cancelMarker();">Cancel</button>
+      <button class="btn btn-success column" (click)="confirmMarker();">Add</button>
+      <button style="margin-left: 30px" class="btn btn-danger column" (click)="cancelMarker();">Cancel</button>
     </div>
   </form>
+</div>
 </div>

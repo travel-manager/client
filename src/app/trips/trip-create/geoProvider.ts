@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class GeoProvider {
   apiUrl1 = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-  apiUrl2 = '&API_KEY';
+  apiUrl2 = '&AIzaSyBpmZbeEIAX5zzNxAei4LpwHGjqDiAqpbk';
 
   constructor(public http: HttpClient) {
   }

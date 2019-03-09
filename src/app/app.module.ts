@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import {MatNativeDateModule} from '@angular/material';
 
 
 import { AppComponent } from './app.component';
@@ -29,7 +30,7 @@ import { MyTripsComponent } from './trips/my-trips/my-trips.component';
     DatepickerComponent,
     TripHubComponent,
     PublicTripsComponent,
-    MyTripsComponent
+    MyTripsComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,9 @@ import { MyTripsComponent } from './trips/my-trips/my-trips.component';
     FormsModule,
     HttpModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   providers: [UserDataService, DatePipe],
   bootstrap: [AppComponent]

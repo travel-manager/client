@@ -18,7 +18,7 @@ export class TripHubComponent implements OnInit {
   private trip: Trip = this._userData.getTripData();
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  private icons = {
+  public icons = {
     Temp: {
       icon: this.iconBase + 'arrow_maps.png'
     },
@@ -43,6 +43,7 @@ export class TripHubComponent implements OnInit {
   };
   public targetMarker = new google.maps.Marker({
     icon: this.icons['Temp'].icon,
+    draggable: true
   });
   public markerType = 'Other';
   public markerNote = '';
@@ -64,6 +65,7 @@ export class TripHubComponent implements OnInit {
 
     google.maps.event.addListener(this.map, 'click', (event) => {
       this.targetMarker.setPosition(event.latLng);
+      this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
     });
 
     for (let marker of this.trip.markers) {
@@ -82,6 +84,7 @@ export class TripHubComponent implements OnInit {
     this.trip.markers.push(marker);
     console.log(this.trip.markers);
     this.tripService.updateTrip(this.trip);
+    this.targetMarker.setAnimation(null);
     this.targetMarker.setPosition(null);
     this.markerNote = '';
     this.markerType = 'Other';
@@ -93,6 +96,9 @@ export class TripHubComponent implements OnInit {
       map: this.map,
       icon: this.icons[markerParam.type].icon,
     });
+    if (this.targetMarker.getPosition() != null) {
+      marker.setAnimation(google.maps.Animation.DROP);
+    }
     let infoWindowText: String = '<b>Added by ' + markerParam.creator.username + '</b>' + '<br><br>' + markerParam.note;
     const infowindow = new google.maps.InfoWindow({
       content: infoWindowText
@@ -103,6 +109,7 @@ export class TripHubComponent implements OnInit {
   }
 
   cancelMarker() {
+    this.targetMarker.setAnimation(null);
     this.targetMarker.setPosition(null);
     this.markerNote = '';
     this.markerType = 'Other';

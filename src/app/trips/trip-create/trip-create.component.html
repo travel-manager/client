@@ -1,8 +1,6 @@
-<div class="col-md-6">
-    <h2 class="col-md-8">Create New Trip</h2>
-
-    <form #createForm="ngForm" (ngSubmit)="createTrip(trip);" class="col-md-8">
-
+<div>
+    <form style="background-color: rgb(94, 155, 255) ; height: 90vh; width: 400px" #createForm="ngForm" (ngSubmit)="createTrip(trip);" class="col-md-8">
+      <h2>Create New Trip</h2>
       <app-datepicker
         [dateupdateHandler]="updateDates">
       </app-datepicker>
@@ -21,7 +19,7 @@
           <input type="text" class="form-control" #description="ngModel" required name="trip-description" [(ngModel)]="trip.description" placeholder="Description"/>
       </div>
 
-      <button class="btn btn-primary" [disabled]="!createForm.valid">Create</button>
+      <button class="btn btn-success" [disabled]="!createForm.valid">Create</button>
       <div *ngIf="createsuccess === -1" class="alert alert-danger">
       Failed to create trip, try another destination
       </div>

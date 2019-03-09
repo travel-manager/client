@@ -1,7 +1,6 @@
-<div class="col-md-6">
-  <h2 class="col-md-8">Log In</h2>
-  <form #loginForm="ngForm" (ngSubmit)="loginAttempt(loginTraveller);" class="col-md-8">
-
+<div>
+  <form style="background-color: rgb(94, 155, 255) ; height: 90vh; width: 200px" #loginForm="ngForm" (ngSubmit)="loginAttempt(loginTraveller);" class="col-md-8">
+    <h2>Log In</h2>
     <div class="form-group">
       <label for="login-username">Username</label>
       <input type="text" class="form-control" #loginusername="ngModel" required name="login-username" [(ngModel)]="loginTraveller.username" placeholder="Username"/>
@@ -11,7 +10,7 @@
       <label for="login-password">Password</label>
       <input type="text" #loginpassword="ngModel" class="form-control" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
     </div>
-    <button class="btn btn-primary" [disabled]="!loginForm.valid">Log in</button>
+    <button class="btn btn-success" [disabled]="!loginForm.valid">Log in</button>
     <div *ngIf="loginsuccess === -1" class="alert alert-danger">
     Incorrect password
     </div>

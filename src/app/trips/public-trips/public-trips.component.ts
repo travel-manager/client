@@ -30,7 +30,16 @@ export class PublicTripsComponent implements OnInit {
     };
     this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
     this.map.setOptions({
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      restriction: {
+        latLngBounds: {
+          north: 84.9,
+          south: -84.9,
+          west: -168.00,
+          east: -168.01,
+        },
+        strictBounds: false
+      }
     });
 
     this.tripService

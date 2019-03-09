@@ -1,5 +1,10 @@
 <code>SHOWS ALL TRIPS AT THE MOMENT</code>
+<div style="background-color: rgb(94, 155, 255); height: 90vh; width: 300px">
+    <mat-nav-list >
+        <div *ngFor="let trip of this.trips">
+            <a mat-list-item (click)="selectTrip(trip)"> {{ trip.name }} </a>
+            <mat-divider></mat-divider>
+        </div>
+      </mat-nav-list>
+</div>
 
-<mat-action-list>
-  <button *ngFor="let trip of this.trips" mat-list-item (click)="selectTrip(trip)"> {{ trip.name }} </button>
-</mat-action-list>
