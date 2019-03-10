@@ -1,8 +1,7 @@
-<div style="background-color: rgb(94, 155, 255); height: 90vh; width: 300px">
+<div style="background-color: rgb(94, 155, 255); max-height: 90vh; width: 300px">
     <mat-nav-list >
         <div *ngFor="let trip of this.trips">
-            <mat-icon matListIcon class="icon" >flight</mat-icon>
-            <a mat-list-item (click)="selectTrip(trip)"> <b>{{ trip.name }}</b></a>
+            <a mat-list-item (click)="selectTrip(trip)"><mat-icon matListIcon class="icon" >flight</mat-icon>  <b> {{ trip.name }}</b></a>
             <mat-divider></mat-divider>
         </div>
       </mat-nav-list>

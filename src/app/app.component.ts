@@ -23,6 +23,10 @@ export class AppComponent implements OnInit{
   }
 
   setView(view: string) {
-    this._userData.setView(view);
+    if (this._userData.getView() !== view) {
+      this._userData.setView(view);
+    } else {
+      this._userData.setView('start');
+    }
   }
 }
