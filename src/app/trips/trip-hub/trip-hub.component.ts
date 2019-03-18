@@ -18,6 +18,7 @@ export class TripHubComponent implements OnInit {
   private trip: Trip = this._userData.getTripData();
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+  public selectedTab: string = 'map';
   public icons = {
     Temp: {
       icon: this.iconBase + 'arrow_maps.png'
@@ -52,25 +53,7 @@ export class TripHubComponent implements OnInit {
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
-    let mapProp = {
-      center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
-      zoom: 10,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
-    this.map.setOptions({
-      disableDefaultUI: true
-    });
-    this.targetMarker.setMap(this.map);
-
-    google.maps.event.addListener(this.map, 'click', (event) => {
-      this.targetMarker.setPosition(event.latLng);
-      this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
-    });
-
-    for (let marker of this.trip.markers) {
-      this.placeMarker(marker);
-    }
+    this.generateMap();
   }
   confirmMarker() {
     let marker: Marker = {
@@ -114,4 +97,39 @@ export class TripHubComponent implements OnInit {
     this.markerNote = '';
     this.markerType = 'Other';
   }
+
+  changeTab(tab: string) {
+    this.selectedTab = tab;
+    if (this.selectedTab === 'map') {
+      this.generateMap();
+
+    }
+  }
+
+  generateMap() {
+    setTimeout(function() {
+      let mapProp = {
+        center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
+      this.map.setOptions({
+        disableDefaultUI: true
+      });
+      this.targetMarker.setMap(this.map);
+
+      google.maps.event.addListener(this.map, 'click', (event) => {
+        this.targetMarker.setPosition(event.latLng);
+        this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+      });
+
+      for (let marker of this.trip.markers) {
+        this.placeMarker(marker);
+      }
+
+      }.bind(this), 200);
+
+
+}
 }
