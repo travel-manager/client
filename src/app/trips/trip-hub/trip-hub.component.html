@@ -1,6 +1,47 @@
-<div fxLayoutAlign="center center" style="height:90vh; width: 100%">
-<div class="col-md-1" id="googleMap" style="height: 100%; width: 500px"></div>
-<div class="col-md-1" style="height: 100%; width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">
+
+
+<mat-toolbar style="height: 7vh; background-color: rgb(167, 112, 50)">
+
+  <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
+    <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+      <li>
+        <a>
+          <mat-icon class="icon" (click)="changeTab('feed');" >speaker_notes</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('feed');" >Feed</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <mat-icon class="icon" (click)="changeTab('map');"  >map</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('map');" >Map</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <mat-icon class="icon" (click)="changeTab('chat');"  >chat</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('chat');" >Chat</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <mat-icon class="icon" (click)="changeTab('transactions');"  >attach_money</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('transactions');" >Transactions</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <mat-icon class="icon" (click)="changeTab('options');"  >settings</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('options');" >Options</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  </mat-toolbar>
+
+
+<div *ngIf="this.selectedTab === 'map'" fxLayoutAlign="end"  style="height:83vh; width:100%">
+  <div class="col-md-1" id="googleMap" style="height: 100%; width: 500px"></div>
+  <div class="col-md-1" style="height: 100%; width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">
   <h4>Add New Marker</h4>
 
   <form #addMarkerForm="ngForm">
