@@ -2,7 +2,9 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
+//const io = require('socket.io').listen(4000).sockets;
 
+var MESSAGES_COLLECTION = "messages";
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
 
@@ -22,6 +24,49 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukuma
     console.log(err);
     process.exit(1);
   }
+
+  // Connect to Socket.io
+ /*  io.on('connection', function(socket){
+      let chat = db.collection('chats');
+
+      // Create function to send status
+      sendStatus = function(s){
+        socket.emit('status', s);
+       }
+
+      //Get chats from mongo collection
+      chat.find().limit(100).sort({_id:1}).toArray(function(err, res){
+        if(err){
+          throw err;
+        }
+
+          //Emit the messages
+          socket.emit('output', res);
+        });
+
+        //Handle input events
+        socket.on('input',function(data){
+            let name =  data.name;
+            let message = data.message;
+
+            //Check for name and message
+            if(name == '' || message == ''){
+                //Send error status
+                sendStatus('Please enter a name and a message');
+            } else {
+              // Insert message
+              chat.insert({name: name, message: message}, function(){
+                  client.emit('output', [data]);
+
+                  // Send status object
+                  sendStatus({
+                    message: 'Message sent',
+                    clear: true
+                  });
+              });
+            }
+        });
+    }); */
 
   // Save database object from the callback for reuse.
   db = client.db();
@@ -139,4 +184,25 @@ app.put("/api/trips/:id", function(req, res) {
   });
 });
 
+app.get("/api/messages/:tripid", function(req, res) {
+  let tripID = req.params.tripid;
+  db.collection(MESSAGES_COLLECTION).find({tripId:tripID}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get messages.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
 
+
+app.post("/api/messages", function(req, res) {
+  var newMessage = req.body;
+  db.collection(MESSAGES_COLLECTION).insertOne(newMessage, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to post a message.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});

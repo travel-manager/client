@@ -38,7 +38,10 @@
   </div>
   </mat-toolbar>
 
-
+<div *ngIf="this.selectedTab === 'chat'">
+  <app-trip-chat>
+  </app-trip-chat>
+</div>
 <div *ngIf="this.selectedTab === 'map'" fxLayoutAlign="end"  style="height:83vh; width:100%">
   <div class="col-md-1" id="googleMap" style="height: 100%; width: 500px"></div>
   <div class="col-md-1" style="height: 100%; width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">

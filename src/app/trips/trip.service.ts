@@ -3,12 +3,13 @@ import { Trip } from './trip';
 import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-
+import { Message } from './trip-hub/trip-chat/message'
 @Injectable()
 export class TripService {
     private tripsUrl = '/api/trips';
     private tripsOwnerUrl = '/owner';
     private tripsDatesUrl = '/dates';
+    private messagesUrl = '/api/messages';
 
     constructor (private http: Http, private http2: HttpClient) {}
 
@@ -69,6 +70,22 @@ export class TripService {
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Trip[])
+                 .catch(this.handleError);
+    }
+
+    getMessagesByTripId(tripId : String): Promise<Message[]> {
+      const callString: string = this.messagesUrl + '/' + tripId;
+      console.log(callString);
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Message[])
+                 .catch(this.handleError);
+    }
+
+    createMessage(newMessage: Message): Promise<Message> {
+      return this.http.post(this.messagesUrl, newMessage)
+                 .toPromise()
+                 .then(response => response.json() as Message)
                  .catch(this.handleError);
     }
 }

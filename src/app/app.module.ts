@@ -20,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TripHubComponent } from './trips/trip-hub/trip-hub.component';
 import { PublicTripsComponent } from './trips/public-trips/public-trips.component';
 import { MyTripsComponent } from './trips/my-trips/my-trips.component';
-
+import { TripChatComponent } from './trips/trip-hub/trip-chat/trip-chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +31,7 @@ import { MyTripsComponent } from './trips/my-trips/my-trips.component';
     TripHubComponent,
     PublicTripsComponent,
     MyTripsComponent,
+    TripChatComponent,
   ],
   imports: [
     BrowserModule,
