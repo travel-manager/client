@@ -3,12 +3,14 @@ import { Trip } from './trip';
 import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
+import { Transaction } from './transactions/transaction';
 
 @Injectable()
 export class TripService {
     private tripsUrl = '/api/trips';
     private tripsOwnerUrl = '/owner';
     private tripsDatesUrl = '/dates';
+    private transactionsUrl = '/api/transactions';
 
     constructor (private http: Http, private http2: HttpClient) {}
 
@@ -69,6 +71,13 @@ export class TripService {
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Trip[])
+                 .catch(this.handleError);
+    }
+
+    createTransaction(newTransaction: Transaction): Promise<Transaction> {
+      return this.http.post(this.transactionsUrl, newTransaction)
+                 .toPromise()
+                 .then(response => response.json() as Transaction)
                  .catch(this.handleError);
     }
 }

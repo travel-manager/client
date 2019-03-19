@@ -5,6 +5,7 @@ var ObjectID = mongodb.ObjectID;
 
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
+var TRANSACTIONS_COLLECTION = "transactions";
 
 var app = express();
 app.use(bodyParser.json());
@@ -135,6 +136,17 @@ app.put("/api/trips/:id", function(req, res) {
     } else {
       updateDoc._id = req.params.id;
       res.status(200).json(updateDoc);
+    }
+  });
+});
+
+app.post("/api/transactions", function(req, res) {
+  var newTransaction = req.body;
+  db.collection(TRANSACTIONS_COLLECTION).insertOne(newTransaction, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new transaction.");
+    } else {
+      res.status(201).json(doc.ops[0]);
     }
   });
 });
