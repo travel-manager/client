@@ -3,6 +3,8 @@ import { Message } from './message'
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
 import { DatePipe } from '@angular/common';
+import { interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-trip-chat',
@@ -18,21 +20,34 @@ export class TripChatComponent implements OnInit {
     content:null,
     tripId:null,
   };
-  messages: Message[];
+
+  messages: Message[] = [];
   constructor(private tripService: TripService, private _userData: UserDataService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.tripId = this._userData.getTripData()._id;
     this.updateChat();
+    interval(500).subscribe(() => this.updateChat());
+
+    setTimeout(function() {
+      this.scrollChat();
+      }.bind(this), 200);
   }
 
   updateChat(){
     this.tripService
     .getMessagesByTripId(this.tripId)
     .then((messages: Message[]) => {
+      if (this.messages.length !== messages.length) {
+        this.scrollChat();
+      }
       this.messages = messages;
     });
+  }
 
+  scrollChat(){
+   const chatBox = document.getElementById('messages');
+   chatBox.scrollTop = chatBox.scrollHeight;
   }
 
   postMessage(){
