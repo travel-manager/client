@@ -28,11 +28,9 @@ export class TripChatComponent implements OnInit {
     this.tripId = this._userData.getTripData()._id;
     this.updateChat();
     interval(500).subscribe(() => this.updateChat());
-
-    setTimeout(function() {
-      this.scrollChat();
-      }.bind(this), 200);
+    this.scrollChat();
   }
+
 
   updateChat(){
     this.tripService
@@ -46,8 +44,13 @@ export class TripChatComponent implements OnInit {
   }
 
   scrollChat(){
-   const chatBox = document.getElementById('messages');
+
+
+   setTimeout(function() {
+    const chatBox = document.getElementById('messages');
    chatBox.scrollTop = chatBox.scrollHeight;
+    }.bind(this), 100);
+
   }
 
   postMessage(){
