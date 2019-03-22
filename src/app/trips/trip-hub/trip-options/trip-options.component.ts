@@ -16,20 +16,22 @@ export class TripOptionsComponent implements OnInit {
 
   usernametoAdd: string;
   addsuccess = 0;
+  tripId: string;
   constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
+    this.tripId = this._userData.getTripData()._id;
   }
 
   createMembership() {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
-          if (traveller !== null)
-          {
+          if (traveller !== null) {
             const membership: Membership = {
               travellerId: traveller._id,
-              tripId: this._userData.getTripData()._id
+              tripId: this.tripId
             }
+            console.log(membership);
             this.tripService.createMembership(membership);
             this.addsuccess = 1;
           } else {

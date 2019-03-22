@@ -55,7 +55,7 @@ export class PublicTripsComponent implements OnInit {
             const endString = this.datepipe.transform(new Date(trip.dateend), 'dd.MM.yy');
             let infoWindowText: String =
               '<b>' + trip.name + '</b><br>' +
-              'Created by ' + trip.owner.username + '<br>' +
+              'Created by ' + trip.owner + '<br>' +
               trip.location + '<br><br>' +
               startString + ' – ' + endString + '<br><br>' +
               trip.description + '<br><br>'

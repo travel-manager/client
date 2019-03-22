@@ -211,7 +211,6 @@ app.get("/api/memberships/travellerId/:travellerId", function(req, res) {
 
 app.post("/api/memberships", function(req, res) {
   var newMembership = req.body;
-  console.log(newMembership);
   db.collection(MEMBERSHIPS_COLLECTION).insertOne(newMembership, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new membership.");

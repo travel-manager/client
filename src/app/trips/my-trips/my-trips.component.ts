@@ -27,8 +27,9 @@ export class MyTripsComponent implements OnInit {
     this.tripService
       .getMembershipsByTravellerId(this._userData.getUserData()._id)
       .then((memberships: Membership[]) => {
-        if (this.memberships.length !== memberships.length) {
-          this.memberships = memberships;
+        console.log(this.memberships.length, memberships.length);
+        this.memberships = memberships;
+        if (this.memberships.length !== this.trips.length) {
           this.updateMyTrips();
         }
       });
@@ -36,6 +37,7 @@ export class MyTripsComponent implements OnInit {
   updateMyTrips() {
     this.trips = [];
     for (const membership of this.memberships) {
+      console.log(membership.tripId);
       this.tripService
       .getTripById(membership.tripId)
       .then((trip: Trip) => {
