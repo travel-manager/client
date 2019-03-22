@@ -4,7 +4,7 @@
     <h2>Add Traveller</h2>
     <div class="form-group">
       <label for="traveller-username">Username</label>
-      <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="First Name"/>
+      <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="Username"/>
     </div>
     <button class="btn btn-success" [disabled]="!createForm.valid">Add</button>
     <div *ngIf="addsuccess === 1" class="alert alert-success">
