@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Traveller } from 'app/travellers/traveller';
 import { Trip } from '../trip';
+import { Membership } from '../membership';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
 
@@ -13,23 +14,23 @@ import {UserDataService} from 'app/app.component.service';
 export class MyTripsComponent implements OnInit {
 
   trips: Trip[] = [];
+  memberships: Membership[] = [];
   selectedTrip: Trip
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
-    let owner: Traveller = this._userData.getUserData();
     this.tripService
-      .getTrips()
-      .then((trips: Trip[]) => {
-        this.trips = trips;
+      .getMembershipsByTravellerId(this._userData.getUserData()._id)
+      .then((memberships: Membership[]) => {
+        this.memberships = memberships;
+        for (const membership of this.memberships) {
+          this.tripService
+          .getTripById(membership.tripId)
+          .then((trip: Trip) => {
+            this.trips.push(trip);
+          });
+        }
       });
-
-    /* this.tripService
-      .getTripsByOwner(owner)
-      .then((trips: Trip[]) => {
-        this.trips = trips;
-        console.log('trips:', trips);
-      }); */
   }
 
   selectTrip(trip: Trip) {

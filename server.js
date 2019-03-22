@@ -7,6 +7,7 @@ var ObjectID = mongodb.ObjectID;
 var MESSAGES_COLLECTION = "messages";
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
+var MEMBERSHIPS_COLLECTION = "memberships"
 
 var app = express();
 app.use(bodyParser.json());
@@ -149,16 +150,6 @@ app.post("/api/trips", function(req, res) {
   });
 });
 
-app.get("/api/trips/owner/:owner", function(req, res) {
-  db.collection(TRIPS_COLLECTION).find({owner: req.params.owner}).toArray(function(err, docs) {
-    if (err) {
-      handleError(res, err.message, "Failed to get trips.");
-    } else {
-      res.status(200).json(docs);
-    }
-  });
-});
-
 app.get("/api/trips/dates/:startdate", function(req, res) {
   let startdate = new Date(req.params.startdate);
   db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate.toISOString() } }).toArray(function(err, docs) {
@@ -201,6 +192,29 @@ app.post("/api/messages", function(req, res) {
   db.collection(MESSAGES_COLLECTION).insertOne(newMessage, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to post a message.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.get("/api/memberships/travellerId/:travellerId", function(req, res) {
+  let memberId = req.params.travellerId;
+  db.collection(MEMBERSHIPS_COLLECTION).find({travellerId: memberId}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get memberships.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.post("/api/memberships", function(req, res) {
+  var newMembership = req.body;
+  console.log(newMembership);
+  db.collection(MEMBERSHIPS_COLLECTION).insertOne(newMembership, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new membership.");
     } else {
       res.status(201).json(doc.ops[0]);
     }

@@ -25,7 +25,7 @@ export class TravellerCreateComponent implements OnInit {
   }
 
   createTraveller(traveller: Traveller) {
-    this.travellerService.getTraveller(traveller.username).then((dbreturn: Traveller) => {
+    this.travellerService.getTravellerByUsername(traveller.username).then((dbreturn: Traveller) => {
       if (dbreturn == null) {
         const bcrypt = require('bcryptjs');
         let salt = bcrypt.genSaltSync(10);

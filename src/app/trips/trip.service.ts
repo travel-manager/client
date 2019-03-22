@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Trip } from './trip';
+import { Membership } from './membership';
 import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
@@ -7,9 +8,9 @@ import { Message } from './trip-hub/trip-chat/message'
 @Injectable()
 export class TripService {
     private tripsUrl = '/api/trips';
-    private tripsOwnerUrl = '/owner';
     private tripsDatesUrl = '/dates';
     private messagesUrl = '/api/messages';
+    private membershipsUrl = '/api/memberships';
 
     constructor (private http: Http, private http2: HttpClient) {}
 
@@ -54,28 +55,17 @@ export class TripService {
       return Promise.reject(errMsg);
     }
 
-    getTripsByOwner(owner: Traveller): Promise<Trip[]> {
-      const ownerString: string = encodeURI(JSON.stringify(owner));
-      const callString: string = this.tripsUrl + this.tripsOwnerUrl + '/' + ownerString;
-      console.log(callString);
-      return this.http2.get(callString)
-                 .toPromise()
-                 .then(response => response as Trip[])
-                 .catch(this.handleError);
-    }
-
     getTripsByDates(startdate: Date): Promise<Trip[]> {
       const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + encodeURI(startdate.toDateString());
-      console.log(callString);
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Trip[])
                  .catch(this.handleError);
     }
 
-    getMessagesByTripId(tripId : String): Promise<Message[]> {
+
+    getMessagesByTripId(tripId: String): Promise<Message[]> {
       const callString: string = this.messagesUrl + '/' + tripId;
-      console.log(callString);
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Message[])
@@ -86,6 +76,29 @@ export class TripService {
       return this.http.post(this.messagesUrl, newMessage)
                  .toPromise()
                  .then(response => response.json() as Message)
+                 .catch(this.handleError);
+    }
+
+    createMembership(newMembership: Membership): Promise<Membership> {
+      return this.http.post(this.membershipsUrl, newMembership)
+                 .toPromise()
+                 .then(response => response.json() as Membership)
+                 .catch(this.handleError);
+    }
+
+    getMembershipsByTravellerId(travellerId: String): Promise<Membership[]> {
+      const callString: string = this.membershipsUrl + '/travellerId/' + travellerId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Membership[])
+                 .catch(this.handleError);
+    }
+
+    getTripById(tripId: String): Promise<Trip> {
+      const callString: string = this.tripsUrl + '/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Trip[])
                  .catch(this.handleError);
     }
 }
