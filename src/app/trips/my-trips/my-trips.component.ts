@@ -4,6 +4,7 @@ import { Trip } from '../trip';
 import { Membership } from '../membership';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-my-trips',
@@ -19,20 +20,29 @@ export class MyTripsComponent implements OnInit {
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
+    this.updateMemberships();
+    interval(1000).subscribe(() => this.updateMemberships());
+  }
+  updateMemberships() {
     this.tripService
       .getMembershipsByTravellerId(this._userData.getUserData()._id)
       .then((memberships: Membership[]) => {
-        this.memberships = memberships;
-        for (const membership of this.memberships) {
-          this.tripService
-          .getTripById(membership.tripId)
-          .then((trip: Trip) => {
-            this.trips.push(trip);
-          });
+        if (this.memberships.length !== memberships.length) {
+          this.memberships = memberships;
+          this.updateMyTrips();
         }
       });
   }
-
+  updateMyTrips() {
+    this.trips = [];
+    for (const membership of this.memberships) {
+      this.tripService
+      .getTripById(membership.tripId)
+      .then((trip: Trip) => {
+        this.trips.push(trip);
+      });
+    }
+  }
   selectTrip(trip: Trip) {
     this._userData.setTripData(trip);
     this._userData.setView('trip');
