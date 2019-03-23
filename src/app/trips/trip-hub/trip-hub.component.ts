@@ -59,14 +59,12 @@ export class TripHubComponent implements OnInit {
     let marker: Marker = {
       coords: { lat: this.targetMarker.getPosition().lat(), lng: this.targetMarker.getPosition().lng() },
       type: this.markerType,
-      creator: this._userData.getUserData(),
+      creator: this._userData.getUserData().username,
+      tripId: this.trip._id,
       note: this.markerNote
     };
     this.placeMarker(marker);
-    this.trip = this._userData.getTripData();
-    this.trip.markers.push(marker);
-    console.log(this.trip.markers);
-    this.tripService.updateTrip(this.trip);
+    this.tripService.createMarker(marker);
     this.targetMarker.setAnimation(null);
     this.targetMarker.setPosition(null);
     this.markerNote = '';
@@ -82,7 +80,7 @@ export class TripHubComponent implements OnInit {
     if (this.targetMarker.getPosition() != null) {
       marker.setAnimation(google.maps.Animation.DROP);
     }
-    let infoWindowText: String = '<b>Added by ' + markerParam.creator.username + '</b>' + '<br><br>' + markerParam.note;
+    let infoWindowText: String = '<b>Added by ' + markerParam.creator + '</b>' + '<br><br>' + markerParam.note;
     const infowindow = new google.maps.InfoWindow({
       content: infoWindowText
     });
@@ -107,29 +105,26 @@ export class TripHubComponent implements OnInit {
   }
 
   generateMap() {
-    setTimeout(function() {
-      let mapProp = {
-        center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
-      this.map.setOptions({
-        disableDefaultUI: true
-      });
-      this.targetMarker.setMap(this.map);
-
-      google.maps.event.addListener(this.map, 'click', (event) => {
-        this.targetMarker.setPosition(event.latLng);
-        this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
-      });
-
-      for (let marker of this.trip.markers) {
-        this.placeMarker(marker);
-      }
-
-      }.bind(this), 200);
-
-
-}
+    this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
+      setTimeout(function() {
+        let mapProp = {
+          center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        this.map = new google.maps.Map(document.getElementById('googleMap'), mapProp);
+        this.map.setOptions({
+          disableDefaultUI: true
+        });
+        this.targetMarker.setMap(this.map);
+        google.maps.event.addListener(this.map, 'click', (event) => {
+          this.targetMarker.setPosition(event.latLng);
+          this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
+        });
+        for (let marker of markers) {
+          this.placeMarker(marker);
+        }
+        }.bind(this), 200);
+    });
+  }
 }

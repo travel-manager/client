@@ -11,7 +11,6 @@ export class Trip {
   name: string;
   datestart: Date;
   dateend: Date;
-  markers: Array<Marker>;
   owner: string;
   description: string;
 }

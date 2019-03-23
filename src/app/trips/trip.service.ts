@@ -5,7 +5,8 @@ import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Transaction } from './transactions/transaction';
-import { Message } from './trip-hub/trip-chat/message'
+import { Message } from './trip-hub/trip-chat/message';
+import { Marker } from './marker';
 
 @Injectable()
 export class TripService {
@@ -14,6 +15,7 @@ export class TripService {
     private transactionsUrl = '/api/transactions';
     private messagesUrl = '/api/messages';
     private membershipsUrl = '/api/memberships';
+    private markersUrl = '/api/markers';
 
     constructor (private http: Http, private http2: HttpClient) {}
 
@@ -94,6 +96,37 @@ export class TripService {
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Membership[])
+                 .catch(this.handleError);
+    }
+
+    getMembershipsByTripId(tripId: String): Promise<Membership[]> {
+      const callString: string = this.membershipsUrl + '/tripId/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Membership[])
+                 .catch(this.handleError);
+    }
+
+    createMarker(newMarker: Marker): Promise<Marker> {
+      return this.http.post(this.markersUrl, newMarker)
+                 .toPromise()
+                 .then(response => response.json() as Marker)
+                 .catch(this.handleError);
+    }
+
+    getMarkersByTripId(tripId: String): Promise<Marker[]> {
+      const callString: string = this.markersUrl + '/tripId/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Marker[])
+                 .catch(this.handleError);
+    }
+
+    getMarkerById(id: String): Promise<Marker> {
+      const callString: string = this.markersUrl + '/' + id;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Marker[])
                  .catch(this.handleError);
     }
 

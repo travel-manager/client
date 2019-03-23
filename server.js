@@ -7,8 +7,17 @@ var MESSAGES_COLLECTION = "messages";
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
 var TRANSACTIONS_COLLECTION = "transactions";
-var MEMBERSHIPS_COLLECTION = "memberships"
+var MEMBERSHIPS_COLLECTION = "memberships";
+var KEYS_COLLECTION = "keys";
+var MARKERS_COLLECTION = "markers";
 
+var AKey;
+var AId;
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+var singleUpload;
+var s3;
 
 var app = express();
 app.use(bodyParser.json());
@@ -29,7 +38,32 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukuma
   // Save database object from the callback for reuse.
   db = client.db();
   console.log("Database connection ready");
-
+  db.collection(KEYS_COLLECTION).findOne({ type: 'AKey' }, function(err, docs) {
+    AKey = docs['value'];
+    db.collection(KEYS_COLLECTION).findOne({ type: 'AId' }, function(err, docs) {
+      AId = docs['value'];
+      aws.config.update({
+        secretAccessKey: AKey,
+        accessKeyId: AId,
+        region: 'eu-north-1'
+      });
+      s3 = new aws.S3();
+      const upload = multer({
+        storage: multerS3({
+          s3: s3,
+          bucket: 'travelmanagerpictures',
+          acl: 'public-read',
+          metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+          },
+          key: function (req, file, cb) {
+            cb(null, Date.now().toString())
+          }
+        })
+      })
+      singleUpload = upload.single('image');
+    });
+  });
   // Initialize the app.
   var server = app.listen(process.env.PORT || 4200, function () {
     var port = server.address().port;
@@ -67,7 +101,17 @@ app.post("/api/travellers", function(req, res) {
 app.get("/api/travellers/username/:username", function(req, res) {
   db.collection(TRAVELLERS_COLLECTION).findOne({username: req.params.username}, function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get travellers.");
+      handleError(res, err.message, "Failed to get traveller.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/travellers/id/:id", function(req, res) {
+  db.collection(TRAVELLERS_COLLECTION).findOne({_id: new ObjectID(req.params.id)}, function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get traveller.");
     } else {
       res.status(200).json(docs);
     }
@@ -138,6 +182,43 @@ app.post("/api/transactions", function(req, res) {
   db.collection(TRANSACTIONS_COLLECTION).insertOne(newTransaction, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new transaction.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.post("/api/markers", function(req, res) {
+  var newMarker = req.body;
+  db.collection(MARKERS_COLLECTION).insertOne(newMarker, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new marker.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.get("/api/markers/id/:id", function(req, res) {
+  db.collection(MARKERS_COLLECTION).findOne({_id: new ObjectID(req.params.id)}, function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get marker.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/markers/tripId/:tripId", function(req, res) {
+  let tripId = req.params.tripId;
+  db.collection(MARKERS_COLLECTION).find({tripId: tripId}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get markers.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
 
 app.put("/api/travellers/:id", function(req, res) {
   var updateDoc = req.body;
@@ -177,8 +258,19 @@ app.post("/api/messages", function(req, res) {
 });
 
 app.get("/api/memberships/travellerId/:travellerId", function(req, res) {
-  let memberId = req.params.travellerId;
-  db.collection(MEMBERSHIPS_COLLECTION).find({travellerId: memberId}).toArray(function(err, docs) {
+  let travId = req.params.travellerId;
+  db.collection(MEMBERSHIPS_COLLECTION).find({travellerId: travId}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get memberships.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/memberships/tripId/:tripId", function(req, res) {
+  let tripId = req.params.tripId;
+  db.collection(MEMBERSHIPS_COLLECTION).find({tripId: tripId}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get memberships.");
     } else {
@@ -200,38 +292,6 @@ app.post("/api/memberships", function(req, res) {
 
 
 //**IMAGE UPLOAD */
-
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const aws = require('aws-sdk');
-
-aws.config.update({
-    secretAccessKey: "mZrnn9Yy0kPKDxbeX7OGMmvXqUAwWRGpc4eZyfMQ",
-    accessKeyId: "AKIAJFDR4PELA7XACFTA",
-    region: 'eu-north-1'
-});
-
-const s3 = new aws.S3();
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'travelmanagerpictures',
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
-  })
-})
-
-
-
-
-
-const singleUpload = upload.single('image');
 
 app.post('/api/image-upload', function(req, res) {
 
@@ -257,6 +317,16 @@ app.delete('/api/image-upload/:key', function(req, res) {
     } else {
       console.log("deleted object");
       return res.status(200).json(req.params.key);
+    }
+  });
+});
+
+app.get("/api/keys/:type", function(req, res) {
+  db.collection(KEYS_COLLECTION).findOne({ type: req.params.type }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get key");
+    } else {
+      res.status(200).json(doc);
     }
   });
 });

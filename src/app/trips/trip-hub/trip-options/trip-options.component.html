@@ -1,21 +1,28 @@
-<div style="background-color: rgb(94, 155, 255) ; height: 83vh; width: 300px">
-  <form *ngIf="_userData.getUserData().username === _userData.getTripData().owner" #createForm="ngForm" (ngSubmit)="createMembership();" class="col-md-8">
-    <h2>Add Traveller</h2>
-    <div class="form-group">
-      <label for="traveller-username">Username</label>
-      <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="Username"/>
+<div style="background-color: rgb(94, 155, 255) ; height: 83vh; width: 200px">
+  <div *ngIf="_userData.getUserData().username === _userData.getTripData().owner">
+    <form #createForm="ngForm" (ngSubmit)="createMembership();" class="col-md-8">
+      <h4>Add Traveller</h4>
+      <div class="form-group">
+        <label for="traveller-username">Username</label>
+        <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="Username"/>
+      </div>
+      <button class="btn btn-success" [disabled]="!createForm.valid">Add</button>
+      <div *ngIf="addsuccess === 1" class="alert alert-success">
+        Traveller successfully added
+      </div>
+      <div *ngIf="addsuccess === -1" class="alert alert-danger">
+        Traveller not found
+      </div>
+    </form>
+
+    <div class="col-md-8">
+      <h4>Trip picture</h4>
+      <app-image-upload></app-image-upload>
     </div>
-    <button class="btn btn-success" [disabled]="!createForm.valid">Add</button>
-    <div *ngIf="addsuccess === 1" class="alert alert-success">
-      Traveller successfully added
-    </div>
-    <div *ngIf="addsuccess === -1" class="alert alert-danger">
-      Traveller not found
-    </div>
-  </form>
+  </div>
 
   <form *ngIf="_userData.getUserData().username !== _userData.getTripData().owner" #leaveForm="ngForm" (ngSubmit)="leaveTrip();" class="col-md-8">
-    <h2>Leave Trip</h2>
+    <h4>Leave Trip</h4>
     <button class="btn btn-danger" disabled>Leave</button>
   </form>
 </div>

@@ -6,6 +6,7 @@ import { Http, Response } from '@angular/http';
 export class TravellerService {
     private travellersUrl = '/api/travellers';
     private usernameUrl = '/username';
+    private idUrl = '/id';
 
     constructor (private http: Http) {}
 
@@ -29,6 +30,13 @@ export class TravellerService {
     // get("/api/travellers/username/:username")
     getTravellerByUsername(getTravellerUsername: String): Promise<Traveller> {
       return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
+                 .toPromise()
+                 .then(response => response.json() as Traveller[])
+                 .catch(this.handleError);
+    }
+
+    getTravellerById(getTravellerId: String): Promise<Traveller> {
+      return this.http.get(this.travellersUrl + this.idUrl + '/' + getTravellerId)
                  .toPromise()
                  .then(response => response.json() as Traveller[])
                  .catch(this.handleError);

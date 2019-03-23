@@ -4,6 +4,7 @@ import { TripService } from 'app/trips/trip.service';
 import { UserDataService } from 'app/app.component.service';
 import { Transaction } from '../transaction';
 import { TravellerService } from 'app/travellers/traveller.service';
+import { Membership } from 'app/trips/membership';
 
 @Component({
   selector: 'app-create-transaction',
@@ -14,30 +15,43 @@ import { TravellerService } from 'app/travellers/traveller.service';
 export class CreateTransactionComponent implements OnInit {
 
   public createsuccess = 0;
-  public transaction: Transaction = {
-    payer: null,
-    freeloader: null,
-    amount: 0,
-    date: null,
-    subject: null
-  };
-  public freeloaderUsername: string;
-  public selectedAmount: string;
+  public freeloaders;
+  public selectedAmount = '';
+  public selectedSubject = '';
+  public tripMembers: Traveller[] = [];
 
   constructor (private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) {}
 
   ngOnInit() {
+    const myId = this._userData.getUserData()._id;
+    this.tripService
+      .getMembershipsByTripId(this._userData.getTripData()._id)
+      .then((memberships: Membership[]) => {
+        for (const membership of memberships) {
+          if (membership.travellerId !== myId) {
+            this.travellerService
+            .getTravellerById(membership.travellerId)
+            .then((traveller: Traveller) => {
+            this.tripMembers.push(traveller);
+            });
+          }
+        }
+      });
   }
 
-  createTransaction() {
-    this.transaction.payer = this._userData.getUserData().username;
-    this.transaction.freeloader = this.freeloaderUsername;
-    this.transaction.amount = +this.selectedAmount;
-    this.tripService.createTransaction(this.transaction);
-    console.log(this.transaction);
-  }
-
-  updateSelectedFreeloader(event: string): void{
-    this.freeloaderUsername = event;
+  createTransactions() {
+    const payer = this._userData.getUserData().username;
+    const amountPerFreeloader = +this.selectedAmount / this.freeloaders.length;
+    for (const freeloader of this.freeloaders) {
+      const transaction: Transaction = {
+        payer: payer,
+        amount: amountPerFreeloader,
+        subject: this.selectedSubject,
+        freeloader: freeloader,
+        date: new Date()
+      };
+      console.log(transaction);
+      //this.tripService.createTransaction(transaction);
+    }
   }
 }

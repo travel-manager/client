@@ -38,7 +38,7 @@ import { ProfileOptionsComponent } from './travellers/profile-options/profile-op
     PublicTripsComponent,
     MyTripsComponent,
     MemberSidebarComponent,
-    CreateTransactionComponent
+    CreateTransactionComponent,
     TripChatComponent,
     TripOptionsComponent,
     ImageUploadComponent,

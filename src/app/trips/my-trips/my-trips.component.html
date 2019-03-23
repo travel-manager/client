@@ -1,9 +1,13 @@
-<div style="background-color: rgb(94, 155, 255); max-height: 90vh; width: 300px">
-    <mat-nav-list >
-        <div *ngFor="let trip of this.trips">
-            <a mat-list-item (click)="selectTrip(trip)"><mat-icon matListIcon class="icon" >flight</mat-icon>  <b> {{ trip.name }}</b></a>
-            <mat-divider></mat-divider>
-        </div>
-      </mat-nav-list>
+<div style="background-color: rgb(94, 155, 255); height: 90vh;">
+    <div fxLayoutAlign="end center" style="resize: none; height: 8vh" *ngFor="let trip of this.trips; let odd = odd; let even = even" (click)="selectTrip(trip)" [class.odd]="odd" [class.even]="even">
+          <label ng-class-odd="'odd'" flex style="margin-left: 8px; margin-right: 8px"><b>{{ trip.name }}</b></label>
+          <mat-icon flex style="
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size:cover;
+          height: 8vh; width: 8vh;"
+          [ngStyle]="{'background-image': 'url(' + tripPictureUrl + trip.picture + ')'}">
+          </mat-icon>
+    </div>
 </div>
 

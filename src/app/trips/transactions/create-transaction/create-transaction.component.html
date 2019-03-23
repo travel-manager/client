@@ -1,12 +1,13 @@
-<div>
+<div >
+  <form class="col-md-8" style="background-color: rgb(210, 133, 255) ; ; padding-top: 1vh; height: 83vh; width: 200px" #createForm="ngForm" (ngSubmit)="createTransactions();">
 
-  <form style="background-color: rgb(196, 94, 255) ; ; padding-top: 1vh; height: 83vh; width: 300px" #createForm="ngForm" (ngSubmit)="createTransaction(transaction);">
-    <h2>New Transaction</h2>
-    <div class="form-group">
-      <label for="transaction-freeloader">Freeloader</label>
-      <select [ngModel]="freeloaderUsername" (ngModelChange)="updateSelectedFreeloader($event)"  name="transaction-freeloader">
-        <option *ngFor="let member of _userData.getTripData().members" [ngValue]="member.username"> {{ member.username }}</option>
-      </select>
+    <div style="margin-top: -13px;" fxLayoutAlign="flex-end" class="form-group">
+
+      <mat-selection-list name="freeloadersList" #freeloadersList="ngModel" [(ngModel)]="freeloaders">
+          <mat-list-option style="height: 8vh" *ngFor="let member of tripMembers" [value]="member.username">
+              {{ member.username }}
+          </mat-list-option>
+      </mat-selection-list>
     </div>
 
     <div class="form-group">
@@ -16,12 +17,7 @@
 
     <div class="form-group">
       <label for="transaction-subject">Subject</label>
-      <input type="text" class="form-control" #subject="ngModel" name="transaction-subject" [(ngModel)]="this.transaction.subject"/>
-    </div>
-
-    <div class="form-group">
-      <label for="transaction-date">Date</label>
-      <input type="date" class="form-control" #subject="ngModel" name="transaction-date" [(ngModel)]="this.transaction.date"/>
+      <input type="text" class="form-control" name="transaction-subject" [(ngModel)]="selectedSubject"/>
     </div>
 
     <button class="btn btn-success" [disabled]="!createForm.valid">Create</button>

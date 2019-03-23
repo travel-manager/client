@@ -58,6 +58,11 @@ export class ImageUploadComponent {
             this.imageService.deleteImage(user.picture);
             user.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
             this.travellerService.updateTraveller(user);
+          } else {
+            const trip: Trip = this._userData.getTripData();
+            this.imageService.deleteImage(trip.picture);
+            trip.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
+            this.tripService.updateTrip(trip);
           }
         },
         (err) => {

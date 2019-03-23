@@ -16,28 +16,29 @@ export class MyTripsComponent implements OnInit {
 
   trips: Trip[] = [];
   memberships: Membership[] = [];
-  selectedTrip: Trip
+  selectedTrip: Trip;
+  public tripPictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
+
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
     this.updateMemberships();
-    interval(1000).subscribe(() => this.updateMemberships());
+    // interval(1000).subscribe(() => this.updateMemberships());
   }
   updateMemberships() {
     this.tripService
       .getMembershipsByTravellerId(this._userData.getUserData()._id)
       .then((memberships: Membership[]) => {
-        console.log(this.memberships.length, memberships.length);
         this.memberships = memberships;
-        if (this.memberships.length !== this.trips.length) {
+        this.updateMyTrips();
+        /*if (this.memberships.length !== this.trips.length) {
           this.updateMyTrips();
-        }
+        }*/
       });
   }
   updateMyTrips() {
     this.trips = [];
     for (const membership of this.memberships) {
-      console.log(membership.tripId);
       this.tripService
       .getTripById(membership.tripId)
       .then((trip: Trip) => {
