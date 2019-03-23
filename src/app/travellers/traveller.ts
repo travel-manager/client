@@ -4,5 +4,6 @@ export class Traveller {
   lastname: string;
   username: string;
   password: string;
+  picture: string;
 }
 

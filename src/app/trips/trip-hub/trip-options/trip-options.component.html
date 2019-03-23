@@ -1,0 +1,21 @@
+<div style="background-color: rgb(94, 155, 255) ; height: 83vh; width: 300px">
+  <form *ngIf="_userData.getUserData().username === _userData.getTripData().owner" #createForm="ngForm" (ngSubmit)="createMembership();" class="col-md-8">
+    <h2>Add Traveller</h2>
+    <div class="form-group">
+      <label for="traveller-username">Username</label>
+      <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="Username"/>
+    </div>
+    <button class="btn btn-success" [disabled]="!createForm.valid">Add</button>
+    <div *ngIf="addsuccess === 1" class="alert alert-success">
+      Traveller successfully added
+    </div>
+    <div *ngIf="addsuccess === -1" class="alert alert-danger">
+      Traveller not found
+    </div>
+  </form>
+
+  <form *ngIf="_userData.getUserData().username !== _userData.getTripData().owner" #leaveForm="ngForm" (ngSubmit)="leaveTrip();" class="col-md-8">
+    <h2>Leave Trip</h2>
+    <button class="btn btn-danger" disabled>Leave</button>
+  </form>
+</div>
