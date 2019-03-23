@@ -11,9 +11,8 @@ export class Trip {
   name: string;
   datestart: Date;
   dateend: Date;
-  members: Array<Traveller>;
   markers: Array<Marker>;
-  owner: Traveller;
+  owner: string;
   description: string;
 }
 

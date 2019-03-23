@@ -45,14 +45,22 @@
           <span fxHide.lt-md class="label">Log Out</span>
         </a>
       </li>
+
     </ul>
+
+  </div>
+  <div (click)="setView('myprofile');" *ngIf="this._userData.getUserData() != null" style="
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            height: 9vh; width: 9vh;
+            margin-right: -13px;
+            "
+            [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
   </div>
 </mat-toolbar>
 
-
-
 <div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
-
   <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
 </div>
 <div fxLayoutAlign="end">
@@ -60,7 +68,7 @@
 <div *ngIf="this._userData.getView() == 'findtrips'">
     <app-public-trips></app-public-trips>
 </div>
-<div *ngIf="this._userData.getView() == 'trip'">
+<div style="width: 100%" *ngIf="this._userData.getView() == 'trip'">
   <app-trip-hub></app-trip-hub>
 </div>
 
@@ -79,6 +87,8 @@
 <div  *ngIf="this._userData.getView() == 'login'">
   <app-traveller-login></app-traveller-login>
 </div>
-</div>
 
-</div>
+<div *ngIf="this._userData.getView() == 'myprofile'">
+    <app-profile-options>
+    </app-profile-options>
+  </div>

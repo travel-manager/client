@@ -21,7 +21,8 @@ export class TravellerLoginComponent {
     firstname: '',
     lastname: '',
     username: '',
-    password: ''
+    password: '',
+    picture: null
   };
   loginsuccess = 0;
   constructor(
@@ -29,7 +30,7 @@ export class TravellerLoginComponent {
     public _userData: UserDataService) { }
 
   loginAttempt(loginTraveller: Traveller) {
-      this.travellerService.getTraveller(loginTraveller.username).then((dbtraveller: Traveller) => {
+      this.travellerService.getTravellerByUsername(loginTraveller.username).then((dbtraveller: Traveller) => {
         const bcrypt = require('bcryptjs');
         if (dbtraveller == null) {
           this.loginsuccess = -1;

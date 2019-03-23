@@ -27,7 +27,7 @@ export class TravellerService {
     }
 
     // get("/api/travellers/username/:username")
-    getTraveller(getTravellerUsername: String): Promise<Traveller> {
+    getTravellerByUsername(getTravellerUsername: String): Promise<Traveller> {
       return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
                  .toPromise()
                  .then(response => response.json() as Traveller[])

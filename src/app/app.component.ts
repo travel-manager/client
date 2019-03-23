@@ -9,7 +9,9 @@ import { Traveller } from 'app/travellers/traveller';
 })
 
 export class AppComponent implements OnInit{
+
   public view: string;
+  public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   constructor(public _userData: UserDataService) {
     }
 

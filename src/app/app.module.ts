@@ -20,7 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TripHubComponent } from './trips/trip-hub/trip-hub.component';
 import { PublicTripsComponent } from './trips/public-trips/public-trips.component';
 import { MyTripsComponent } from './trips/my-trips/my-trips.component';
-
+import { TripChatComponent } from './trips/trip-hub/trip-chat/trip-chat.component';
+import { TripOptionsComponent } from './trips/trip-hub/trip-options/trip-options.component';
+import { ImageUploadComponent } from './other/image-upload/image-upload.component';
+import { ProfileOptionsComponent } from './travellers/profile-options/profile-options.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,10 @@ import { MyTripsComponent } from './trips/my-trips/my-trips.component';
     TripHubComponent,
     PublicTripsComponent,
     MyTripsComponent,
+    TripChatComponent,
+    TripOptionsComponent,
+    ImageUploadComponent,
+    ProfileOptionsComponent,
   ],
   imports: [
     BrowserModule,
