@@ -2,12 +2,13 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
-//const io = require('socket.io').listen(4000).sockets;
 
 var MESSAGES_COLLECTION = "messages";
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
+var TRANSACTIONS_COLLECTION = "transactions";
 var MEMBERSHIPS_COLLECTION = "memberships"
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -131,6 +132,13 @@ app.put("/api/trips/:id", function(req, res) {
   });
 });
 
+
+app.post("/api/transactions", function(req, res) {
+  var newTransaction = req.body;
+  db.collection(TRANSACTIONS_COLLECTION).insertOne(newTransaction, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new transaction.");
+
 app.put("/api/travellers/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
@@ -189,6 +197,7 @@ app.post("/api/memberships", function(req, res) {
     }
   });
 });
+
 
 //**IMAGE UPLOAD */
 

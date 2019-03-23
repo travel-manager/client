@@ -4,11 +4,14 @@ import { Membership } from './membership';
 import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
+import { Transaction } from './transactions/transaction';
 import { Message } from './trip-hub/trip-chat/message'
+
 @Injectable()
 export class TripService {
     private tripsUrl = '/api/trips';
     private tripsDatesUrl = '/dates';
+    private transactionsUrl = '/api/transactions';
     private messagesUrl = '/api/messages';
     private membershipsUrl = '/api/memberships';
 
@@ -99,6 +102,13 @@ export class TripService {
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Trip[])
+                 .catch(this.handleError);
+    }
+
+    createTransaction(newTransaction: Transaction): Promise<Transaction> {
+      return this.http.post(this.transactionsUrl, newTransaction)
+                 .toPromise()
+                 .then(response => response.json() as Transaction)
                  .catch(this.handleError);
     }
 }

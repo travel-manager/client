@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import {MatNativeDateModule} from '@angular/material';
 
 
+
 import { AppComponent } from './app.component';
 import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
 import { TravellerLoginComponent } from './travellers/traveller-login/traveller-login.component';
@@ -20,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { TripHubComponent } from './trips/trip-hub/trip-hub.component';
 import { PublicTripsComponent } from './trips/public-trips/public-trips.component';
 import { MyTripsComponent } from './trips/my-trips/my-trips.component';
+import {  MemberSidebarComponent  } from './trips/member-sidebar/member-sidebar.component';
+import { CreateTransactionComponent } from './trips/transactions/create-transaction/create-transaction.component';
 import { TripChatComponent } from './trips/trip-hub/trip-chat/trip-chat.component';
 import { TripOptionsComponent } from './trips/trip-hub/trip-options/trip-options.component';
 import { ImageUploadComponent } from './other/image-upload/image-upload.component';
@@ -34,6 +37,8 @@ import { ProfileOptionsComponent } from './travellers/profile-options/profile-op
     TripHubComponent,
     PublicTripsComponent,
     MyTripsComponent,
+    MemberSidebarComponent,
+    CreateTransactionComponent
     TripChatComponent,
     TripOptionsComponent,
     ImageUploadComponent,

@@ -1,5 +1,3 @@
-
-
 <mat-toolbar style="height: 7vh; background-color: rgb(167, 112, 50)">
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
@@ -47,6 +45,7 @@
   </app-trip-options>
 </div>
 
+<div *ngIf="this.selectedTab === 'transactions'"> <app-create-transaction></app-create-transaction> </div>
 <div *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end" style="height:83vh; width:100%">
   <div class="col-md-1" id="googleMap" style="height: 100%; width: 500px"></div>
   <div class="col-md-1" style="height: 100%; width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">
@@ -78,4 +77,5 @@
   </form>
 </div>
 </div>
+<app-member-sidebar></app-member-sidebar>
 </div>
