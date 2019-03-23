@@ -44,4 +44,8 @@ export class TripOptionsComponent implements OnInit {
       }.bind(this), 3000);
   }
 
+  leaveTrip() {
+
+  }
+
 }

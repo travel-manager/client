@@ -25,50 +25,6 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI || "mongodb://sakari:m1ukuma
     console.log(err);
     process.exit(1);
   }
-
-  // Connect to Socket.io
- /*  io.on('connection', function(socket){
-      let chat = db.collection('chats');
-
-      // Create function to send status
-      sendStatus = function(s){
-        socket.emit('status', s);
-       }
-
-      //Get chats from mongo collection
-      chat.find().limit(100).sort({_id:1}).toArray(function(err, res){
-        if(err){
-          throw err;
-        }
-
-          //Emit the messages
-          socket.emit('output', res);
-        });
-
-        //Handle input events
-        socket.on('input',function(data){
-            let name =  data.name;
-            let message = data.message;
-
-            //Check for name and message
-            if(name == '' || message == ''){
-                //Send error status
-                sendStatus('Please enter a name and a message');
-            } else {
-              // Insert message
-              chat.insert({name: name, message: message}, function(){
-                  client.emit('output', [data]);
-
-                  // Send status object
-                  sendStatus({
-                    message: 'Message sent',
-                    clear: true
-                  });
-              });
-            }
-        });
-    }); */
-
   // Save database object from the callback for reuse.
   db = client.db();
   console.log("Database connection ready");
@@ -175,6 +131,20 @@ app.put("/api/trips/:id", function(req, res) {
   });
 });
 
+app.put("/api/travellers/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(TRAVELLERS_COLLECTION).replaceOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update traveller");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 app.get("/api/messages/:tripid", function(req, res) {
   let tripID = req.params.tripid;
   db.collection(MESSAGES_COLLECTION).find({tripId:tripID}).toArray(function(err, docs) {
@@ -216,6 +186,68 @@ app.post("/api/memberships", function(req, res) {
       handleError(res, err.message, "Failed to create new membership.");
     } else {
       res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+//**IMAGE UPLOAD */
+
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+
+aws.config.update({
+    secretAccessKey: "mZrnn9Yy0kPKDxbeX7OGMmvXqUAwWRGpc4eZyfMQ",
+    accessKeyId: "AKIAJFDR4PELA7XACFTA",
+    region: 'eu-north-1'
+});
+
+const s3 = new aws.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'travelmanagerpictures',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+})
+
+
+
+
+
+const singleUpload = upload.single('image');
+
+app.post('/api/image-upload', function(req, res) {
+
+  singleUpload(req, res, function(err) {
+
+    if (err) {
+      return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
+    }
+
+    return res.json({'imageUrl': req.file.location});
+  });
+});
+
+app.delete('/api/image-upload/:key', function(req, res) {
+  var fileKey = req.params.key;
+  var params = {
+    Bucket: 'travelmanagerpictures',
+    Key: fileKey
+  };
+  s3.deleteObject(params, function(err) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete object.");
+    } else {
+      console.log("deleted object");
+      return res.status(200).json(req.params.key);
     }
   });
 });

@@ -16,7 +16,8 @@ export class TravellerCreateComponent implements OnInit {
     firstname: '',
     lastname: '',
     username: '',
-    password: ''
+    password: '',
+    picture: null
   };
 
   constructor (private travellerService: TravellerService) {}
@@ -30,14 +31,15 @@ export class TravellerCreateComponent implements OnInit {
         const bcrypt = require('bcryptjs');
         let salt = bcrypt.genSaltSync(10);
         traveller.password = bcrypt.hashSync(traveller.password, salt);
-        console.log(traveller.password);
+        this.traveller.picture = '1553354500042';
         this.travellerService.createTraveller(traveller);
         this.createsuccess = 1;
         this.traveller = {
           firstname: '',
           lastname: '',
           username: '',
-          password: ''
+          password: '',
+          picture: null
         };
       } else {
         this.traveller.username = '';

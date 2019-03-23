@@ -21,7 +21,8 @@ export class TravellerLoginComponent {
     firstname: '',
     lastname: '',
     username: '',
-    password: ''
+    password: '',
+    picture: null
   };
   loginsuccess = 0;
   constructor(
