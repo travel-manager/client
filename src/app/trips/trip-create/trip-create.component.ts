@@ -23,7 +23,6 @@ export class TripCreateComponent implements OnInit {
     datestart: null,
     coords: null,
     dateend: null,
-    markers: [],
     owner: null,
     description: ''
   };
