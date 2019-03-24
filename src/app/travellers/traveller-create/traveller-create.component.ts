@@ -31,7 +31,7 @@ export class TravellerCreateComponent implements OnInit {
         const bcrypt = require('bcryptjs');
         let salt = bcrypt.genSaltSync(10);
         traveller.password = bcrypt.hashSync(traveller.password, salt);
-        this.traveller.picture = '1553354500042';
+        this.traveller.picture = 'profile-default';
         this.travellerService.createTraveller(traveller);
         this.createsuccess = 1;
         this.traveller = {
