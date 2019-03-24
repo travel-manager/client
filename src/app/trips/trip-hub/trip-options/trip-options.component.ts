@@ -27,13 +27,20 @@ export class TripOptionsComponent implements OnInit {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
-            const membership: Membership = {
-              travellerId: traveller._id,
-              tripId: this.tripId
-            }
-            console.log(membership);
-            this.tripService.createMembership(membership);
-            this.addsuccess = 1;
+            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.tripId).then(memberships => {
+              console.log(memberships);
+              if (memberships.length === 0) {
+                const membership: Membership = {
+                  travellerId: traveller._id,
+                  tripId: this.tripId
+                }
+                this.tripService.createMembership(membership);
+                this.addsuccess = 1;
+              } else {
+                this.usernametoAdd = '';
+                this.addsuccess = -2;
+              }
+            })
           } else {
             this.usernametoAdd = '';
             this.addsuccess = -1;

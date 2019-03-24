@@ -105,8 +105,7 @@ export class TripHubComponent implements OnInit {
   }
 
   generateMap() {
-    this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
-      setTimeout(function() {
+     this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
         let mapProp = {
           center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
           zoom: 10,
@@ -124,7 +123,6 @@ export class TripHubComponent implements OnInit {
         for (let marker of markers) {
           this.placeMarker(marker);
         }
-        }.bind(this), 200);
     });
   }
 }
