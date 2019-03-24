@@ -6,7 +6,8 @@ import { Url } from 'url';
 export class Trip {
   _id?: string;
   location: string;
-  coords: Array<number>;
+  lat: number;
+  long: number;
   picture: string;
   name: string;
   datestart: Date;

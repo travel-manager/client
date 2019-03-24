@@ -3,7 +3,6 @@ import { Message } from './message'
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
 import { DatePipe } from '@angular/common';
-import { interval } from 'rxjs';
 
 
 @Component({

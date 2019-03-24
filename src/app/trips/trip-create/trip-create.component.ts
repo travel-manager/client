@@ -21,7 +21,8 @@ export class TripCreateComponent implements OnInit {
     name: null,
     picture: null,
     datestart: null,
-    coords: null,
+    lat: null,
+    long: null,
     dateend: null,
     owner: null,
     description: ''
@@ -49,7 +50,8 @@ export class TripCreateComponent implements OnInit {
       lat = data['lat'];
       lng = data['lng'];
       if (lat != null && this.trip.datestart != null && this.trip.dateend != null) {
-        this.trip.coords = [lat, lng];
+        this.trip.lat = lat;
+        this.trip.long = lng;
         this.trip.owner = this._userData.getUserData().username;
         const membership = new Membership;
         this.trip.picture = 'trip-default';

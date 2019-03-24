@@ -14,14 +14,16 @@ export class GeoProvider {
   getCoords(location) {
 
     let apiKey: string;
-    this.getGKey().then (key => apiKey = key.value);
-    const apiUrl = this.apiUrl1 + location + this.apiUrl2 + apiKey;
-    return new Promise(resolve => {
-      this.http.get(apiUrl).subscribe((data: any)  => {
-        let result = data.results[0].geometry.location;
-        resolve(result);
-      }, err => {
-        console.log(err);
+    return this.getGKey().then (key => {
+      apiKey = key.value;
+      const apiUrl = this.apiUrl1 + location + this.apiUrl2 + apiKey;
+      return new Promise(resolve => {
+        this.http.get(apiUrl).subscribe((data: any)  => {
+          let result = data.results[0].geometry.location;
+          resolve(result);
+        }, err => {
+          console.log(err);
+        });
       });
     });
   }

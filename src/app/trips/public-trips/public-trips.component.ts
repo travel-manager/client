@@ -27,7 +27,8 @@ export class PublicTripsComponent implements OnInit {
     name: null,
     picture: null,
     datestart: null,
-    coords: null,
+    lat: null,
+    long: null,
     dateend: null,
     owner: null,
     description: null
@@ -102,7 +103,7 @@ export class PublicTripsComponent implements OnInit {
     this.markers = [];
     for (let trip of this.trips) {
       let marker = new google.maps.Marker({
-        position: { lat: trip.coords[0], lng: trip.coords[1] },
+        position: { lat: trip.lat, lng: trip.long },
           map: this.map,
           icon: 'http://maps.google.com/mapfiles/kml/paddle/red-stars_maps.png'
       });

@@ -16,33 +16,29 @@ export class TripOptionsComponent implements OnInit {
 
   usernametoAdd: string;
   addsuccess = 0;
-  tripId: string;
   constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
-    this.tripId = this._userData.getTripData()._id;
   }
 
   createMembership() {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
-            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.tripId).then(memberships => {
-              console.log(memberships);
+            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this._userData.getTripData()._id).then(memberships => {
               if (memberships.length === 0) {
                 const membership: Membership = {
                   travellerId: traveller._id,
-                  tripId: this.tripId
+                  tripId: this._userData.getTripData()._id
                 }
                 this.tripService.createMembership(membership);
                 this.addsuccess = 1;
-              } else {
                 this.usernametoAdd = '';
+              } else {
                 this.addsuccess = -2;
               }
             })
           } else {
-            this.usernametoAdd = '';
             this.addsuccess = -1;
           }
     });
@@ -52,7 +48,8 @@ export class TripOptionsComponent implements OnInit {
   }
 
   leaveTrip() {
-      this.tripService.getMembershipsByTravellerAndTripId(this._userData.getUserData()._id, this.tripId).then(memberships => {
+      this.tripService.getMembershipsByTravellerAndTripId(this._userData.getUserData()._id, this._userData.getTripData()._id)
+      .then(memberships => {
         for (const membership of memberships) {
             this.tripService.deleteMembership(membership._id);
         }

@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Traveller } from 'app/travellers/traveller';
 import { Trip } from '../trip';
 import { TripService } from '../trip.service';
 import { TravellerService } from 'app/travellers/traveller.service';
 import {UserDataService} from 'app/app.component.service';
 import { Membership } from '../membership';
-import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-member-sidebar',
@@ -13,11 +12,12 @@ import { interval } from 'rxjs';
   styleUrls: ['./member-sidebar.component.css'],
   providers: [TripService, TravellerService]
 })
-export class MemberSidebarComponent implements OnInit {
+export class MemberSidebarComponent implements OnInit, OnDestroy {
 
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   private myId;
   private tripId;
+  private updateInterval;
   members: Traveller[] = [];
   memberships: Membership[] = [];
   selectedTraveller: Traveller;
@@ -28,7 +28,11 @@ export class MemberSidebarComponent implements OnInit {
     this.tripId = this._userData.getTripData()._id;
     this.memberships = [];
     this.updateMemberships();
-    interval(2000).subscribe(() => this.updateMemberships());
+    this.updateInterval = setInterval(() => {this.updateMemberships()}, 1000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.updateInterval);
   }
 
   updateMemberships() {

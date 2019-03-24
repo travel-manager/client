@@ -57,7 +57,8 @@ export class TripHubComponent implements OnInit {
   }
   confirmMarker() {
     let marker: Marker = {
-      coords: { lat: this.targetMarker.getPosition().lat(), lng: this.targetMarker.getPosition().lng() },
+      lat: this.targetMarker.getPosition().lat(),
+      long: this.targetMarker.getPosition().lng(),
       type: this.markerType,
       creator: this._userData.getUserData().username,
       tripId: this.trip._id,
@@ -73,7 +74,7 @@ export class TripHubComponent implements OnInit {
 
   placeMarker(markerParam: Marker) {
     let marker = new google.maps.Marker({
-      position: markerParam.coords,
+      position: { lat: markerParam.lat, lng: markerParam.long },
       map: this.map,
       icon: this.icons[markerParam.type].icon,
     });
@@ -107,7 +108,7 @@ export class TripHubComponent implements OnInit {
   generateMap() {
      this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
         let mapProp = {
-          center: new google.maps.LatLng(this.trip.coords[0], this.trip.coords[1]),
+          center: new google.maps.LatLng(this.trip.lat, this.trip.long),
           zoom: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
