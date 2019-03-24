@@ -1,10 +1,10 @@
 <div >
-  <form class="col-md-8" style="background-color: rgb(210, 133, 255) ; ; padding-top: 1vh; height: 83vh; width: 200px" #createForm="ngForm" (ngSubmit)="createTransactions();">
+  <form class="col-md-8" style="background-color: rgb(94, 155, 255) ; ; padding-top: 1vh; height: 83vh; width: 200px" #createForm="ngForm" (ngSubmit)="createTransactions();">
 
     <div style="margin-top: -13px;" fxLayoutAlign="flex-end" class="form-group">
 
       <mat-selection-list name="freeloadersList" #freeloadersList="ngModel" [(ngModel)]="freeloaders">
-          <mat-list-option style="height: 8vh" *ngFor="let member of tripMembers" [value]="member.username">
+          <mat-list-option style="height: 8vh" *ngFor="let member of tripMembers | orderBy: '_id'" [value]="member.username">
               {{ member.username }}
           </mat-list-option>
       </mat-selection-list>
@@ -20,7 +20,7 @@
       <input type="text" class="form-control" name="transaction-subject" [(ngModel)]="selectedSubject"/>
     </div>
 
-    <button class="btn btn-success" [disabled]="!createForm.valid">Create</button>
+    <button class="btn btn-success" disabled [disabled]="!createForm.valid">Coming soon!</button>
     <div *ngIf="createsuccess === 1" class="alert alert-success">
     Transaction successfully created
     </div>

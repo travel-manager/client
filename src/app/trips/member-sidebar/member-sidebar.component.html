@@ -1,5 +1,5 @@
-<div style="background-color: rgb(94, 155, 255); height: 83vh;">
-      <div fxLayoutAlign="end center" style="resize: none; height: 8vh" *ngFor="let member of this.members; let odd = odd; let even = even" (click)="selectTraveller(member.username)" [class.odd]="odd" [class.even]="even">
+<div style="background-color: rgb(63, 81, 181); height: 83vh;">
+      <div fxLayoutAlign="end center" style="resize: none; height: 8vh" *ngFor="let member of this.members | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTraveller(member.username)" [class.odd]="odd" [class.even]="even">
             <label ng-class-odd="'odd'" flex style="margin-left: 8px; margin-right: 8px"><b>{{ member.firstname.slice(0,2) + member.lastname.slice(0,2) }}</b></label>
             <mat-icon flex style="
             background-position: center;

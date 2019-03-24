@@ -5,6 +5,7 @@ import { TripService } from '../trip.service';
 import { TravellerService } from 'app/travellers/traveller.service';
 import {UserDataService} from 'app/app.component.service';
 import { Membership } from '../membership';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-member-sidebar',
@@ -15,26 +16,43 @@ import { Membership } from '../membership';
 export class MemberSidebarComponent implements OnInit {
 
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
+  private myId;
+  private tripId;
   members: Traveller[] = [];
   memberships: Membership[] = [];
   selectedTraveller: Traveller;
   constructor(private tripService: TripService, private travellerService: TravellerService, private _userData: UserDataService) { }
 
   ngOnInit() {
-    const myId = this._userData.getUserData()._id;
+    this.myId = this._userData.getUserData()._id;
+    this.tripId = this._userData.getTripData()._id;
+    this.memberships = [];
+    this.updateMemberships();
+    interval(2000).subscribe(() => this.updateMemberships());
+  }
+
+  updateMemberships() {
     this.tripService
-      .getMembershipsByTripId(this._userData.getTripData()._id)
+      .getMembershipsByTripId(this.tripId)
       .then((memberships: Membership[]) => {
-        for (const membership of memberships) {
-          if (membership.travellerId !== myId) {
-            this.travellerService
-            .getTravellerById(membership.travellerId)
-            .then((traveller: Traveller) => {
-              this.members.push(traveller);
-            });
-          }
+        if (memberships.length !== this.memberships.length) {
+          this.memberships = memberships;
+          this.updateMembers();
         }
       });
+  }
+
+  updateMembers() {
+    this.members = [];
+    for (const membership of this.memberships) {
+      if (membership.travellerId !== this.myId) {
+        this.travellerService
+        .getTravellerById(membership.travellerId)
+        .then((traveller: Traveller) => {
+          this.members.push(traveller);
+        });
+      }
+    }
   }
 
   selectTraveller(username: string) {

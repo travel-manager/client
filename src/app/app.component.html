@@ -39,13 +39,6 @@
           <span fxHide.lt-md class="label">Log In</span>
         </a>
       </li>
-      <li *ngIf="this._userData.getUserData() != null">
-        <a (click)="logOut();">
-          <mat-icon class="icon">lock</mat-icon>
-          <span fxHide.lt-md class="label">Log Out</span>
-        </a>
-      </li>
-
     </ul>
 
   </div>
@@ -65,7 +58,7 @@
 </div>
 <div fxLayoutAlign="end">
 
-<div *ngIf="this._userData.getView() == 'findtrips'">
+<div style="width: 100%" *ngIf="this._userData.getView() == 'findtrips'">
     <app-public-trips></app-public-trips>
 </div>
 <div style="width: 100%" *ngIf="this._userData.getView() == 'trip'">

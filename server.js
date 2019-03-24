@@ -151,9 +151,11 @@ app.post("/api/trips", function(req, res) {
   });
 });
 
-app.get("/api/trips/dates/:startdate", function(req, res) {
-  let startdate = new Date(req.params.startdate);
-  db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate.toISOString() } }).toArray(function(err, docs) {
+app.get("/api/trips/dates/:starttoend", function(req, res) {
+  var datesplit = req.params.starttoend.toString().split('to');
+  var startdate = datesplit[0];
+  var enddate = datesplit[1];
+  db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate }, dateend: { $lte: enddate } }).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get trips.");
     } else {
@@ -234,7 +236,7 @@ app.put("/api/travellers/:id", function(req, res) {
   });
 });
 
-app.get("/api/messages/:tripid", function(req, res) {
+app.get("/api/messages/tripId/:tripid", function(req, res) {
   let tripID = req.params.tripid;
   db.collection(MESSAGES_COLLECTION).find({tripId:tripID}).toArray(function(err, docs) {
     if (err) {
@@ -279,6 +281,19 @@ app.get("/api/memberships/tripId/:tripId", function(req, res) {
   });
 });
 
+app.get("/api/memberships/:ids", function(req, res) {
+  var idsplit = req.params.ids.toString().split('&');
+  var travId = idsplit[0];
+  var tripId = idsplit[1];
+  db.collection(MEMBERSHIPS_COLLECTION).find({travellerId: travId, tripId: tripId}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get memberships.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 app.post("/api/memberships", function(req, res) {
   var newMembership = req.body;
   db.collection(MEMBERSHIPS_COLLECTION).insertOne(newMembership, function(err, doc) {
@@ -286,6 +301,16 @@ app.post("/api/memberships", function(req, res) {
       handleError(res, err.message, "Failed to create new membership.");
     } else {
       res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.delete("/api/memberships/:id", function(req, res) {
+  db.collection(MEMBERSHIPS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete membership");
+    } else {
+      res.status(200).json(req.params.id);
     }
   });
 });

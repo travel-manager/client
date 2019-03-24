@@ -60,21 +60,10 @@ export class TripService {
       return Promise.reject(errMsg);
     }
 
-    getTripsByDates(startdate: Date): Promise<Trip[]> {
-      const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + encodeURI(startdate.toDateString());
-      return this.http2.get(callString)
-                 .toPromise()
-                 .then(response => response as Trip[])
-                 .catch(this.handleError);
-    }
-
-
-    getMessagesByTripId(tripId: String): Promise<Message[]> {
-      const callString: string = this.messagesUrl + '/' + tripId;
-      return this.http2.get(callString)
-                 .toPromise()
-                 .then(response => response as Message[])
-                 .catch(this.handleError);
+    public getTripsByDates(startdate: Date, enddate: Date): Promise<Trip[]> {
+      const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + startdate.toISOString() + 'to' + enddate.toISOString();
+      return this.http.get(callString).toPromise()
+      .then(response => response.json() as Trip[])
     }
 
     createMessage(newMessage: Message): Promise<Message> {
@@ -99,8 +88,23 @@ export class TripService {
                  .catch(this.handleError);
     }
 
+    deleteMembership(delMShipId: String): Promise<String> {
+      return this.http.delete(this.membershipsUrl + '/' + delMShipId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
+
     getMembershipsByTripId(tripId: String): Promise<Membership[]> {
       const callString: string = this.membershipsUrl + '/tripId/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Membership[])
+                 .catch(this.handleError);
+    }
+
+    getMembershipsByTravellerAndTripId(travellerId: string, tripId: string): Promise<Membership[]> {
+      const callString: string = this.membershipsUrl + '/' + travellerId + '&' + tripId;
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Membership[])
@@ -111,6 +115,14 @@ export class TripService {
       return this.http.post(this.markersUrl, newMarker)
                  .toPromise()
                  .then(response => response.json() as Marker)
+                 .catch(this.handleError);
+    }
+
+    getMessagesByTripId(tripId: String): Promise<Message[]> {
+      const callString: string = this.messagesUrl + '/tripId/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Message[])
                  .catch(this.handleError);
     }
 

@@ -17,6 +17,7 @@ a:active {
 
 .icon {
   display: inline-block;
+  color: black;
   height: 30px;
   margin: 0 auto;
   padding-right: 5px;
@@ -27,6 +28,7 @@ a:active {
 
 .label {
   display: inline-block;
+  color: black;
   line-height: 30px;
   margin: 0;
   width: 85%;

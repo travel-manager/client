@@ -7,9 +7,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { DatePipe } from '@angular/common';
-import {MatNativeDateModule} from '@angular/material';
-
-
+import {MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@angular/material';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { AppComponent } from './app.component';
 import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
@@ -27,6 +26,7 @@ import { TripChatComponent } from './trips/trip-hub/trip-chat/trip-chat.componen
 import { TripOptionsComponent } from './trips/trip-hub/trip-options/trip-options.component';
 import { ImageUploadComponent } from './other/image-upload/image-upload.component';
 import { ProfileOptionsComponent } from './travellers/profile-options/profile-options.component';
+import { USE_VALUE } from '@angular/core/src/di/injector';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,8 +55,11 @@ import { ProfileOptionsComponent } from './travellers/profile-options/profile-op
     HttpClientModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    OrderModule
   ],
-  providers: [UserDataService, DatePipe],
+  providers: [UserDataService, DatePipe,
+     {provide: MAT_DATE_LOCALE, useValue: 'en-FI' },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

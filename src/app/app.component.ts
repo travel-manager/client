@@ -19,12 +19,6 @@ export class AppComponent implements OnInit{
   ngOnInit() {
   }
 
-  logOut()
-  {
-    this._userData.setUserData(null);
-    this._userData.setView('start');
-  }
-
   setView(view: string) {
     if (this._userData.getView() !== view) {
       this._userData.setView(view);

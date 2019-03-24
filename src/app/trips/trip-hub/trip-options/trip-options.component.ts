@@ -45,7 +45,13 @@ export class TripOptionsComponent implements OnInit {
   }
 
   leaveTrip() {
-
+      this.tripService.getMembershipsByTravellerAndTripId(this._userData.getUserData()._id, this.tripId).then(memberships => {
+        for (const membership of memberships) {
+            this.tripService.deleteMembership(membership._id);
+        }
+      })
+      this._userData.setTripData(null);
+      this._userData.setView('start');
   }
 
 }

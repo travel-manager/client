@@ -52,7 +52,7 @@ export class TripCreateComponent implements OnInit {
         this.trip.coords = [lat, lng];
         this.trip.owner = this._userData.getUserData().username;
         const membership = new Membership;
-
+        this.trip.picture = 'trip-default';
         this.tripService.createTrip(this.trip).then(createdTrip => {
           membership.travellerId = this._userData.getUserData()._id;
           membership.tripId = createdTrip._id;

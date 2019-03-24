@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Message } from './message'
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
@@ -12,13 +12,14 @@ import { interval } from 'rxjs';
   styleUrls: ['./trip-chat.component.css'],
   providers: [TripService, DatePipe]
 })
-export class TripChatComponent implements OnInit {
+export class TripChatComponent implements OnInit, OnDestroy {
   private tripId: string;
-  message: Message ={
-    sender:null,
-    timestamp:null,
-    content:null,
-    tripId:null,
+  private updateInterval;
+  message: Message = {
+    sender: null,
+    timestamp: null,
+    content: null,
+    tripId: null,
   };
 
   messages: Message[] = [];
@@ -27,12 +28,14 @@ export class TripChatComponent implements OnInit {
   ngOnInit() {
     this.tripId = this._userData.getTripData()._id;
     this.updateChat();
-    interval(500).subscribe(() => this.updateChat());
+    this.updateInterval = setInterval(() => {this.updateChat()}, 500);
     this.scrollChat();
   }
+  ngOnDestroy() {
+    clearInterval(this.updateInterval);
+  }
 
-
-  updateChat(){
+  updateChat() {
     this.tripService
     .getMessagesByTripId(this.tripId)
     .then((messages: Message[]) => {
@@ -43,26 +46,20 @@ export class TripChatComponent implements OnInit {
     });
   }
 
-  scrollChat(){
-
-
+  scrollChat() {
    setTimeout(function() {
     const chatBox = document.getElementById('messages');
-   chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTop = chatBox.scrollHeight;
     }.bind(this), 100);
 
   }
 
-  postMessage(){
+  postMessage() {
     this.message.tripId = this.tripId;
     this.message.sender = this._userData.getUserData().username;
-
     this.message.timestamp = this.datePipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString();
-
    this.tripService.createMessage(this.message);
-
     this.updateChat();
-
     this.message.content = '';
   }
 

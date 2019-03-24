@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDataService } from 'app/app.component.service';
 
 @Component({
   selector: 'app-profile-options',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileOptionsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _userData: UserDataService) { }
 
   ngOnInit() {
   }
 
+  logOut()
+  {
+    this._userData.setUserData(null);
+    this._userData.setView('start');
+  }
 }
