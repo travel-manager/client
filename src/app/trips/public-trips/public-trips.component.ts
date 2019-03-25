@@ -5,6 +5,7 @@ import { TripService } from '../trip.service';
 import { DatePipe } from '@angular/common';
 import {UserDataService} from 'app/app.component.service';
 import {FormControl} from '@angular/forms';
+import {Notification} from 'app/trips/trip-hub/trip-feed/notification'
 
 declare var google: any;
 
@@ -135,7 +136,14 @@ export class PublicTripsComponent implements OnInit {
       travellerId: this.myId,
       tripId: tripId
     }
+    const notification: Notification = {
+      content: this._userData.getUserData().username + ' joined trip',
+      tripId: tripId,
+      type: 'joined',
+      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString()
+    }
     this.tripService.createMembership(membership);
+    this.tripService.createNotification(notification);
     this._userData.setTripData(this.selectedTrip);
     this._userData.setView('trip');
   }

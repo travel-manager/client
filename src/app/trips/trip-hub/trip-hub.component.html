@@ -44,6 +44,10 @@
   <app-trip-options>
   </app-trip-options>
 </div>
+<div *ngIf="this.selectedTab === 'feed'">
+  <app-trip-feed>
+  </app-trip-feed>
+</div>
 
 <div *ngIf="this.selectedTab === 'transactions'"> <app-create-transaction></app-create-transaction> </div>
 <div *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end">
