@@ -27,7 +27,7 @@ export class TripChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tripId = this._userData.getTripData()._id;
     this.updateChat();
-    this.updateInterval = setInterval(() => {this.updateChat()}, 500);
+    this.updateInterval = setInterval(() => {this.updateChat()}, 1000);
     this.scrollChat();
   }
   ngOnDestroy() {

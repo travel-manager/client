@@ -28,7 +28,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     this.tripId = this._userData.getTripData()._id;
     this.memberships = [];
     this.updateMemberships();
-    this.updateInterval = setInterval(() => {this.updateMemberships()}, 1000);
+    this.updateInterval = setInterval(() => {this.updateMemberships()}, 5000);
   }
 
   ngOnDestroy() {
