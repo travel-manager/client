@@ -118,8 +118,11 @@ export class TripHubComponent implements OnInit {
     this.selectedTab = tab;
     if (this.selectedTab === 'map') {
       this.generateMap();
-
     }
+  }
+
+  setProfileTab = () => {
+    //this.changeTab('profile');
   }
 
   generateMap() {

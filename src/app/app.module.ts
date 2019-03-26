@@ -27,6 +27,7 @@ import { TripOptionsComponent } from './trips/trip-hub/trip-options/trip-options
 import { ImageUploadComponent } from './other/image-upload/image-upload.component';
 import { ProfileOptionsComponent } from './travellers/profile-options/profile-options.component';
 import { USE_VALUE } from '@angular/core/src/di/injector';
+import { TravellerProfileComponent } from './travellers/traveller-profile/traveller-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { USE_VALUE } from '@angular/core/src/di/injector';
     TripOptionsComponent,
     ImageUploadComponent,
     ProfileOptionsComponent,
+    TravellerProfileComponent,
   ],
   imports: [
     BrowserModule,

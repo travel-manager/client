@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Traveller } from 'app/travellers/traveller';
 import { Trip } from '../trip';
 import { TripService } from '../trip.service';
@@ -13,6 +13,9 @@ import { Membership } from '../membership';
   providers: [TripService, TravellerService]
 })
 export class MemberSidebarComponent implements OnInit, OnDestroy {
+
+  @Input()
+  setProfileTab: Function;
 
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   private myId;
@@ -59,7 +62,12 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectTraveller(username: string) {
-    console.log('selected ' + username);
+  selectTraveller(traveller: Traveller) {
+    this.setProfileTab();
+    if (traveller !== this.selectedTraveller) {
+      this.selectedTraveller = traveller;
+    } else {
+      this.selectedTraveller = null;
+    }
   }
 }

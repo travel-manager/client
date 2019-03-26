@@ -1,5 +1,13 @@
-<div style="background-color: rgb(63, 81, 181); height: 83vh; width: 100px">
-      <div fxLayoutAlign="end center" style="resize: none; height: 8vh" *ngFor="let member of this.members | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTraveller(member.username)" [class.odd]="odd" [class.even]="even">
+<div  style="height: 83vh;" fxLayout="row">
+  <div style="background-color: rgb(70, 217, 191);" *ngIf="selectedTraveller != null">
+    <app-traveller-profile
+      [traveller]="selectedTraveller">
+    </app-traveller-profile>
+  </div>
+
+
+  <div style="background-color: rgb(63, 81, 181); width: 100px">
+      <div fxLayoutAlign="end center" style="resize: none; height: 8vh" *ngFor="let member of this.members | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTraveller(member)" [class.odd]="odd" [class.even]="even">
             <label ng-class-odd="'odd'" flex style="margin-left: 8px; margin-right: 8px"><b>{{ member.firstname.slice(0,2) + member.lastname.slice(0,2) }}</b></label>
             <mat-icon flex style="
             background-position: center;
@@ -9,5 +17,6 @@
             [ngStyle]="{'background-image': 'url(' + profilePictureUrl + member.picture + ')'}">
             </mat-icon>
       </div>
+  </div>
 </div>
 

@@ -22,7 +22,9 @@ export class TravellerLoginComponent {
     lastname: '',
     username: '',
     password: '',
-    picture: null
+    picture: null,
+    bio: '',
+    country: ''
   };
   loginsuccess = 0;
   constructor(

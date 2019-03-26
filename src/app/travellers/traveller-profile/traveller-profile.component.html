@@ -1,0 +1,31 @@
+<div class="col-md-8" style="width: 300px">
+    <br>
+    <mat-card>
+      <mat-card-header>
+          <div mat-card-avatar style="
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            height: 10vh; width: 10vh;"
+          [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
+          </div>
+        <mat-card-title>{{ traveller.username }}</mat-card-title>
+          <mat-card-subtitle>
+            <div fxLayout="row">
+              <div style="
+                height: 11px; width: 16px; vertical-align:middle; margin-right: 8px"
+                [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/flags/' + traveller.country + '.png' +  ')'}">
+              </div>
+              {{ codeToCountry(traveller.country) }}
+            </div>
+          </mat-card-subtitle>
+
+      </mat-card-header>
+      <br>
+      <mat-card-content>
+          {{ traveller.bio }}
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+  </div>

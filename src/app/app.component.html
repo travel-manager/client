@@ -82,6 +82,9 @@
 </div>
 
 <div *ngIf="this._userData.getView() == 'myprofile'">
-    <app-profile-options>
-    </app-profile-options>
-  </div>
+    <app-profile-options></app-profile-options>
+</div>
+
+<div *ngIf="this._userData.getView() == 'profile'">
+    <app-profile-options></app-profile-options>
+</div>
