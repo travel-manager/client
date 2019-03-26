@@ -55,8 +55,8 @@ export class TripCreateComponent implements OnInit {
         this.trip.owner = this._userData.getUserData().username;
         const membership = new Membership;
         this.trip.picture = 'trip-default';
+        this._userData.setTripData(this.trip);
         this.tripService.createTrip(this.trip).then(createdTrip => {
-          this._userData.setTripData(this.trip);
           membership.travellerId = this._userData.getUserData()._id;
           membership.tripId = createdTrip._id;
           this.tripService.createMembership(membership);
