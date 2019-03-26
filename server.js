@@ -315,6 +315,16 @@ app.delete("/api/memberships/:id", function(req, res) {
   });
 });
 
+app.delete("/api/markers/:id", function(req, res) {
+  db.collection(MARKERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete marker");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
 
 //**IMAGE UPLOAD */
 

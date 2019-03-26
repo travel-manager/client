@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Trip } from 'app/trips/trip';
 import { Traveller } from 'app/travellers/traveller';
-import { Marker } from '../marker';
+import { Marker } from './marker';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
 
@@ -15,7 +15,11 @@ declare var google: any;
 })
 export class TripHubComponent implements OnInit {
 
-  private trip: Trip = this._userData.getTripData();
+  public selectedMarker: Marker = null;
+  public selectedMarkerIcon: string;
+  private trip: Trip;
+  private user: Traveller;
+  public userCanDeleteMarker: boolean;
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
   public selectedTab: string = 'map';
@@ -53,6 +57,8 @@ export class TripHubComponent implements OnInit {
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
+    this.trip = this._userData.getTripData();
+    this.user = this._userData.getUserData();
     this.generateMap();
   }
   confirmMarker() {
@@ -60,7 +66,7 @@ export class TripHubComponent implements OnInit {
       lat: this.targetMarker.getPosition().lat(),
       long: this.targetMarker.getPosition().lng(),
       type: this.markerType,
-      creator: this._userData.getUserData().username,
+      creator: this.user.username,
       tripId: this.trip._id,
       note: this.markerNote
     };
@@ -81,12 +87,16 @@ export class TripHubComponent implements OnInit {
     if (this.targetMarker.getPosition() != null) {
       marker.setAnimation(google.maps.Animation.DROP);
     }
-    let infoWindowText: String = '<b>Added by ' + markerParam.creator + '</b>' + '<br><br>' + markerParam.note;
-    const infowindow = new google.maps.InfoWindow({
-      content: infoWindowText
-    });
-    marker.addListener('click', function() {
-        infowindow.open(this.map, marker);
+    marker.addListener('click', () => {
+      this.selectedMarker = markerParam;
+      this.selectedMarkerIcon = marker.icon;
+      this.selectedMarkerIcon = this.selectedMarkerIcon.replace('_maps', '');
+      this.cancelMarker();
+      if (this.user.username === this.trip.owner || this.user.username === this.selectedMarker.creator ) {
+        this.userCanDeleteMarker = true;
+      } else {
+        this.userCanDeleteMarker = false;
+      }
     });
   }
 
@@ -95,6 +105,13 @@ export class TripHubComponent implements OnInit {
     this.targetMarker.setPosition(null);
     this.markerNote = '';
     this.markerType = 'Other';
+  }
+
+  deleteMarker(id: string) {
+    this.tripService.deleteMarker(id).then(res => {
+      this.generateMap();
+      this.selectedMarker = null;
+    })
   }
 
   changeTab(tab: string) {
@@ -118,6 +135,7 @@ export class TripHubComponent implements OnInit {
         });
         this.targetMarker.setMap(this.map);
         google.maps.event.addListener(this.map, 'click', (event) => {
+          this.selectedMarker = null;
           this.targetMarker.setPosition(event.latLng);
           this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
         });

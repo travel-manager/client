@@ -6,7 +6,7 @@ import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Transaction } from './transactions/transaction';
 import { Message } from './trip-hub/trip-chat/message';
-import { Marker } from './marker';
+import { Marker } from './trip-hub/marker';
 
 @Injectable()
 export class TripService {
@@ -115,6 +115,13 @@ export class TripService {
       return this.http.post(this.markersUrl, newMarker)
                  .toPromise()
                  .then(response => response.json() as Marker)
+                 .catch(this.handleError);
+    }
+
+    deleteMarker(delMarkerId: String): Promise<String> {
+      return this.http.delete(this.markersUrl + '/' + delMarkerId)
+                 .toPromise()
+                 .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 

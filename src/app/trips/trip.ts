@@ -1,5 +1,5 @@
 import { Traveller } from 'app/travellers/traveller';
-import { Marker } from './marker';
+import { Marker } from './trip-hub/marker';
 import { Url } from 'url';
 
 
