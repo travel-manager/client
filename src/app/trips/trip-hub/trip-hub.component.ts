@@ -20,6 +20,7 @@ export class TripHubComponent implements OnInit {
   private trip: Trip;
   private user: Traveller;
   public userCanDeleteMarker: boolean;
+  inputsEnabled = false;
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
   public selectedTab: string = 'map';
@@ -138,6 +139,12 @@ export class TripHubComponent implements OnInit {
         });
         this.targetMarker.setMap(this.map);
         google.maps.event.addListener(this.map, 'click', (event) => {
+          if (this.targetMarker.getPosition()  == null && this.selectedMarker == null) {
+            this.inputsEnabled = false;
+            setTimeout(function() {
+              this.inputsEnabled = true;
+              }.bind(this), 500);
+          }
           this.selectedMarker = null;
           this.targetMarker.setPosition(event.latLng);
           this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
