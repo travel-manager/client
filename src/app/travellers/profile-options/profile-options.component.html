@@ -1,14 +1,10 @@
-<div style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 200px">
-  <div class="col-md-8">
+<div class="col-md-8" style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 200px">
+  <div>
       <h4>Upload picture</h4>
       <app-image-upload></app-image-upload>
   </div>
-  <div style="margin-top: 40px" class="col-md-8">
-    <h4>Log Out</h4>
-    <button class="btn btn-danger" (click)="logOut()">Log Out</button>
-  </div>
-
-  <div style="margin-top: 40px" class="col-md-8">
+  <br>
+  <div>
     <mat-form-field>
       <mat-label>Country</mat-label>
       <mat-select (selectionChange)="updateCountry()" [(value)]="selectedCountry">
@@ -18,5 +14,18 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <br>
+  <form name="bioForm" #f="ngForm" (ngSubmit)="updateBio()">
+    <h4>Bio</h4>
+    <textarea name="bioBox" rows="5" #bio="ngModel" type= "text" [(ngModel)]="userBio" class="form-control"></textarea>
+    <br>
+    <button class="btn btn-primary">Save</button>
+  </form>
+  <br>
+  <div>
+    <h4>Log Out</h4>
+    <button class="btn btn-danger" (click)="logOut()">Log Out</button>
+  </div>
+
 </div>
 

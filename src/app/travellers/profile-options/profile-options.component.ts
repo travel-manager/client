@@ -15,18 +15,26 @@ export class ProfileOptionsComponent implements OnInit {
   objectKeys = Object.keys;
   user: Traveller;
   selectedCountry: string;
+  userBio: string;
   public countries: Countries = new Countries;
   constructor(private travellerService: TravellerService, private _userData: UserDataService) { }
 
   ngOnInit() {
     this.user = this._userData.getUserData();
     this.selectedCountry = this.countries.isoCountries[this.user.country.toUpperCase()];
+    this.userBio = this.user.bio;
   }
 
   updateCountry() {
     this.user = this._userData.getUserData();
     this.user.country =
      Object.keys(this.countries.isoCountries).find(key => this.countries.isoCountries[key] === this.selectedCountry).toLowerCase();
+    this.travellerService.updateTraveller(this.user);
+  }
+
+  updateBio() {
+    this.user = this._userData.getUserData();
+    this.user.bio = this.userBio;
     this.travellerService.updateTraveller(this.user);
   }
 

@@ -35,6 +35,7 @@ export class TravellerCreateComponent implements OnInit {
         traveller.password = bcrypt.hashSync(traveller.password, salt);
         this.traveller.picture = 'profile-default';
         this.traveller.country = 'hidden';
+        this.traveller.bio = 'I\'m using TravelManager!';
         this.travellerService.createTraveller(traveller);
         this.createsuccess = 1;
         this.traveller = {
