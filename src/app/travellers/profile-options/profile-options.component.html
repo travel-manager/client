@@ -3,9 +3,20 @@
       <h4>Upload picture</h4>
       <app-image-upload></app-image-upload>
   </div>
-  <div style="margin-top: 50px" class="col-md-8">
+  <div style="margin-top: 40px" class="col-md-8">
     <h4>Log Out</h4>
     <button class="btn btn-danger" (click)="logOut()">Log Out</button>
+  </div>
+
+  <div style="margin-top: 40px" class="col-md-8">
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="updateCountry()" [(value)]="selectedCountry">
+        <mat-option *ngFor="let country of objectKeys(countries.isoCountries)" [value]="countries.isoCountries[country]">
+          {{ countries.isoCountries[country] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </div>
 

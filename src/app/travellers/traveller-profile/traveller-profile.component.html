@@ -11,7 +11,7 @@
           </div>
         <mat-card-title>{{ traveller.username }}</mat-card-title>
           <mat-card-subtitle>
-            <div fxLayout="row">
+            <div *ngIf="traveller.country !== 'hidden'" fxLayout="row">
               <div style="
                 height: 11px; width: 16px; vertical-align:middle; margin-right: 8px"
                 [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/flags/' + traveller.country + '.png' +  ')'}">
