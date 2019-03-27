@@ -1,4 +1,4 @@
-<div flex style="height: 7vh; background-color: rgb(242, 208, 59)">
+<div flex [ngStyle.lt-md]="{'height': '20vh'}" style="height: 7vh; background-color: rgb(242, 208, 59)">
     <form #filterForm="ngForm" style="margin-left: 20px" (submit)="filterTrips()">
         <mat-form-field>
             <input matInput [matDatepicker]="startpicker" [formControl]="startDate" placeholder="Start date">
