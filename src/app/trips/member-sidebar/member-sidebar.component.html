@@ -1,5 +1,5 @@
 <div  style="height: 83vh;" fxLayout="row">
-  <div style="background-color: rgb(70, 217, 191);" *ngIf="selectedTraveller != null">
+  <div [ngStyle.lt-md]="{'width': '100%'}" style="background-color: rgb(70, 217, 191);" *ngIf="selectedTraveller != null">
     <app-traveller-profile
       [traveller]="selectedTraveller">
     </app-traveller-profile>
