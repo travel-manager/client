@@ -350,7 +350,6 @@ app.delete('/api/image-upload/:key', function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to delete object.");
     } else {
-      console.log("deleted object");
       return res.status(200).json(req.params.key);
     }
   });
