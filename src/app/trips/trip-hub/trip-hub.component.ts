@@ -62,7 +62,7 @@ export class TripHubComponent implements OnInit {
     this.generateMap();
   }
   confirmMarker() {
-    let marker: Marker = {
+    const marker: Marker = {
       lat: this.targetMarker.getPosition().lat(),
       long: this.targetMarker.getPosition().lng(),
       type: this.markerType,
@@ -79,7 +79,7 @@ export class TripHubComponent implements OnInit {
   }
 
   placeMarker(markerParam: Marker) {
-    let marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: { lat: markerParam.lat, lng: markerParam.long },
       map: this.map,
       icon: this.icons[markerParam.type].icon,
@@ -88,14 +88,18 @@ export class TripHubComponent implements OnInit {
       marker.setAnimation(google.maps.Animation.DROP);
     }
     marker.addListener('click', () => {
-      this.selectedMarker = markerParam;
-      this.selectedMarkerIcon = marker.icon;
-      this.selectedMarkerIcon = this.selectedMarkerIcon.replace('_maps', '');
-      this.cancelMarker();
-      if (this.user.username === this.trip.owner || this.user.username === this.selectedMarker.creator ) {
-        this.userCanDeleteMarker = true;
+      if (this.selectedMarker == null) {
+        this.selectedMarker = markerParam;
+        this.selectedMarkerIcon = marker.icon;
+        this.selectedMarkerIcon = this.selectedMarkerIcon.replace('_maps', '');
+        this.cancelMarker();
+        if (this.user.username === this.trip.owner || this.user.username === this.selectedMarker.creator ) {
+          this.userCanDeleteMarker = true;
+        } else {
+          this.userCanDeleteMarker = false;
+        }
       } else {
-        this.userCanDeleteMarker = false;
+        this.selectedMarker = null;
       }
     });
   }
@@ -121,13 +125,9 @@ export class TripHubComponent implements OnInit {
     }
   }
 
-  setProfileTab = () => {
-    //this.changeTab('profile');
-  }
-
   generateMap() {
      this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
-        let mapProp = {
+          const mapProp = {
           center: new google.maps.LatLng(this.trip.lat, this.trip.long),
           zoom: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -142,7 +142,7 @@ export class TripHubComponent implements OnInit {
           this.targetMarker.setPosition(event.latLng);
           this.targetMarker.setAnimation(google.maps.Animation.BOUNCE);
         });
-        for (let marker of markers) {
+        for (const marker of markers) {
           this.placeMarker(marker);
         }
     });

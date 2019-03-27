@@ -14,9 +14,6 @@ import { Membership } from '../membership';
 })
 export class MemberSidebarComponent implements OnInit, OnDestroy {
 
-  @Input()
-  setProfileTab: Function;
-
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   private myId;
   private tripId;
@@ -63,7 +60,6 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   }
 
   selectTraveller(traveller: Traveller) {
-    this.setProfileTab();
     if (traveller !== this.selectedTraveller) {
       this.selectedTraveller = traveller;
     } else {

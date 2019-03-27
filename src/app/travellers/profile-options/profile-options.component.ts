@@ -16,6 +16,7 @@ export class ProfileOptionsComponent implements OnInit {
   user: Traveller;
   selectedCountry: string;
   userBio: string;
+  savesuccess = 0;
   public countries: Countries = new Countries;
   constructor(private travellerService: TravellerService, private _userData: UserDataService) { }
 
@@ -36,6 +37,10 @@ export class ProfileOptionsComponent implements OnInit {
     this.user = this._userData.getUserData();
     this.user.bio = this.userBio;
     this.travellerService.updateTraveller(this.user);
+    this.savesuccess = 1;
+    setTimeout(function() {
+      this.savesuccess = 0;
+      }.bind(this), 3000);
   }
 
   logOut() {
