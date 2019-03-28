@@ -20,7 +20,7 @@ export class TripHubComponent implements OnInit {
   private trip: Trip;
   private user: Traveller;
   public userCanDeleteMarker: boolean;
-  inputsEnabled = false;
+  inputsEnabled = true;
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
   public selectedTab: string = 'map';
