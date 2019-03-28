@@ -19,4 +19,5 @@
 
   <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
   <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+  <div *ngIf="uploadsuccess === -1" class="alert alert-danger">Image must be jpeg/png and max 200KB</div>
 </div>
