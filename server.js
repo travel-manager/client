@@ -250,6 +250,9 @@ app.get("/api/messages/tripId/:tripid", function(req, res) {
 
 app.post("/api/messages", function(req, res) {
   var newMessage = req.body;
+  console.log('before: ',  newMessage.timestamp);
+  newMessage.timestamp = new Date();
+  console.log('after: ', newMessage);
   db.collection(MESSAGES_COLLECTION).insertOne(newMessage, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to post a message.");
