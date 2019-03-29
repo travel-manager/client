@@ -25,7 +25,8 @@ export class TripCreateComponent implements OnInit {
     long: null,
     dateend: null,
     owner: null,
-    description: ''
+    description: '',
+    status: null
   };
 
   constructor (

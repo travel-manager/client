@@ -31,7 +31,8 @@ export class PublicTripsComponent implements OnInit {
     long: null,
     dateend: null,
     owner: null,
-    description: null
+    description: null,
+    status: null
   };
   private map;
   trips: Trip[];

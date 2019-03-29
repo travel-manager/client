@@ -14,9 +14,13 @@ import { Membership } from '../membership';
 })
 export class MemberSidebarComponent implements OnInit, OnDestroy {
 
+  @Input()
+  changeHubTab: Function;
+
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   private myId;
-  private tripId;
+  public trip: Trip;
+  public userIsOwner = false;
   private updateInterval;
   members: Traveller[] = [];
   memberships: Membership[] = [];
@@ -25,7 +29,12 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.myId = this._userData.getUserData()._id;
-    this.tripId = this._userData.getTripData()._id;
+    this.trip = this._userData.getTripData();
+    if (this._userData.getUserData().username === this.trip.owner) {
+      this.userIsOwner = true;
+    } else {
+      this.userIsOwner = false;
+    }
     this.memberships = [];
     this.updateMemberships();
     this.updateInterval = setInterval(() => {this.updateMemberships()}, 5000);
@@ -37,7 +46,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
 
   updateMemberships() {
     this.tripService
-      .getMembershipsByTripId(this.tripId)
+      .getMembershipsByTripId(this.trip._id)
       .then((memberships: Membership[]) => {
         if (memberships.length !== this.memberships.length) {
           this.memberships = memberships;
@@ -65,5 +74,9 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     } else {
       this.selectedTraveller = null;
     }
+  }
+
+  goToAddNew() {
+    this.changeHubTab('options');
   }
 }

@@ -14,11 +14,15 @@ import { UserDataService } from 'app/app.component.service';
 })
 export class TripOptionsComponent implements OnInit {
 
+  trip: Trip;
+  tripDesc: string;
+  savesuccess = 0;
   usernametoAdd: string;
   addsuccess = 0;
   constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
+    this.tripDesc = this._userData.getTripData().description;
   }
 
   createMembership() {
@@ -56,6 +60,16 @@ export class TripOptionsComponent implements OnInit {
       })
       this._userData.setTripData(null);
       this._userData.setView('start');
+  }
+
+  updateDesc() {
+    this.trip = this._userData.getTripData();
+    this.trip.description = this.tripDesc;
+    this.tripService.updateTrip(this.trip);
+    this.savesuccess = 1;
+    setTimeout(function() {
+      this.savesuccess = 0;
+      }.bind(this), 3000);
   }
 
 }

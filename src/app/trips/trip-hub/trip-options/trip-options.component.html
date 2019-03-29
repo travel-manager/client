@@ -1,6 +1,6 @@
-<div style="background-color: rgb(94, 155, 255) ; height: 83vh; padding-top: 1vh; width: 200px">
+<div class="col-md-12" style="background-color: rgb(94, 155, 255) ; height: 83vh; padding-top: 1vh; width: 200px">
   <div style="display: inline" *ngIf="_userData.getUserData().username === _userData.getTripData().owner">
-    <form  #createForm="ngForm" (ngSubmit)="createMembership();" class="col-md-12">
+    <form  #createForm="ngForm" (ngSubmit)="createMembership();">
       <h4>Invite Traveller</h4>
       <div class="form-group">
         <label for="traveller-username">Username</label>
@@ -19,9 +19,23 @@
           Traveller is already on this trip
         </div>
     </form>
-    <div style="margin-top: 50px" class="col-md-8">
+    <div style="margin-top: 50px">
       <h4>Upload trip picture</h4>
       <app-image-upload></app-image-upload>
+    </div>
+    <br>
+    <div style="height: 200px">
+      <form name="bioForm" #f="ngForm" (ngSubmit)="updateDesc()">
+        <h4>Bio</h4>
+        <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="tripDesc" class="form-control"></textarea>
+        <br>
+        <div fxLayout="row">
+          <button style="height: fit-content;" class="btn btn-primary">Save</button>
+          <div *ngIf="savesuccess === 1" class="alert alert-success">
+              Saved
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <br>
