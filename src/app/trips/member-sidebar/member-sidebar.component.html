@@ -16,7 +16,7 @@
               background-size:cover;
               height: 48px; width: 48px;"
               [ngStyle]="{'background-image': 'url(' + profilePictureUrl + member.picture + ')'}">
-                <img [ngStyle.lt-md]="{'top': '-10px'}" *ngIf="trip.owner === member.username" style="pointer-events: none; left: 12px; top: -22px; position: relative; z-index: 2" src="https://s3.eu-north-1.amazonaws.com/travelmanagerpictures/icon-owner">
+                <img [ngStyle.lt-md]="{'top': '-14px'}" *ngIf="trip.owner === member.username" style="pointer-events: none; left: 12px; top: -22px; position: relative; z-index: 2" src="https://s3.eu-north-1.amazonaws.com/travelmanagerpictures/icon-owner">
               </mat-icon>
       </div>
       <div *ngIf="userIsOwner === true" fxLayoutAlign="center center" style="resize: none; height: 48px" (click)="goToAddNew()">
