@@ -4,14 +4,14 @@
     <div style="margin-top: -13px;" fxLayoutAlign="flex-end" class="form-group">
 
       <mat-selection-list name="freeloadersList" #freeloadersList="ngModel" [(ngModel)]="freeloaders">
-          <mat-list-option style="height: 8vh" *ngFor="let member of tripMembers | orderBy: '_id'" [value]="member.username">
+          <mat-list-option style="height: 48px" *ngFor="let member of tripMembers | orderBy: '_id'" [value]="member.username">
               {{ member.username }}
           </mat-list-option>
       </mat-selection-list>
     </div>
 
     <div class="form-group">
-      <label for="transaction-amount">Amount</label>
+      <label for="transaction-amount">Bill Total</label>
       <input type="text" class="form-control" #amount="ngModel" required name="transaction-amount" [(ngModel)]="selectedAmount" placeholder="0"/>
     </div>
 

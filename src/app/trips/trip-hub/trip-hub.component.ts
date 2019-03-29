@@ -89,7 +89,7 @@ export class TripHubComponent implements OnInit {
       marker.setAnimation(google.maps.Animation.DROP);
     }
     marker.addListener('click', () => {
-      if (this.selectedMarker == null) {
+      if (this.selectedMarker !== markerParam) {
         this.selectedMarker = markerParam;
         this.selectedMarkerIcon = marker.icon;
         this.selectedMarkerIcon = this.selectedMarkerIcon.replace('_maps', '');
