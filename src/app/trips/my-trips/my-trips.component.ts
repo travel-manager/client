@@ -4,7 +4,6 @@ import { Trip } from '../trip';
 import { Membership } from '../membership';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
-import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-my-trips',
@@ -15,6 +14,7 @@ import { interval } from 'rxjs';
 export class MyTripsComponent implements OnInit {
 
   trips: Trip[] = [];
+  user: Traveller;
   memberships: Membership[] = [];
   selectedTrip: Trip;
   public tripPictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
@@ -22,12 +22,13 @@ export class MyTripsComponent implements OnInit {
   constructor(private tripService: TripService, private _userData: UserDataService) { }
 
   ngOnInit() {
+    this.user = this._userData.getUserData();
     this.updateMemberships();
-    // interval(1000).subscribe(() => this.updateMemberships());
+    // interval(5000).subscribe(() => this.updateMemberships());
   }
   updateMemberships() {
     this.tripService
-      .getMembershipsByTravellerId(this._userData.getUserData()._id)
+      .getMembershipsByTravellerId(this.user._id)
       .then((memberships: Membership[]) => {
         this.memberships = memberships;
         this.updateMyTrips();
