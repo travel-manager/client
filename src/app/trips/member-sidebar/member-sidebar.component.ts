@@ -18,8 +18,8 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   changeHubTab: Function;
 
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
-  private myId;
   public trip: Trip;
+  public user: Traveller;
   public userIsOwner = false;
   private updateInterval;
   members: Traveller[] = [];
@@ -28,7 +28,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   constructor(private tripService: TripService, private travellerService: TravellerService, private _userData: UserDataService) { }
 
   ngOnInit() {
-    this.myId = this._userData.getUserData()._id;
+    this.user = this._userData.getUserData();
     this.trip = this._userData.getTripData();
     if (this._userData.getUserData().username === this.trip.owner) {
       this.userIsOwner = true;
@@ -58,7 +58,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   updateMembers() {
     this.members = [];
     for (const membership of this.memberships) {
-      if (membership.travellerId !== this.myId) {
+      if (membership.travellerId !== this.user._id) {
         this.travellerService
         .getTravellerById(membership.travellerId)
         .then((traveller: Traveller) => {
