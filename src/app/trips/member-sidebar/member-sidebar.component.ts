@@ -47,6 +47,9 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   }
 
   updateMemberships() {
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+    })
     this.tripService
       .getMembershipsByTripId(this.trip._id)
       .then((memberships: Membership[]) => {
