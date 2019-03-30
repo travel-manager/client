@@ -1,13 +1,13 @@
-<div class="col-md-12" [ngStyle.lt-md]="{'width': 'calc(100%-100px'}" style="min-width: 300px">
+<div class="col-md-12">
     <br>
-    <mat-card>
+    <mat-card style="max-width: 300px">
       <mat-card-header>
           <div mat-card-avatar style="
             background-position: center;
             background-repeat: no-repeat;
             background-size:cover;
             height: 10vh; width: 10vh;"
-          [ngStyle]="{'max-width':'calc(100%-150px)', 'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
+          [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
           </div>
         <mat-card-title>{{ traveller.username }}</mat-card-title>
           <mat-card-subtitle>
