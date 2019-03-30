@@ -1,4 +1,4 @@
-<div class="col-md-12" [ngStyle.lt-md]="{'max-width': 'calc(100%-100px'}" style="min-width: 300px">
+<div class="col-md-12" [ngStyle.lt-md]="{'width': 'calc(100%-100px'}" style="min-width: 300px">
     <br>
     <mat-card>
       <mat-card-header>
@@ -7,7 +7,7 @@
             background-repeat: no-repeat;
             background-size:cover;
             height: 10vh; width: 10vh;"
-          [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
+          [ngStyle]="{'max-width':'calc(100%-150px)', 'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
           </div>
         <mat-card-title>{{ traveller.username }}</mat-card-title>
           <mat-card-subtitle>
