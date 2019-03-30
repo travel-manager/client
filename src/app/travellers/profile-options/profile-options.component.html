@@ -18,8 +18,7 @@
     <form name="bioForm" #f="ngForm" (ngSubmit)="updateBio()">
       <h4>Bio</h4>
       <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="userBio" class="form-control"></textarea>
-      <br>
-      <div fxLayout="row">
+      <div style="margin-top: 2px" fxLayout="row">
         <button style="height: fit-content;" class="btn btn-primary">Save</button>
         <div *ngIf="savesuccess === 1" class="alert alert-success">
             Saved
@@ -27,7 +26,6 @@
       </div>
     </form>
   </div>
-  <br>
   <div>
     <h4>Log Out</h4>
     <button class="btn btn-danger" (click)="logOut()">Log Out</button>

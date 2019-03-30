@@ -23,7 +23,6 @@
       <h4>Upload trip picture</h4>
       <app-image-upload></app-image-upload>
     </div>
-    <br>
     <div>
       <form name="bioForm" #f="ngForm" (ngSubmit)="updateDesc()">
         <h4>Bio</h4>
@@ -48,7 +47,6 @@
       </div>
     </div>
   </div>
-  <br>
   <form *ngIf="userIsOwner != true" #leaveForm="ngForm" (ngSubmit)="leaveTrip();" class="col-md-8">
     <h4>Leave Trip</h4>
     <button class="btn btn-danger">Leave</button>
