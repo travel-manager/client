@@ -1,4 +1,4 @@
-<div [ngStyle.lt-md]="{'width': '100%'}" style="width: 300px;" class="col-md-12">
+<div [ngStyle.lt-md]="{'width': '220px'}" style="width: 300px;" class="col-md-12">
     <br>
     <mat-card>
       <mat-card-header>
@@ -9,8 +9,8 @@
             height: 10vh; width: 10vh;"
           [ngStyle]="{'background-image': 'url(' + 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/' + traveller.picture + ')'}">
           </div>
-        <mat-card-title>{{ traveller.username }}</mat-card-title>
-          <mat-card-subtitle>
+        <mat-card-title style="font-size: small">{{ traveller.username }}</mat-card-title>
+          <mat-card-subtitle style="font-size: small">
             <div *ngIf="traveller.country !== 'hidden'" fxLayout="row">
               <div style="
                 background-position: center; background-repeat: no-repeat; height: 20px; width: 16px; margin-right: 8px;"
@@ -22,7 +22,7 @@
 
       </mat-card-header>
       <br>
-      <mat-card-content>
+      <mat-card-content style="font-size: small">
           {{ traveller.bio }}
       </mat-card-content>
       <mat-card-actions>

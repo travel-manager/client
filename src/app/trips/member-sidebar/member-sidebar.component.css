@@ -8,14 +8,14 @@
 }
 
 .img-spinning-circle {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 .img-spinning-circle:after {
   content: " ";
   display: block;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   margin: 1px;
   border-radius: 50%;
   border: 5px solid #fff;
