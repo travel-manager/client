@@ -13,6 +13,7 @@ import {UserDataService} from 'app/app.component.service';
 })
 export class MyTripsComponent implements OnInit {
 
+  loadingStatus = false;
   trips: Trip[] = [];
   user: Traveller;
   memberships: Membership[] = [];
@@ -23,6 +24,7 @@ export class MyTripsComponent implements OnInit {
 
   ngOnInit() {
     this.user = this._userData.getUserData();
+    this.loadingStatus = true;
     this.updateMemberships();
     // interval(5000).subscribe(() => this.updateMemberships());
   }
@@ -30,6 +32,9 @@ export class MyTripsComponent implements OnInit {
     this.tripService
       .getMembershipsByTravellerId(this.user._id)
       .then((memberships: Membership[]) => {
+        if (memberships.length === 0) {
+          this.loadingStatus = false;
+        }
         this.memberships = memberships;
         this.updateMyTrips();
         /*if (this.memberships.length !== this.trips.length) {
@@ -43,7 +48,9 @@ export class MyTripsComponent implements OnInit {
       this.tripService
       .getTripById(membership.tripId)
       .then((trip: Trip) => {
-        this.trips.push(trip);
+        if (this.trips.push(trip) >= this.memberships.length) {
+          this.loadingStatus = false;
+        };
       });
     }
   }

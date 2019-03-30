@@ -17,6 +17,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   @Input()
   changeHubTab: Function;
 
+  loadingStatus = false;
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
   public trip: Trip;
   public user: Traveller;
@@ -36,6 +37,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
       this.userIsOwner = false;
     }
     this.memberships = [];
+    this.loadingStatus = true;
     this.updateMemberships();
     this.updateInterval = setInterval(() => {this.updateMemberships()}, 5000);
   }
@@ -48,11 +50,21 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     this.tripService
       .getMembershipsByTripId(this.trip._id)
       .then((memberships: Membership[]) => {
-        if (memberships.length !== this.memberships.length) {
+        if (memberships.length <= 1) {
+          this.loadingStatus = false;
+        } else if (memberships.length !== this.memberships.length) {
           this.memberships = memberships;
           this.updateMembers();
         }
       });
+  }
+
+  transferLeadership = (newLeader: string) => {
+    this.userIsOwner = false;
+    this.trip = this._userData.getTripData();
+    this.trip.owner = newLeader;
+    this.tripService.updateTrip(this.trip);
+    this.changeHubTab('');
   }
 
   updateMembers() {
@@ -62,7 +74,9 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
         this.travellerService
         .getTravellerById(membership.travellerId)
         .then((traveller: Traveller) => {
-          this.members.push(traveller);
+          if (this.members.push(traveller) + 1 >= this.memberships.length) {
+            this.loadingStatus = false;
+          };
         });
       }
     }

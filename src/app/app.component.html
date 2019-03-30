@@ -39,6 +39,7 @@
           <span fxHide.lt-md class="label">Log In</span>
         </a>
       </li>
+      <span style="width: 5vh" *ngIf="this._userData.getUserData() != null" ></span>
     </ul>
 
   </div>
@@ -47,13 +48,12 @@
             background-repeat: no-repeat;
             background-size:cover;
             height: 9vh; width: 9vh;
-            margin-right: -13px;
-            margin-left:13px;
+            position: absolute;
+            right: calc(1% / 4);
             "
             [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
   </div>
 </mat-toolbar>
-
 <div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
   <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
 </div>

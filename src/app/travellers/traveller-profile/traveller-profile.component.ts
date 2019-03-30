@@ -10,7 +10,11 @@ import { Countries } from '../countries'
 })
 export class TravellerProfileComponent implements OnInit {
   @Input()
-  public traveller: Traveller;
+  transferLeadership: Function;
+  @Input()
+  traveller: Traveller;
+  @Input()
+  userIsOwner: boolean;
   private countries: Countries = new Countries;
 
   constructor() { }
@@ -27,4 +31,7 @@ export class TravellerProfileComponent implements OnInit {
     }
   }
 
+  changeLeader(newLeader: string) {
+    this.transferLeadership(newLeader);
+  }
 }

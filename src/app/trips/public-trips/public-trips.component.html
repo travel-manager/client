@@ -41,7 +41,7 @@
       </mat-card-content>
       <mat-card-actions>
         <button class="btn btn-success" (click)="joinTrip(selectedId)" *ngIf="joinStatus === 0">Join trip!</button>
-        <button class="btn btn-alert" disabled *ngIf="joinStatus === 1">Already joined!</button>
+        <button class="btn" disabled *ngIf="joinStatus === 1">Already joined!</button>
         <button class="btn btn-danger" disabled *ngIf="joinStatus === -1">Log in to join!</button>
 
       </mat-card-actions>

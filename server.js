@@ -250,9 +250,7 @@ app.get("/api/messages/tripId/:tripid", function(req, res) {
 
 app.post("/api/messages", function(req, res) {
   var newMessage = req.body;
-  console.log('before: ',  newMessage.timestamp);
   newMessage.timestamp = new Date();
-  console.log('after: ', newMessage);
   db.collection(MESSAGES_COLLECTION).insertOne(newMessage, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to post a message.");
@@ -322,6 +320,46 @@ app.delete("/api/markers/:id", function(req, res) {
   db.collection(MARKERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete marker");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
+app.delete("/api/trips/:id", function(req, res) {
+  db.collection(TRIPS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete trip");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
+app.delete("/api/memberships/tripId/:id", function(req, res) {
+  db.collection(MEMBERSHIPS_COLLECTION).deleteMany({tripId: req.params.id}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete memberships");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
+app.delete("/api/markers/tripId/:id", function(req, res) {
+  db.collection(MARKERS_COLLECTION).deleteMany({tripId: req.params.id}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete markers");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
+app.delete("/api/messages/tripId/:id", function(req, res) {
+  db.collection(MESSAGES_COLLECTION).deleteMany({tripId: req.params.id}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete messages");
     } else {
       res.status(200).json(req.params.id);
     }

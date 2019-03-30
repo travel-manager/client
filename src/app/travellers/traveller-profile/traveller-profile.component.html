@@ -26,6 +26,7 @@
           {{ traveller.bio }}
       </mat-card-content>
       <mat-card-actions>
+          <button (click)="changeLeader(traveller.username)" class="btn btn-warning" *ngIf="userIsOwner === true">Make trip leader</button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -15,25 +15,44 @@ import { UserDataService } from 'app/app.component.service';
 export class TripOptionsComponent implements OnInit {
 
   trip: Trip;
+  user: Traveller;
   tripDesc: string;
   savesuccess = 0;
+  userIsOwner = false;
   usernametoAdd: string;
   addsuccess = 0;
+  deleteEnabled = false;
+  deleteConfirm: string;
   constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
-    this.tripDesc = this._userData.getTripData().description;
+    this.trip = this._userData.getTripData();
+    this.user = this._userData.getUserData();
+    this.tripDesc = this.trip.description;
+    if (this.trip.owner === this.user.username) {
+      this.userIsOwner = true;
+    } else {
+      this.userIsOwner = false;
+    }
+    this.tripService.getMembershipsByTripId(this.trip._id).then(memberships => {
+      if (memberships.length > 1) {
+        this.deleteEnabled = false;
+      } else {
+        this.deleteEnabled = true;
+      }
+    })
+
   }
 
   createMembership() {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
-            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this._userData.getTripData()._id).then(memberships => {
+            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.trip._id).then(memberships => {
               if (memberships.length === 0) {
                 const membership: Membership = {
                   travellerId: traveller._id,
-                  tripId: this._userData.getTripData()._id
+                  tripId: this.trip._id
                 }
                 this.tripService.createMembership(membership);
                 this.addsuccess = 1;
@@ -52,7 +71,7 @@ export class TripOptionsComponent implements OnInit {
   }
 
   leaveTrip() {
-      this.tripService.getMembershipsByTravellerAndTripId(this._userData.getUserData()._id, this._userData.getTripData()._id)
+      this.tripService.getMembershipsByTravellerAndTripId(this.user._id, this.trip._id)
       .then(memberships => {
         for (const membership of memberships) {
             this.tripService.deleteMembership(membership._id);
@@ -62,8 +81,16 @@ export class TripOptionsComponent implements OnInit {
       this._userData.setView('start');
   }
 
+  deleteTrip() {
+    this.tripService.deleteMarkersByTripId(this.trip._id);
+    this.tripService.deleteMembershipsByTripId(this.trip._id);
+    this.tripService.deleteMessagesByTripId(this.trip._id);
+    this.tripService.deleteTrip(this.trip._id);
+    this._userData.setView('start');
+    this._userData.setTripData(null);
+  }
+
   updateDesc() {
-    this.trip = this._userData.getTripData();
     this.trip.description = this.tripDesc;
     this.tripService.updateTrip(this.trip);
     this.savesuccess = 1;
@@ -71,5 +98,4 @@ export class TripOptionsComponent implements OnInit {
       this.savesuccess = 0;
       }.bind(this), 3000);
   }
-
 }
