@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Trip } from 'app/trips/trip';
 import { Traveller } from 'app/travellers/traveller';
 import { Marker } from './marker';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
+import { MemberSidebarComponent } from '../member-sidebar/member-sidebar.component';
 
 declare var google: any;
 
@@ -15,6 +16,7 @@ declare var google: any;
 })
 export class TripHubComponent implements OnInit {
 
+  @ViewChild('sidebar') sidebar: MemberSidebarComponent;
   public selectedMarker: Marker = null;
   public selectedMarkerIcon: string;
   private trip: Trip;
@@ -23,7 +25,7 @@ export class TripHubComponent implements OnInit {
   inputsEnabled = true;
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  public selectedTab: string = 'map';
+  public selectedTab = 'map';
   public icons = {
     Temp: {
       icon: this.iconBase + 'arrow_maps.png'
@@ -121,12 +123,24 @@ export class TripHubComponent implements OnInit {
 
   changeTab = (tab: string) => {
     this.selectedTab = tab;
+    this.sidebar.closeSelection();
     if (this.selectedTab === 'map') {
       this.generateMap();
     }
   }
 
   generateMap() {
+    try {
+      const head: any = document.getElementsByTagName('head')[0];
+
+      const insertBefore = head.insertBefore;
+      head.insertBefore = function (newElement, referenceElement) {
+          if (newElement.href && newElement.href.indexOf('https://fonts.googleapis.com/css?family=Roboto') === 0) {
+              return;
+          }
+          insertBefore.call(head, newElement, referenceElement);
+      };
+    } catch {}
      this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
           const mapProp = {
           center: new google.maps.LatLng(this.trip.lat, this.trip.long),

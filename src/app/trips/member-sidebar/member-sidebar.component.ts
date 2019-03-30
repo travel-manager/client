@@ -83,11 +83,16 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   }
 
   selectTraveller(traveller: Traveller) {
+    this.changeHubTab('');
     if (traveller !== this.selectedTraveller) {
       this.selectedTraveller = traveller;
     } else {
       this.selectedTraveller = null;
     }
+  }
+
+  closeSelection = () => {
+    this.selectedTraveller = null;
   }
 
   goToAddNew() {

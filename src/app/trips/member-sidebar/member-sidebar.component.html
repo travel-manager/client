@@ -1,4 +1,4 @@
-<div style="height: 83vh;" fxLayout="row">
+<div style="min-height: 83vh;" fxLayout="row">
   <div style="background-color: rgb(70, 217, 191);" *ngIf="selectedTraveller != null">
     <app-traveller-profile
       [traveller]="selectedTraveller"
@@ -11,15 +11,14 @@
   height: 5vh;
   width: 5vh;
   pointer-events: none;
-  right: calc(1% * 1.25);
+  right: calc(1vh * 2.5);
   top: calc(-1vh * 2.6);
   position: absolute;
   z-index: 2;
   background-size:cover;
-  background-image: url('https://s3.eu-north-1.amazonaws.com/travelmanagerpictures/icon-owner')
-  ">
+  background-image: url('https://s3.eu-north-1.amazonaws.com/travelmanagerpictures/icon-owner')">
   </div>
-  <div style="background-color: rgb(63, 81, 181); width: 100px">
+  <div style="background-color: rgb(63, 81, 181); min-height: 83vh; width: 100px;">
     <div fxLayoutAlign="center center" style="height: 100px; width: 100px;" *ngIf="loadingStatus === true">
       <div class="img-spinning-circle"></div>
     </div>
