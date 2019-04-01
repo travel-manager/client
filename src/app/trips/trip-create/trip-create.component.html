@@ -1,4 +1,4 @@
-<div fxLayoutAlign="flex-end" fxLayout="row">
+<div style="width: 100%" fxLayoutAlign="flex-end" fxLayout="row">
     <div style="width: 100%;" fxLayout="column">
         <div [ngStyle]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: 'calc(90vh - 50px)';"></div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="mapOpen" style="background-color: rgb(63, 81, 181); width: 100%; height: 50px;">
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form [ngStyle.lt-md]="{'width': '100%'}" [ngStyle.lt-md]="{'display': mapOpen ? 'none' : 'initial' }" style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 327px" #createForm="ngForm" class="col-md-8">
+    <form [ngStyle.lt-md]="{'display': mapOpen ? 'none' : 'initial' }" style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 327px" #createForm="ngForm" class="col-md-12">
       <h2>Create New Trip</h2>
       <app-datepicker
         [dateupdateHandler]="updateDates">
