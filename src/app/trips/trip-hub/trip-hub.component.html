@@ -95,6 +95,7 @@
 
         <mat-card-actions>
           <button *ngIf="userCanDeleteMarker === true" (click)="deleteMarker(selectedMarker._id)" class="btn btn-danger">Delete</button>
+          <button style="float: right" (click)="closeMarker()" class="btn">Close</button>
         </mat-card-actions>
 
       </mat-card>

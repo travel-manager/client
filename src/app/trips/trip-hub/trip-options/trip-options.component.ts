@@ -5,6 +5,7 @@ import { Trip } from 'app/trips/trip';
 import { Membership } from 'app/trips/membership';
 import { Traveller } from 'app/travellers/traveller';
 import { UserDataService } from 'app/app.component.service';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-trip-options',
@@ -23,11 +24,18 @@ export class TripOptionsComponent implements OnInit {
   addsuccess = 0;
   deleteEnabled = false;
   deleteConfirm: string;
+  toggleState;
+
   constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
     this.trip = this._userData.getTripData();
     this.user = this._userData.getUserData();
+    if (this.trip.public === true) {
+      this.toggleState = 'Public';
+    } else {
+      this.toggleState = 'Private';
+    }
     this.tripDesc = this.trip.description;
     if (this.trip.owner === this.user.username) {
       this.userIsOwner = true;
@@ -91,11 +99,29 @@ export class TripOptionsComponent implements OnInit {
   }
 
   updateDesc() {
-    this.trip.description = this.tripDesc;
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+      this.trip.description = this.tripDesc;
     this.tripService.updateTrip(this.trip);
+    this._userData.setTripData(this.trip);
     this.savesuccess = 1;
     setTimeout(function() {
       this.savesuccess = 0;
       }.bind(this), 3000);
+    })
+  }
+
+  updatePublic(toggle: MatSlideToggleChange) {
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+      this.trip.public = toggle.checked;
+      if (this.trip.public === true) {
+        this.toggleState = 'Public';
+      } else {
+        this.toggleState = 'Private';
+      }
+      this._userData.setTripData(this.trip);
+      this.tripService.updateTrip(this.trip);
+    })
   }
 }

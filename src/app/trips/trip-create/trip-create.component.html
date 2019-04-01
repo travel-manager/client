@@ -1,5 +1,13 @@
-<div>
-    <form style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 327px" #createForm="ngForm" (ngSubmit)="createTrip(trip);" class="col-md-8">
+<div fxLayoutAlign="flex-end" fxLayout="row">
+    <div style="width: 100%;" fxLayout="column">
+        <div [ngStyle]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: 'calc(90vh - 50px)';"></div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="mapOpen" style="background-color: rgb(63, 81, 181); width: 100%; height: 50px;">
+            <button [disabled]="mapConfirmEnabled === false" (click)="confirmMap()" class="btn btn-success">Set destination</button>
+            <button style="margin-left: 20px" (click)="setMap(false)" class="btn btn-danger">Cancel</button>
+        </div>
+    </div>
+
+    <form [ngStyle.lt-md]="{'width': '100%'}" [ngStyle.lt-md]="{'display': mapOpen ? 'none' : 'initial' }" style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 327px" #createForm="ngForm" class="col-md-8">
       <h2>Create New Trip</h2>
       <app-datepicker
         [dateupdateHandler]="updateDates">
@@ -11,7 +19,11 @@
 
       <div class="form-group">
         <label for="trip-location">Destination</label>
-        <input type="text" class="form-control" #location="ngModel" required name="trip-location" [(ngModel)]="trip.location" placeholder="Destination"/>
+        <div fxLayout="row">
+            <input type="text" class="form-control" #location="ngModel" required name="trip-location" [(ngModel)]="trip.location" placeholder="Destination"/>
+            <button type="button" *ngIf="mapOpen === false" (click)="setMap(true)" class="btn btn-primary">Open Map</button>
+        </div>
+
       </div>
 
       <div class="form-group">
@@ -19,9 +31,12 @@
           <input type="text" class="form-control" #description="ngModel" required name="trip-description" [(ngModel)]="trip.description" placeholder="Description"/>
       </div>
 
-      <button class="btn btn-success" [disabled]="!createForm.valid">Create</button>
+      <button (click)="setTripCoords()" class="btn btn-success" [disabled]="!createForm.valid">Create</button>
       <div *ngIf="createsuccess === -1" class="alert alert-danger">
-      Failed to create trip, try another destination
+        Dates invalid
+      </div>
+      <div *ngIf="createsuccess === -2" class="alert alert-danger">
+        Destination invalid
       </div>
     </form>
   </div>

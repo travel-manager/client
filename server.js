@@ -155,7 +155,20 @@ app.get("/api/trips/dates/:starttoend", function(req, res) {
   var datesplit = req.params.starttoend.toString().split('to');
   var startdate = datesplit[0];
   var enddate = datesplit[1];
-  db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate }, dateend: { $lte: enddate } }).toArray(function(err, docs) {
+  db.collection(TRIPS_COLLECTION).find({datestart: { $gte : startdate }, dateend: { $lte: enddate }, public: true }).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get trips.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/trips/coords/:latandlng", function(req, res) {
+  var coordsplit = req.params.latandlng.toString().split('and');
+  var lat = parseFloat(coordsplit[0]);
+  var lng = parseFloat(coordsplit[1]);
+  db.collection(TRIPS_COLLECTION).find({lat: lat, long: lng}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get trips.");
     } else {

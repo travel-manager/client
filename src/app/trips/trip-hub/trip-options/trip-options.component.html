@@ -19,13 +19,14 @@
           Traveller is already on this trip
         </div>
     </form>
+    <mat-slide-toggle [checked]="trip.public" (change)="updatePublic($event)" > {{ toggleState }} </mat-slide-toggle>
     <div>
       <h4>Upload trip picture</h4>
       <app-image-upload></app-image-upload>
     </div>
     <div>
       <form name="bioForm" #f="ngForm" (ngSubmit)="updateDesc()">
-        <h4>Bio</h4>
+        <h4>Description</h4>
         <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="tripDesc" class="form-control"></textarea>
         <div style="margin-top: 2px" fxLayout="row">
           <button style="height: fit-content;" class="btn btn-primary">Save</button>

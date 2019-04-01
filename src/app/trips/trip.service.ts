@@ -12,6 +12,7 @@ import { Marker } from './trip-hub/marker';
 export class TripService {
     private tripsUrl = '/api/trips';
     private tripsDatesUrl = '/dates';
+    private tripsCoordsUrl = '/coords';
     private transactionsUrl = '/api/transactions';
     private messagesUrl = '/api/messages';
     private membershipsUrl = '/api/memberships';
@@ -54,6 +55,12 @@ export class TripService {
 
     public getTripsByDates(startdate: Date, enddate: Date): Promise<Trip[]> {
       const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + startdate.toISOString() + 'to' + enddate.toISOString();
+      return this.http.get(callString).toPromise()
+      .then(response => response.json() as Trip[])
+    }
+
+    public getTripsByCoords(lat: number, lng: number): Promise<Trip[]> {
+      const callString: string = this.tripsUrl + this.tripsCoordsUrl + '/' + lat + 'and' + lng;
       return this.http.get(callString).toPromise()
       .then(response => response.json() as Trip[])
     }

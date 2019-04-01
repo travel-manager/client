@@ -14,6 +14,6 @@ export class Trip {
   dateend: Date;
   owner: string;
   description: string;
-  status: string;
+  public: boolean;
 }
 
