@@ -3,7 +3,7 @@ export class Notification {
   _id?: string;
   tripId: string;
   content: string;
-  timestamp: string;
+  timestamp: Date;
   type: string;
   icon: string;
 }

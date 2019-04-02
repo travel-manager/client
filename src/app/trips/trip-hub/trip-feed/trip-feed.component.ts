@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Notification } from './notification';
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-trip-feed',
   templateUrl: './trip-feed.component.html',
   styleUrls: ['./trip-feed.component.css'],
-  providers: [TripService]
+  providers: [TripService, DatePipe]
 })
 export class TripFeedComponent implements OnInit, OnDestroy {
 
@@ -16,7 +17,7 @@ export class TripFeedComponent implements OnInit, OnDestroy {
 
   notifications: Notification[] = [];
 
-  constructor(private tripService: TripService, private _userData: UserDataService) { }
+  constructor(private tripService: TripService, private _userData: UserDataService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.tripId = this._userData.getTripData()._id;
@@ -45,7 +46,10 @@ export class TripFeedComponent implements OnInit, OnDestroy {
      const feedBox = document.getElementById('notifications');
      feedBox.scrollTop = feedBox.scrollHeight;
      }.bind(this), 100);
+   }
 
+   getEndOfContent(contentString: string) {
+     return contentString.split(/ (.+)/)[1];
    }
 
 }

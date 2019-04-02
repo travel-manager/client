@@ -5,6 +5,7 @@ import { UserDataService } from 'app/app.component.service';
 import { Transaction } from '../transaction';
 import { TravellerService } from 'app/travellers/traveller.service';
 import { Membership } from 'app/trips/membership';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -16,14 +17,17 @@ import { Membership } from 'app/trips/membership';
 export class CreateTransactionComponent implements OnInit {
 
   public createsuccess = 0;
-  public freeloaders;
-  public selectedAmount = '';
+  public freeloaders: string[] = [];
+  public selectedAmount;
+  public amountPerFreeloader = 0;
   public selectedSubject = '';
+  selectedUnit = '€';
   public tripMembers: Traveller[] = [];
   public selectedTab = 'create';
   private user: Traveller;
-  public toPayTransactions : Transaction [] = [];
+  public toPayTransactions: Transaction [] = [];
   public toReceiveTransactions : Transaction [] = [];
+  unitOptions: string[] = [ '€', '$' ];
 
   constructor (private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) {}
 
@@ -45,43 +49,65 @@ export class CreateTransactionComponent implements OnInit {
       this.updateTransactionsList();
   }
 
-  setTab(tab:string){
+  setTab(tab: string){
     this.selectedTab = tab;
+  }
+
+  updateAmountPer() {
+    let totalToSplit = 0;
+    if (this.selectedAmount == null) {
+      totalToSplit = 0;
+    } else {
+      totalToSplit = this.selectedAmount;
+    }
+    this.amountPerFreeloader = +(totalToSplit / (1 + +(this.freeloaders.length))).toFixed(2);
   }
 
   createTransactions() {
     const payer = this._userData.getUserData().username;
-    const amountPerFreeloader = +this.selectedAmount / 1 + this.freeloaders.length;
     for (const freeloader of this.freeloaders) {
       const transaction: Transaction = {
         payer: payer,
-        amount: amountPerFreeloader,
-        unit: '€',
+        amount: this.amountPerFreeloader,
+        unit: this.selectedUnit,
         subject: this.selectedSubject,
         freeloader: freeloader,
-        date: new Date()
+        date: null
       };
-      console.log(transaction);
-      this.tripService.createTransaction(transaction);
+      this.tripService.createTransaction(transaction).then(result => {
+        this.updateTransactionsList();
+        this.setTab('show');
+      });
     }
   }
-updateTransactionsList(){
+  updateTransactionsList()  {
+    this.tripService.getTransactionsByFreeloader(this.user.username).then(transactions => {
+      for (const transaction of transactions) {
+        if (transaction.subject.length > 0) {
+          transaction.subject = '"' + transaction.subject + '"';
+        }
+      }
+      this.toPayTransactions = transactions
+    });
+    this.tripService.getTransactionsByPayer(this.user.username).then(transactions => {
+      for (const transaction of transactions) {
+        if (transaction.subject.length > 0) {
+          transaction.subject = '"' + transaction.subject + '"';
+        }
+      }
+      this.toReceiveTransactions = transactions;
+      this.scrollTransactions();
+    });
+  }
 
-  this.tripService.getTransactionsByFreeloader(this.user.username).then(transactions => {
-    this.toPayTransactions = transactions
-  })
-  this.tripService.getTransactionsByPayer(this.user.username).then(transactions => {
-    this.toReceiveTransactions = transactions
-  })
-}
-deleteTransaction(id: string){
+  scrollTransactions() {
+    const transactionBox = document.getElementById('transactions');
+    transactionBox.scrollTop =  transactionBox.scrollHeight;
+  }
 
-this.tripService.deleteTransaction(id).then(response => {
-this.updateTransactionsList()
-})
-
-
-}
-
-
+  deleteTransaction(id: string) {
+    this.tripService.deleteTransaction(id).then(response => {
+      this.updateTransactionsList()
+    });
+  }
 }

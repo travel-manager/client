@@ -71,7 +71,7 @@ export class TripOptionsComponent implements OnInit {
                   content: traveller.username + ' was invited to trip',
                   tripId: this.trip._id,
                   type: 'invite',
-                  timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+                  timestamp: null,
                   icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
                 }
                 this.tripService.createNotification(notification);
@@ -102,7 +102,7 @@ export class TripOptionsComponent implements OnInit {
         content: this.user.username + ' left trip',
         tripId: this.trip._id,
         type: 'left',
-        timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+        timestamp: null,
         icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-left'
       }
       this.tripService.createNotification(notification);

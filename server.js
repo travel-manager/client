@@ -195,6 +195,7 @@ app.put("/api/trips/:id", function(req, res) {
 
 app.post("/api/transactions", function(req, res) {
   var newTransaction = req.body;
+  newTransaction.timestamp = new Date();
   db.collection(TRANSACTIONS_COLLECTION).insertOne(newTransaction, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new transaction.");
@@ -287,6 +288,7 @@ app.post("/api/messages", function(req, res) {
 
 app.post("/api/notifications", function(req, res) {
   var newNotification = req.body;
+  newNotification.timestamp = new Date();
   db.collection(NOTIFICATIONS_COLLECTION).insertOne(newNotification, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to post a notification.");
@@ -352,6 +354,7 @@ app.delete("/api/memberships/:id", function(req, res) {
   });
 });
 
+
 app.delete("/api/markers/:id", function(req, res) {
   db.collection(MARKERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
@@ -376,6 +379,16 @@ app.delete("/api/memberships/tripId/:id", function(req, res) {
   db.collection(MEMBERSHIPS_COLLECTION).deleteMany({tripId: req.params.id}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete memberships");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
+app.delete("/api/notifications/tripId/:id", function(req, res) {
+  db.collection(NOTIFICATIONS_COLLECTION).deleteMany({tripId: req.params.id}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete notifications");
     } else {
       res.status(200).json(req.params.id);
     }

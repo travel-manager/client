@@ -5,6 +5,7 @@ import { TripService } from '../trip.service';
 import { TravellerService } from 'app/travellers/traveller.service';
 import {UserDataService} from 'app/app.component.service';
 import { Membership } from '../membership';
+import { Notification } from '../trip-hub/trip-feed/notification'
 
 @Component({
   selector: 'app-member-sidebar',
@@ -67,6 +68,14 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     this.trip = this._userData.getTripData();
     this.trip.owner = newLeader;
     this.tripService.updateTrip(this.trip);
+    const notification: Notification = {
+      content: newLeader + ' is now the trip leader!',
+      tripId: this.trip._id,
+      type: 'leader',
+      timestamp: null,
+      icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-owner'
+    }
+    this.tripService.createNotification(notification);
     this.changeHubTab('');
   }
 

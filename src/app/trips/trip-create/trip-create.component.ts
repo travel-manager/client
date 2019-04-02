@@ -5,6 +5,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { GeoProvider } from './geoProvider';
 import { UserDataService } from 'app/app.component.service';
 import { Membership } from '../membership';
+import { Notification } from '../trip-hub/trip-feed/notification'
 
 declare var google: any;
 
@@ -78,6 +79,15 @@ export class TripCreateComponent implements OnInit {
           membership.travellerId = this._userData.getUserData()._id;
           membership.tripId = createdTrip._id;
           this.tripService.createMembership(membership);
+          const notification: Notification = {
+            content: this.trip.owner + ' created ' + this.trip.name + '!',
+            tripId: createdTrip._id,
+            type: 'created',
+            timestamp: null,
+            icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-created'
+          }
+          this.tripService.createNotification(notification);
+          console.log(notification);
           this._userData.setView('trip');
         });
       });

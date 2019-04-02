@@ -27,7 +27,7 @@ export class TripHubComponent implements OnInit {
   inputsEnabled = true;
 
   private iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-  public selectedTab = 'map';
+  public selectedTab = 'feed';
   public icons = {
     Temp: {
       icon: this.iconBase + 'arrow_maps.png'
@@ -64,7 +64,6 @@ export class TripHubComponent implements OnInit {
   ngOnInit() {
     this.trip = this._userData.getTripData();
     this.user = this._userData.getUserData();
-    this.generateMap();
   }
   confirmMarker() {
     const marker: Marker = {
@@ -79,7 +78,7 @@ export class TripHubComponent implements OnInit {
       content: this._userData.getUserData().username + ' added a marker: "' + marker.note + '"',
       tripId: this.trip._id,
       type: 'marker',
-      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+      timestamp: null,
       icon: this.icons[marker.type].icon
     }
     this.tripService.createNotification(notification);

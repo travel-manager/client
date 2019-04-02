@@ -1,13 +1,13 @@
-<div [ngStyle.lt-md]="{'width':'100%' }" id="notifications" style="height:83vh; background-color: rgb(94, 155, 255); width:600px; overflow-y: auto; height:83vh">
+<div [ngStyle.lt-md]="{'width':'100%' }" id="notifications" style="height:83vh; background-color: rgb(94, 155, 255); width:400px; overflow-y: auto; height:83vh">
 
     <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin: 12px">
 
 
       <mat-card-subtitle>
-        {{ notification.timestamp }} <img style = "width:24px; height:24px;" src = {{notification.icon}}>
+        {{ datepipe.transform(notification.timestamp, 'dd/MM/yy, HH:mm:ss').toString()  }} <img style="margin-left: 12px; width:24px; height:24px;" src = {{notification.icon}}>
       </mat-card-subtitle>
       <mat-card-content>
-          {{ notification.content }}
+          <b>{{ notification.content.split(' ',2)[0] }}</b> {{ getEndOfContent(notification.content) }}
       </mat-card-content>
 
 

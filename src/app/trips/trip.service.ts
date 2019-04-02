@@ -158,6 +158,7 @@ export class TripService {
       this.http.delete(this.membershipsUrl + '/tripId/' + delTripId);
       this.http.delete(this.markersUrl + '/tripId/' + delTripId);
       this.http.delete(this.messagesUrl + '/tripId/' + delTripId);
+      this.http.delete(this.notificationsUrl + '/tripId/' + delTripId);
       return this.http.delete(this.tripsUrl + '/' + delTripId)
                  .toPromise()
                  .then(response => response.json() as String)

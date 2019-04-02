@@ -49,7 +49,9 @@
   </app-trip-feed>
 </div>
 
-<div *ngIf="this.selectedTab === 'transactions'"> <app-create-transaction></app-create-transaction> </div>
+<div *ngIf="this.selectedTab === 'transactions'" style="width: 100%" fxLayoutAlign="flex-end">
+  <app-create-transaction></app-create-transaction>
+</div>
 <div fxLayout="row" *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end">
   <div [ngStyle]="{'width': targetMarker.getPosition() == null && selectedMarker == null ? '100%' : 'calc(100% - 200px)' }" id="googleMap" style="height:83vh;"></div>
   <div style="background-color: rgb(94, 155, 255)">
