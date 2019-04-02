@@ -3,11 +3,11 @@
 
   <div id="notifications" style="overflow-y: scroll; height:55vh">
 
-    <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin-bottom: 5px; margin-right: 12px">
+    <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin-bottom: 8px; margin-right: 12px">
 
 
       <mat-card-subtitle>
-        {{ notification.timestamp }}
+        {{ notification.timestamp }} <img style = "width:24px; height:24px; margin-left: 5px" src = {{notification.icon}}>
       </mat-card-subtitle>
       <mat-card-content>
           {{ notification.content }}

@@ -34,6 +34,14 @@ export class TripOptionsComponent implements OnInit {
                   travellerId: traveller._id,
                   tripId: this._userData.getTripData()._id
                 }
+                const notification: Notification = {
+                  content: traveller.username + ' was invited to trip',
+                  tripId: this.tripId,
+                  type: 'invite',
+                  timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+                  icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
+                }
+                this.tripService.createNotification(notification);
                 this.tripService.createMembership(membership);
                 this.addsuccess = 1;
                 this.usernametoAdd = '';
@@ -62,7 +70,8 @@ export class TripOptionsComponent implements OnInit {
         content: user.username + ' left trip',
         tripId: this.tripId,
         type: 'left',
-        timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString()
+        timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+        icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-left'
       }
       this.tripService.createNotification(notification);
       this._userData.setTripData(null);

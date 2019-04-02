@@ -140,7 +140,8 @@ export class PublicTripsComponent implements OnInit {
       content: this._userData.getUserData().username + ' joined trip',
       tripId: tripId,
       type: 'joined',
-      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString()
+      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+      icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
     }
     this.tripService.createMembership(membership);
     this.tripService.createNotification(notification);

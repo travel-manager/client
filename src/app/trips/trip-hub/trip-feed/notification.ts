@@ -5,5 +5,6 @@ export class Notification {
   content: string;
   timestamp: string;
   type: string;
+  icon: string;
 }
 
