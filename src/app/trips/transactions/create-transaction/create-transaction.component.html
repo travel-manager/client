@@ -1,9 +1,9 @@
-<div [ngStyle.lt-md]="{'width': '100%'}" style=" height: 83vh; width: 350px" fxLayout="row">
-  <div fxLayout="column" style="width: 80px">
+<div class="col-md-12" [ngStyle.lt-md]="{'width': 'calc(100%)' }" style=" height: 83vh; width: 400px" fxLayout="row">
+  <div fxLayout="column" style="width: 60px">
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(128, 255, 217)" (click)="setTab('create')">New</div>
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(212, 157, 218)" (click)="setTab('show')">Pending</div>
   </div>
-  <div class="col-md-12" [ngStyle.lt-md]="{'width': '100%'}" style="width: 350px; height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
+  <div [ngStyle.lt-md]="{'width': '300px'}" style="width: 400px; height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
       <form #createForm="ngForm" (ngSubmit)="createTransactions();">
 
         <div fxLayoutAlign="flex-end" class="form-group">
@@ -16,11 +16,11 @@
         </div>
 
         <div fxLayoutAlign="start center" fxLayout="row">
-          <mat-form-field (change)="updateAmountPer()" style="width: 50px">
+          <mat-form-field (change)="updateAmountPer()" style="width: 40px">
               <input type="number" name="total" [(ngModel)]="selectedAmount" matInput placeholder="Total">
           </mat-form-field>
 
-          <mat-form-field style="width: 30px; margin-left: 20px; margin-right: 12px">
+          <mat-form-field style="width: 20px; margin-left: 8px; margin-right: 8px">
             <mat-select [(value)]="selectedUnit">
               <mat-option *ngFor="let unit of unitOptions" [value]="unit">
                 {{ unit }}
@@ -30,7 +30,7 @@
           <span> = <b>{{ amountPerFreeloader }} {{ selectedUnit }}</b> per</span>
         </div>
         <div fxLayoutAlign="center center" fxLayout="row">
-            <mat-form-field style="width: 160px">
+            <mat-form-field style="width: 120px">
                 <input type="text" style="margin-right: auto" name="note" [(ngModel)]="selectedSubject" matInput placeholder="Note">
             </mat-form-field>
             <button [disabled]="amountPerFreeloader === 0 || freeloaders.length < 1" style="margin-left: auto" class="btn btn-success">Split!</button>
@@ -40,25 +40,25 @@
 
     </div>
 
-    <div [ngStyle.lt-md]="{'width': '100%'}" style="font-size: 10px; height:83vh; width: 350px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
+    <div [ngStyle.lt-md]="{'width': '300px'}" style="font-size: 10px; height:83vh; width: 400px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
             <div  id="transactions"  style="overflow-y: auto; ">
-                <mat-card style="background-color: rgb(255, 140, 111); margin: 12px" *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
+                <mat-card style="background-color: rgb(255, 140, 111); margin: 8px" *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
                     <mat-card-content>
                         <div fxLayoutAlign="center center" fxLayout="row">
-                            <div style="font-size: 14px; margin-right: auto">
-                                <span style="font-size: 18px"><b>{{ transaction.amount }} {{ transaction.unit }}</b></span> to <b>{{ transaction.freeloader }}</b><br>
+                            <div style="font-size: 12px; margin-right: auto">
+                                <span style="font-size: 16px"><b>{{ transaction.amount }} {{ transaction.unit }}</b></span> to <b>{{ transaction.freeloader }}</b><br>
                                 {{ transaction.subject }}
                             </div>
                             <button style="margin-left: auto" class="btn btn-success" (click)="deleteTransaction(transaction._id)">Paid</button>
                           </div>
                     </mat-card-content>
                 </mat-card>
-                <mat-card style="background-color: rgb(124, 235, 148); margin: 12px" *ngFor="let transaction of toReceiveTransactions | orderBy: '_id';">
+                <mat-card style="background-color: rgb(124, 235, 148); margin: 8px" *ngFor="let transaction of toReceiveTransactions | orderBy: '_id';">
 
                     <mat-card-content>
                       <div fxLayoutAlign="center center" fxLayout="row">
-                        <div style="font-size: 14px; margin-right: auto">
-                            <span style="font-size: 18px"><b>{{ transaction.amount }} {{transaction.unit}}</b></span> from <b>{{ transaction.freeloader }}</b><br>
+                        <div style="font-size: 12px; margin-right: auto">
+                            <span style="font-size: 16px"><b>{{ transaction.amount }} {{transaction.unit}}</b></span> from <b>{{ transaction.freeloader }}</b><br>
                             {{ transaction.subject }}
                         </div>
                         <button style="height: 40px; margin-left: auto" class="btn btn-success" (click)="deleteTransaction(transaction._id)">Paid</button>

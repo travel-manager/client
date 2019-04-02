@@ -3,14 +3,13 @@
     <form  #createForm="ngForm" (ngSubmit)="createMembership();">
       <h4>Invite Traveller</h4>
       <div class="form-group">
-        <label for="traveller-username">Username</label>
         <div fxLayout="row" fxLayoutGap="10px">
           <input type="text" class="form-control" #username="ngModel" required name="traveller-username" [(ngModel)]="usernametoAdd" placeholder="Username"/>
           <button class="btn btn-success" [disabled]="!createForm.valid">Add</button>
         </div>
       </div>
       <div *ngIf="addsuccess === 1" class="alert alert-success">
-        Traveller successfully added
+        Traveller added
       </div>
       <div *ngIf="addsuccess === -1" class="alert alert-danger">
         Traveller not found
@@ -27,7 +26,7 @@
     <div>
       <form name="bioForm" #f="ngForm" (ngSubmit)="updateDesc()">
         <h4>Description</h4>
-        <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="tripDesc" class="form-control"></textarea>
+        <textarea  name="bioBox" rows="3" #bio="ngModel" type= "text" [(ngModel)]="tripDesc" class="form-control"></textarea>
         <div style="margin-top: 2px" fxLayout="row">
           <button style="height: fit-content;" class="btn btn-primary">Save</button>
           <div *ngIf="savesuccess === 1" class="alert alert-success">
