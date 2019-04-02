@@ -48,8 +48,9 @@ export class TripCreateComponent implements OnInit {
     private _userData: UserDataService) {}
 
   ngOnInit() {
-    // this.gp.getAddress(65.0121, 25.4651).then(address => { console.log('result:', address); });
-    this.generateMap();
+    setTimeout(function() {
+      this.generateMap();
+      }.bind(this), 200);
   }
 
   updateDates = (startdate: NgbDate, enddate: NgbDate) => {
