@@ -28,7 +28,11 @@ export class TripOptionsComponent implements OnInit {
   deleteConfirm: string;
   toggleState;
 
-  constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
+  constructor(
+    private tripService: TripService,
+    private travellerService: TravellerService,
+    public _userData: UserDataService,
+    private datepipe: DatePipe) { }
 
   ngOnInit() {
     this.trip = this._userData.getTripData();
@@ -65,7 +69,7 @@ export class TripOptionsComponent implements OnInit {
                 }
                 const notification: Notification = {
                   content: traveller.username + ' was invited to trip',
-                  tripId: this.tripId,
+                  tripId: this.trip._id,
                   type: 'invite',
                   timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
                   icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
@@ -95,8 +99,8 @@ export class TripOptionsComponent implements OnInit {
         }
       })
       const notification: Notification = {
-        content: user.username + ' left trip',
-        tripId: this.tripId,
+        content: this.user.username + ' left trip',
+        tripId: this.trip._id,
         type: 'left',
         timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
         icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-left'

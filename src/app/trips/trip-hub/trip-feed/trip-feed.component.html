@@ -1,13 +1,10 @@
-<div class="container" style=" height:83vh; width:600px; padding-bottom:12px; padding-top:12px; background-color: rgb(94, 155, 255)">
+<div [ngStyle.lt-md]="{'width':'100%' }" id="notifications" style="height:83vh; background-color: rgb(94, 155, 255); width:600px; overflow-y: auto; height:83vh">
 
-
-  <div id="notifications" style="overflow-y: scroll; height:55vh">
-
-    <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin-bottom: 8px; margin-right: 12px">
+    <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin: 12px">
 
 
       <mat-card-subtitle>
-        {{ notification.timestamp }} <img style = "width:24px; height:24px; margin-left: 5px" src = {{notification.icon}}>
+        {{ notification.timestamp }} <img style = "width:24px; height:24px;" src = {{notification.icon}}>
       </mat-card-subtitle>
       <mat-card-content>
           {{ notification.content }}
@@ -15,9 +12,5 @@
 
 
     </mat-card>
-
-  </div>
-
-
 
 </div>
