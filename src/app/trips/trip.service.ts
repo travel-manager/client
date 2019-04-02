@@ -6,7 +6,7 @@ import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Transaction } from './transactions/transaction';
 import { Message } from './trip-hub/trip-chat/message';
-import { Marker } from './marker';
+import { Marker } from './trip-hub/marker';
 import { Notification } from './trip-hub/trip-feed/notification';
 
 @Injectable()
