@@ -1,6 +1,6 @@
-<div style="width: 100%" fxLayoutAlign="flex-end" fxLayout="row">
-    <div style="width: 100%;" fxLayout="column">
-        <div [ngStyle.lt-md]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: 'calc(90vh - 50px)';"></div>
+<div style="width: 100%; height: 90vh" fxLayoutAlign="flex-end" fxLayout="row">
+    <div style="width: 100%; height: 90vh;" fxLayout="column">
+        <div [ngStyle.lt-md]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: calc(90vh - 50px);"></div>
         <div fxLayout="row" fxLayoutAlign="center center" [ngStyle.lt-md]="{'display': mapOpen ? 'none' : 'initial' }" style="background-color: rgb(63, 81, 181); width: 100%; height: 50px;">
             <button [disabled]="mapConfirmEnabled === false" (click)="confirmMap()" class="btn btn-success">Set destination</button>
             <button fxHide.gt-sm style="margin-left: 20px" (click)="setMap(false)" class="btn btn-danger">Cancel</button>

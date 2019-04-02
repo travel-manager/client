@@ -48,9 +48,7 @@ export class TripCreateComponent implements OnInit {
     private _userData: UserDataService) {}
 
   ngOnInit() {
-    setTimeout(function() {
-      this.generateMap();
-      }.bind(this), 200);
+    this.generateMap();
   }
 
   updateDates = (startdate: NgbDate, enddate: NgbDate) => {
