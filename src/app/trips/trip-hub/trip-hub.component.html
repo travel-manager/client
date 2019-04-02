@@ -4,28 +4,31 @@
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
       <li>
         <a>
-          <mat-icon class="icon" (click)="changeTab('feed');" >reorder</mat-icon>
-          <span class="label" fxHide.lt-md (click)="changeTab('feed');" >Feed</span>
+          <mat-icon class="icon" (click)="changeTab('transactions');"  >local_atm</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('transactions');" >Split the Bill</span>
         </a>
       </li>
+      <li>
+        <a>
+            <mat-icon class="icon" (click)="changeTab('chat');"  >chat</mat-icon>
+            <span class="label" fxHide.lt-md (click)="changeTab('chat');" >Chat</span>
+        </a>
+      </li>
+
       <li>
         <a>
           <mat-icon class="icon" (click)="changeTab('map');"  >map</mat-icon>
           <span class="label" fxHide.lt-md (click)="changeTab('map');" >Map</span>
         </a>
       </li>
+
       <li>
         <a>
-          <mat-icon class="icon" (click)="changeTab('chat');"  >chat</mat-icon>
-          <span class="label" fxHide.lt-md (click)="changeTab('chat');" >Chat</span>
+          <mat-icon class="icon" (click)="changeTab('feed');" >notes</mat-icon>
+          <span class="label" fxHide.lt-md (click)="changeTab('feed');" >Feed</span>
         </a>
       </li>
-      <li>
-        <a>
-          <mat-icon class="icon" (click)="changeTab('transactions');"  >attach_money</mat-icon>
-          <span class="label" fxHide.lt-md (click)="changeTab('transactions');" >Split the Bill</span>
-        </a>
-      </li>
+
       <li>
         <a>
           <mat-icon class="icon" (click)="changeTab('options');"  >settings</mat-icon>
@@ -49,9 +52,7 @@
   </app-trip-feed>
 </div>
 
-<div *ngIf="this.selectedTab === 'transactions'" style="width: 100%" fxLayoutAlign="flex-end">
-  <app-create-transaction></app-create-transaction>
-</div>
+
 <div fxLayout="row" *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end">
   <div [ngStyle]="{'width': targetMarker.getPosition() == null && selectedMarker == null ? '100%' : 'calc(100% - 200px)' }" id="googleMap" style="height:83vh;"></div>
   <div style="background-color: rgb(94, 155, 255)">
