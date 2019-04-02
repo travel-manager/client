@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import {MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS} from '@angular/material';
 import { OrderModule } from 'ngx-order-pipe';
 
+
 import { AppComponent } from './app.component';
 import { TravellerCreateComponent } from './travellers/traveller-create/traveller-create.component';
 import { TravellerLoginComponent } from './travellers/traveller-login/traveller-login.component';
@@ -27,6 +28,8 @@ import { TripOptionsComponent } from './trips/trip-hub/trip-options/trip-options
 import { ImageUploadComponent } from './other/image-upload/image-upload.component';
 import { ProfileOptionsComponent } from './travellers/profile-options/profile-options.component';
 import { USE_VALUE } from '@angular/core/src/di/injector';
+import { TripFeedComponent } from './trips/trip-hub/trip-feed/trip-feed.component';
+import { TravellerProfileComponent } from './travellers/traveller-profile/traveller-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +46,8 @@ import { USE_VALUE } from '@angular/core/src/di/injector';
     TripOptionsComponent,
     ImageUploadComponent,
     ProfileOptionsComponent,
+    TripFeedComponent,
+    TravellerProfileComponent,
   ],
   imports: [
     BrowserModule,

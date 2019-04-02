@@ -1,6 +1,6 @@
-<div style="background-color: rgb(94, 155, 255) ; height: 83vh; padding-top: 1vh; width: 200px">
-  <div style="display: inline" *ngIf="_userData.getUserData().username === _userData.getTripData().owner">
-    <form  #createForm="ngForm" (ngSubmit)="createMembership();" class="col-md-12">
+<div class="col-md-12" style="background-color: rgb(94, 155, 255) ; height: 83vh; padding-top: 1vh; width: 200px">
+  <div style="display: inline" *ngIf="userIsOwner == true">
+    <form  #createForm="ngForm" (ngSubmit)="createMembership();">
       <h4>Invite Traveller</h4>
       <div class="form-group">
         <label for="traveller-username">Username</label>
@@ -19,13 +19,36 @@
           Traveller is already on this trip
         </div>
     </form>
-    <div style="margin-top: 50px" class="col-md-8">
+    <mat-slide-toggle [checked]="trip.public" (change)="updatePublic($event)" > {{ toggleState }} </mat-slide-toggle>
+    <div>
       <h4>Upload trip picture</h4>
       <app-image-upload></app-image-upload>
     </div>
+    <div>
+      <form name="bioForm" #f="ngForm" (ngSubmit)="updateDesc()">
+        <h4>Description</h4>
+        <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="tripDesc" class="form-control"></textarea>
+        <div style="margin-top: 2px" fxLayout="row">
+          <button style="height: fit-content;" class="btn btn-primary">Save</button>
+          <div *ngIf="savesuccess === 1" class="alert alert-success">
+              Saved
+          </div>
+        </div>
+      </form>
+    </div>
+    <br>
+    <div *ngIf="deleteEnabled === true">
+      <h4>Delete trip</h4>
+      <div class="form-group">
+        <label for="delete-confirm">Enter 'delete' to confirm</label>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <input style="width: 80px" type="text" class="form-control" #deleteconfirm="ngModel" name="delete-confirm" [(ngModel)]="deleteConfirm"/>
+          <button class="btn btn-danger" (click)="deleteTrip()" [disabled]="deleteConfirm !== 'delete'">Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <br>
-  <form *ngIf="_userData.getUserData().username !== _userData.getTripData().owner" #leaveForm="ngForm" (ngSubmit)="leaveTrip();" class="col-md-8">
+  <form *ngIf="userIsOwner != true" #leaveForm="ngForm" (ngSubmit)="leaveTrip();" class="col-md-8">
     <h4>Leave Trip</h4>
     <button class="btn btn-danger">Leave</button>
   </form>

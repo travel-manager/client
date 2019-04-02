@@ -2,15 +2,15 @@
   <title>Trip chat</title>
 </head>
 <body>
-  <div class="container" style=" height:83vh; width:600px; padding-bottom:12px; background-color: rgb(94, 155, 255)">
+  <div class="container" [ngStyle.lt-md]="{'width': '100%'}" style=" height:83vh; width:600px; padding-bottom:12px; background-color: rgb(94, 155, 255)">
     <div class="row">
         <div class="col -md-7 col-sm-12" >
             <div id="chat">
                 <br>
                 <div class="card">
-                  <div id="messages" class="card-block" style="background-color: white; overflow-y: scroll; height:55vh">
+                  <div id="messages" class="card-block" style="background-color: white; overflow-y: scroll; height:50vh">
                     <div style= "text-indent:-15px; padding-left: 20px; font-size: 16px" *ngFor="let message of messages | orderBy: '_id'">
-                        [{{message.timestamp}}] <b>{{message.sender}}:</b> {{message.content}}
+                        [{{ dateToString(message.timestamp) }}] <br fxHide.gt-sm> <b>{{ message.sender }}:</b> {{ message.content }}
                     </div>
 
                   </div>

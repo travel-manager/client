@@ -5,6 +5,7 @@ import { TripService } from '../trip.service';
 import { DatePipe } from '@angular/common';
 import {UserDataService} from 'app/app.component.service';
 import {FormControl} from '@angular/forms';
+import {Notification} from 'app/trips/trip-hub/trip-feed/notification'
 
 declare var google: any;
 
@@ -31,7 +32,8 @@ export class PublicTripsComponent implements OnInit {
     long: null,
     dateend: null,
     owner: null,
-    description: null
+    description: null,
+    public: null
   };
   private map;
   trips: Trip[];
@@ -72,6 +74,17 @@ export class PublicTripsComponent implements OnInit {
   }
 
   generateMap() {
+    try {
+      const head: any = document.getElementsByTagName('head')[0];
+
+      const insertBefore = head.insertBefore;
+      head.insertBefore = function (newElement, referenceElement) {
+          if (newElement.href && newElement.href.indexOf('https://fonts.googleapis.com/css?family=Roboto') === 0) {
+              return;
+          }
+          insertBefore.call(head, newElement, referenceElement);
+      };
+    } catch {}
     let mapProp = {
       center: new google.maps.LatLng(52.5200, 13.4050),
       zoom: 3,
@@ -87,7 +100,7 @@ export class PublicTripsComponent implements OnInit {
           west: -168.00,
           east: -168.01,
         },
-        strictBounds: false
+        strictBounds: true
       }
     });
     this.map.addListener('click', () => {
@@ -135,9 +148,21 @@ export class PublicTripsComponent implements OnInit {
       travellerId: this.myId,
       tripId: tripId
     }
+    const notification: Notification = {
+      content: this._userData.getUserData().username + ' joined trip',
+      tripId: tripId,
+      type: 'joined',
+      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+      icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
+    }
     this.tripService.createMembership(membership);
+    this.tripService.createNotification(notification);
     this._userData.setTripData(this.selectedTrip);
     this._userData.setView('trip');
+  }
+
+  goToLogin() {
+    this._userData.setView('login');
   }
 
   goToTrip(trip: Trip) {

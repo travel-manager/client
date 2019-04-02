@@ -34,6 +34,10 @@ export class TripChatComponent implements OnInit, OnDestroy {
     clearInterval(this.updateInterval);
   }
 
+  dateToString(date: Date) {
+    return this.datePipe.transform(date, 'dd/MM/yy, HH:mm:ss').toString();
+  }
+
   updateChat() {
     this.tripService
     .getMessagesByTripId(this.tripId)
@@ -56,8 +60,7 @@ export class TripChatComponent implements OnInit, OnDestroy {
   postMessage() {
     this.message.tripId = this.tripId;
     this.message.sender = this._userData.getUserData().username;
-    this.message.timestamp = this.datePipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString();
-   this.tripService.createMessage(this.message);
+    this.tripService.createMessage(this.message);
     this.updateChat();
     this.message.content = '';
   }

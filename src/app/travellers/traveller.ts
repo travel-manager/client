@@ -5,5 +5,7 @@ export class Traveller {
   username: string;
   password: string;
   picture: string;
+  bio: string;
+  country: string;
 }
 
