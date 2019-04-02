@@ -4,6 +4,8 @@ import { Traveller } from 'app/travellers/traveller';
 import { Marker } from './marker';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
+import { Notification } from 'app/trips/trip-hub/trip-feed/notification';
+import { DatePipe } from '@angular/common';
 import { MemberSidebarComponent } from '../member-sidebar/member-sidebar.component';
 
 declare var google: any;
@@ -57,7 +59,7 @@ export class TripHubComponent implements OnInit {
   public markerNote = '';
   private map;
 
-  constructor(private tripService: TripService, private _userData: UserDataService) { }
+  constructor(private tripService: TripService, private _userData: UserDataService, private datepipe: DatePipe) { }
 
   ngOnInit() {
     this.trip = this._userData.getTripData();
@@ -73,6 +75,14 @@ export class TripHubComponent implements OnInit {
       tripId: this.trip._id,
       note: this.markerNote
     };
+    const notification: Notification = {
+      content: this._userData.getUserData().username + ' added a marker: "' + marker.note + '"',
+      tripId: this.trip._id,
+      type: 'marker',
+      timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+      icon: this.icons[marker.type].icon
+    }
+    this.tripService.createNotification(notification);
     this.placeMarker(marker);
     this.tripService.createMarker(marker);
     this.targetMarker.setAnimation(null);

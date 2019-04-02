@@ -6,7 +6,8 @@ import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Transaction } from './transactions/transaction';
 import { Message } from './trip-hub/trip-chat/message';
-import { Marker } from './trip-hub/marker';
+import { Marker } from './marker';
+import { Notification } from './trip-hub/trip-feed/notification';
 
 @Injectable()
 export class TripService {
@@ -17,6 +18,7 @@ export class TripService {
     private messagesUrl = '/api/messages';
     private membershipsUrl = '/api/memberships';
     private markersUrl = '/api/markers';
+    private notificationsUrl = '/api/notifications';
 
     constructor (private http: Http, private http2: HttpClient) {}
 
@@ -69,6 +71,13 @@ export class TripService {
       return this.http.post(this.messagesUrl, newMessage)
                  .toPromise()
                  .then(response => response.json() as Message)
+                 .catch(this.handleError);
+    }
+
+    createNotification(newNotification: Notification): Promise<Notification> {
+      return this.http.post(this.notificationsUrl, newNotification)
+                 .toPromise()
+                 .then(response => response.json() as Notification)
                  .catch(this.handleError);
     }
 
@@ -162,6 +171,15 @@ export class TripService {
                  .then(response => response as Message[])
                  .catch(this.handleError);
     }
+
+    getNotificationsByTripId(tripId: String): Promise<Notification[]> {
+      const callString: string = this.notificationsUrl + '/tripId/' + tripId;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Notification[])
+                 .catch(this.handleError);
+    }
+
 
     getMarkersByTripId(tripId: String): Promise<Marker[]> {
       const callString: string = this.markersUrl + '/tripId/' + tripId;
