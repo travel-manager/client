@@ -32,4 +32,5 @@ export class UserDataService {
   setView(data: string) {
     this.view = data;
   }
+ 
 }

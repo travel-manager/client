@@ -1,5 +1,6 @@
-<div >
-  <form class="col-md-8" style="background-color: rgb(94, 155, 255) ; ; padding-top: 1vh; min-height: 83vh; width: 200px" #createForm="ngForm" (ngSubmit)="createTransactions();">
+<div *ngIf="selectedTab === 'create'">
+    <button class="btn btn-primary" (click)="setTab('show')"  >Show transactions</button>
+  <form class="col-md-8" style="background-color: rgb(94, 155, 255) ; ; padding-top: 1vh; height: 83vh; width: 300px" #createForm="ngForm" (ngSubmit)="createTransactions();">
 
     <div style="margin-top: -13px;" fxLayoutAlign="flex-end" class="form-group">
 
@@ -16,11 +17,16 @@
     </div>
 
     <div class="form-group">
+      <label for="transaction-unit">Unit</label>
+      <input type="text" class="form-control" name="transaction-unit" [(ngModel)]="selectedUnit" placeholder="€"/>
+    </div>
+
+    <div class="form-group">
       <label for="transaction-subject">Subject</label>
       <input type="text" class="form-control" name="transaction-subject" [(ngModel)]="selectedSubject"/>
     </div>
 
-    <button class="btn btn-success" disabled>Coming soon!</button>
+    <button class="btn btn-success" (click)="createTransactions(); setTab('show')" >Create new transaction request</button>
     <div *ngIf="createsuccess === 1" class="alert alert-success">
     Transaction successfully created
     </div>
@@ -31,4 +37,41 @@
       Failed to create user
       </div>
   </form>
+</div>
+
+
+<div *ngIf="selectedTab === 'show'">
+    <button class="btn btn-primary" (click)="setTab('create')"  >Create transaction</button>
+  <div id="transactions"  style="background-color: white; overflow-y: scroll; height:83vh">
+      <mat-card *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
+
+          
+            <mat-card-title>Transaction to make</mat-card-title>
+            <mat-card-subtitle>
+              {{ transaction.subject }}
+            </mat-card-subtitle>    
+          <mat-card-content>
+              {{transaction.amount}} {{transaction.unit}}
+                to  
+              {{transaction.payer}}
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card *ngFor="let transaction of toReceiveTransactions | orderBy: '_id';">
+
+          
+            <mat-card-title>Transaction to make</mat-card-title>
+            <mat-card-subtitle>
+              {{ transaction.subject }}
+            </mat-card-subtitle>
+          <mat-card-content>
+              {{transaction.amount}} {{transaction.unit}}
+                from
+              {{transaction.freeloader}}
+          </mat-card-content>
+          <mat-card-actions>
+            <button class="btn btn-primary" (click)="deleteTransaction(transaction._id)">Paid</button>
+          </mat-card-actions>
+        </mat-card>
+    </div >
 </div>

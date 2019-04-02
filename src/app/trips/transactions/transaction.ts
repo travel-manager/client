@@ -5,6 +5,7 @@ export class Transaction {
   payer: string;
   freeloader: string;
   amount: number;
+  unit: string;
   subject: string;
   date: Date;
 }
