@@ -355,3 +355,34 @@ app.get("/api/keys/:type", function(req, res) {
     }
   });
 });
+
+app.get("/api/transactions/freeloader/:freeloader", function(req, res) {
+  let freeloader = req.params.freeloader;
+  db.collection(TRANSACTIONS_COLLECTION).find({freeloader: freeloader}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get transactions.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
+app.get("/api/transactions/payer/:payer", function(req, res) {
+  let payer = req.params.payer;
+  db.collection(TRANSACTIONS_COLLECTION).find({payer: payer}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get transactions.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+app.delete("/api/transactions/:id", function(req, res) {
+  db.collection(TRANSACTIONS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete transaction");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});

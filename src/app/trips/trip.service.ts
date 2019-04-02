@@ -156,4 +156,25 @@ export class TripService {
                  .then(response => response.json() as Transaction)
                  .catch(this.handleError);
     }
+    getTransactionsByFreeloader(freeloader: String): Promise<Transaction[]> {
+      const callString: string = this.transactionsUrl + '/freeloader/' + freeloader;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Transaction[])
+                 .catch(this.handleError);
+    }
+    getTransactionsByPayer(payer: String): Promise<Transaction[]> {
+      const callString: string = this.transactionsUrl + '/payer/' + payer;
+      return this.http2.get(callString)
+                 .toPromise()
+                 .then(response => response as Transaction[])
+                 .catch(this.handleError);
+    }
+    deleteTransaction(delTransactionId: String): Promise<String> {
+      return this.http.delete(this.transactionsUrl + '/' + delTransactionId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
 }
+
