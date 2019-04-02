@@ -1,9 +1,9 @@
 <div style="width: 100%" fxLayoutAlign="flex-end" fxLayout="row">
     <div style="width: 100%;" fxLayout="column">
-        <div [ngStyle]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: 'calc(90vh - 50px)';"></div>
-        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="mapOpen" style="background-color: rgb(63, 81, 181); width: 100%; height: 50px;">
+        <div [ngStyle.lt-md]="{'width': mapOpen ? '100%' : '0px' }" id="googleMap" style="width: 100%; height: 'calc(90vh - 50px)';"></div>
+        <div fxLayout="row" fxLayoutAlign="center center" [ngStyle.lt-md]="{'display': mapOpen ? 'none' : 'initial' }" style="background-color: rgb(63, 81, 181); width: 100%; height: 50px;">
             <button [disabled]="mapConfirmEnabled === false" (click)="confirmMap()" class="btn btn-success">Set destination</button>
-            <button style="margin-left: 20px" (click)="setMap(false)" class="btn btn-danger">Cancel</button>
+            <button fxHide.gt-sm style="margin-left: 20px" (click)="setMap(false)" class="btn btn-danger">Cancel</button>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
         <label for="trip-location">Destination</label>
         <div fxLayout="row">
             <input type="text" class="form-control" #location="ngModel" required name="trip-location" [(ngModel)]="trip.location" placeholder="Destination"/>
-            <button type="button" *ngIf="mapOpen === false" (click)="setMap(true)" class="btn btn-primary">Open Map</button>
+            <button fxHide.gt-sm type="button" *ngIf="mapOpen === false" (click)="setMap(true)" class="btn btn-primary">Open Map</button>
         </div>
 
       </div>

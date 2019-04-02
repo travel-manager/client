@@ -93,9 +93,9 @@
             {{ selectedMarker.note }}
           </mat-card-content>
 
-        <mat-card-actions>
-          <button *ngIf="userCanDeleteMarker === true" (click)="deleteMarker(selectedMarker._id)" class="btn btn-danger">Delete</button>
-          <button style="float: right" (click)="closeMarker()" class="btn">Close</button>
+        <mat-card-actions fxLayoutAlign="flex-end">
+          <button style="margin-right: 24px" *ngIf="userCanDeleteMarker === true" (click)="deleteMarker(selectedMarker._id)" class="btn btn-danger">Delete</button>
+          <button (click)="closeMarker()" class="btn">Close</button>
         </mat-card-actions>
 
       </mat-card>
