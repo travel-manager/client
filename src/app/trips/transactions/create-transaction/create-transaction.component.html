@@ -1,9 +1,9 @@
-<div class="col-md-12" [ngStyle.lt-md]="{'width': 'calc(100%)' }" style=" height: 83vh; width: 400px" fxLayout="row">
+<div [ngStyle.lt-md]="{'width.px': 300 }" style=" height: 83vh; width: 400px" fxLayout="row">
   <div fxLayout="column" style="width: 60px">
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(128, 255, 217)" (click)="setTab('create')">New</div>
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(212, 157, 218)" (click)="setTab('show')">Pending</div>
   </div>
-  <div [ngStyle.lt-md]="{'width': '300px'}" style="width: 400px; height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
+  <div class="col-md-12"  [ngStyle.lt-md]="{'width.px': 300 }" style="width: 400px; height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
       <form #createForm="ngForm" (ngSubmit)="createTransactions();">
 
         <div fxLayoutAlign="flex-end" class="form-group">
@@ -20,7 +20,7 @@
               <input type="number" name="total" [(ngModel)]="selectedAmount" matInput placeholder="Total">
           </mat-form-field>
 
-          <mat-form-field style="width: 20px; margin-left: 8px; margin-right: 8px">
+          <mat-form-field style="width: 30px; margin-left: 8px; margin-right: 8px">
             <mat-select [(value)]="selectedUnit">
               <mat-option *ngFor="let unit of unitOptions" [value]="unit">
                 {{ unit }}
@@ -29,18 +29,19 @@
           </mat-form-field>
           <span> = <b>{{ amountPerFreeloader }} {{ selectedUnit }}</b> per</span>
         </div>
-        <div fxLayoutAlign="center center" fxLayout="row">
-            <mat-form-field style="width: 120px">
-                <input type="text" style="margin-right: auto" name="note" [(ngModel)]="selectedSubject" matInput placeholder="Note">
+        <div fxLayout="row">
+            <mat-form-field style="margin-right: auto">
+                <input type="text" name="note" [(ngModel)]="selectedSubject" matInput placeholder="Note">
             </mat-form-field>
-            <button [disabled]="amountPerFreeloader === 0 || freeloaders.length < 1" style="margin-left: auto" class="btn btn-success">Split!</button>
+            <span style="width: 10px"></span>
+            <button [disabled]="amountPerFreeloader === 0 || freeloaders.length < 1" style="height: 30px; margin-left: auto" class="btn btn-success">Split!</button>
         </div>
       </form>
 
 
     </div>
 
-    <div [ngStyle.lt-md]="{'width': '300px'}" style="font-size: 10px; height:83vh; width: 400px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
+    <div class="col-md-12" [ngStyle.lt-md]="{'width.px': 300 }" style="font-size: 10px; height:83vh; width: 400px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
             <div  id="transactions"  style="overflow-y: auto; ">
                 <mat-card style="background-color: rgb(255, 140, 111); margin: 8px" *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
                     <mat-card-content>
