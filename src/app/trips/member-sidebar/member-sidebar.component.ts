@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Traveller } from 'app/travellers/traveller';
 import { Trip } from '../trip';
 import { TripService } from '../trip.service';
@@ -14,9 +14,14 @@ import { Membership } from '../membership';
 })
 export class MemberSidebarComponent implements OnInit, OnDestroy {
 
+  @Input()
+  changeHubTab: Function;
+
+  loadingStatus = false;
   public profilePictureUrl = 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/';
-  private myId;
-  private tripId;
+  public trip: Trip;
+  public user: Traveller;
+  public userIsOwner = false;
   private updateInterval;
   members: Traveller[] = [];
   memberships: Membership[] = [];
@@ -24,9 +29,15 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   constructor(private tripService: TripService, private travellerService: TravellerService, private _userData: UserDataService) { }
 
   ngOnInit() {
-    this.myId = this._userData.getUserData()._id;
-    this.tripId = this._userData.getTripData()._id;
+    this.user = this._userData.getUserData();
+    this.trip = this._userData.getTripData();
+    if (this._userData.getUserData().username === this.trip.owner) {
+      this.userIsOwner = true;
+    } else {
+      this.userIsOwner = false;
+    }
     this.memberships = [];
+    this.loadingStatus = true;
     this.updateMemberships();
     this.updateInterval = setInterval(() => {this.updateMemberships()}, 5000);
   }
@@ -36,30 +47,58 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   }
 
   updateMemberships() {
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+    })
     this.tripService
-      .getMembershipsByTripId(this.tripId)
+      .getMembershipsByTripId(this.trip._id)
       .then((memberships: Membership[]) => {
-        if (memberships.length !== this.memberships.length) {
+        if (memberships.length <= 1) {
+          this.loadingStatus = false;
+        } else if (memberships.length !== this.memberships.length) {
           this.memberships = memberships;
           this.updateMembers();
         }
       });
   }
 
+  transferLeadership = (newLeader: string) => {
+    this.userIsOwner = false;
+    this.trip = this._userData.getTripData();
+    this.trip.owner = newLeader;
+    this.tripService.updateTrip(this.trip);
+    this.changeHubTab('');
+  }
+
   updateMembers() {
     this.members = [];
     for (const membership of this.memberships) {
-      if (membership.travellerId !== this.myId) {
+      if (membership.travellerId !== this.user._id) {
         this.travellerService
         .getTravellerById(membership.travellerId)
         .then((traveller: Traveller) => {
-          this.members.push(traveller);
+          if (this.members.push(traveller) + 1 >= this.memberships.length) {
+            this.loadingStatus = false;
+          };
         });
       }
     }
   }
 
-  selectTraveller(username: string) {
-    console.log('selected ' + username);
+  selectTraveller(traveller: Traveller) {
+    this.changeHubTab('');
+    if (traveller !== this.selectedTraveller) {
+      this.selectedTraveller = traveller;
+    } else {
+      this.selectedTraveller = null;
+    }
+  }
+
+  closeSelection = () => {
+    this.selectedTraveller = null;
+  }
+
+  goToAddNew() {
+    this.changeHubTab('options');
   }
 }

@@ -7,6 +7,7 @@ import { Traveller } from 'app/travellers/traveller';
 import { UserDataService } from 'app/app.component.service';
 import { Notification } from '../trip-feed/notification';
 import { DatePipe } from '@angular/common';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-trip-options',
@@ -15,24 +16,52 @@ import { DatePipe } from '@angular/common';
   providers: [TripService, TravellerService, DatePipe]
 })
 export class TripOptionsComponent implements OnInit {
-  private tripId;
+
+  trip: Trip;
+  user: Traveller;
+  tripDesc: string;
+  savesuccess = 0;
+  userIsOwner = false;
   usernametoAdd: string;
   addsuccess = 0;
-  constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService, private datepipe: DatePipe) { }
+  deleteEnabled = false;
+  deleteConfirm: string;
+  toggleState;
+
+  constructor(private tripService: TripService, private travellerService: TravellerService, public _userData: UserDataService) { }
 
   ngOnInit() {
-    this.tripId = this._userData.getTripData()._id;
+    this.trip = this._userData.getTripData();
+    this.user = this._userData.getUserData();
+    if (this.trip.public === true) {
+      this.toggleState = 'Public';
+    } else {
+      this.toggleState = 'Private';
+    }
+    this.tripDesc = this.trip.description;
+    if (this.trip.owner === this.user.username) {
+      this.userIsOwner = true;
+    } else {
+      this.userIsOwner = false;
+    }
+    this.tripService.getMembershipsByTripId(this.trip._id).then(memberships => {
+      if (memberships.length > 1) {
+        this.deleteEnabled = false;
+      } else {
+        this.deleteEnabled = true;
+      }
+    })
   }
 
   createMembership() {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
-            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.tripId).then(memberships => {
+            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.trip._id).then(memberships => {
               if (memberships.length === 0) {
                 const membership: Membership = {
                   travellerId: traveller._id,
-                  tripId: this._userData.getTripData()._id
+                  tripId: this.trip._id
                 }
                 const notification: Notification = {
                   content: traveller.username + ' was invited to trip',
@@ -59,8 +88,7 @@ export class TripOptionsComponent implements OnInit {
   }
 
   leaveTrip() {
-    const user = this._userData.getUserData();
-      this.tripService.getMembershipsByTravellerAndTripId(user._id, this._userData.getTripData()._id)
+      this.tripService.getMembershipsByTravellerAndTripId(this.user._id, this.trip._id)
       .then(memberships => {
         for (const membership of memberships) {
             this.tripService.deleteMembership(membership._id);
@@ -78,4 +106,39 @@ export class TripOptionsComponent implements OnInit {
       this._userData.setView('start');
   }
 
+  deleteTrip() {
+    this.tripService.deleteMarkersByTripId(this.trip._id);
+    this.tripService.deleteMembershipsByTripId(this.trip._id);
+    this.tripService.deleteMessagesByTripId(this.trip._id);
+    this.tripService.deleteTrip(this.trip._id);
+    this._userData.setView('start');
+    this._userData.setTripData(null);
+  }
+
+  updateDesc() {
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+      this.trip.description = this.tripDesc;
+    this.tripService.updateTrip(this.trip);
+    this._userData.setTripData(this.trip);
+    this.savesuccess = 1;
+    setTimeout(function() {
+      this.savesuccess = 0;
+      }.bind(this), 3000);
+    })
+  }
+
+  updatePublic(toggle: MatSlideToggleChange) {
+    this.tripService.getTripById(this.trip._id).then(trip => {
+      this.trip = trip;
+      this.trip.public = toggle.checked;
+      if (this.trip.public === true) {
+        this.toggleState = 'Public';
+      } else {
+        this.toggleState = 'Private';
+      }
+      this._userData.setTripData(this.trip);
+      this.tripService.updateTrip(this.trip);
+    })
+  }
 }

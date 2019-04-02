@@ -1,13 +1,19 @@
-<div style="background-color: rgb(63, 81, 181); height: 90vh; width: 200px">
-    <div fxLayoutAlign="end center" style="resize: horizontal; height: 8vh" *ngFor="let trip of this.trips | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTrip(trip)" [class.odd]="odd" [class.even]="even">
-          <label ng-class-odd="'odd'" flex style="margin-left: 8px; margin-right: 8px"><b>{{ trip.name }}</b></label>
+<div style="background-color: rgb(63, 81, 181); min-height: 90vh; min-width: 150px">
+  <div fxLayoutAlign="center center" style="height: 150px; width: 150px;" *ngIf="loadingStatus === true">
+        <div style="margin-left: auto; margin-right:auto;" class="img-spinning-circle"></div>
+  </div>
+  <div *ngIf="loadingStatus === false" >
+    <div fxLayoutAlign="end center" style="padding-left: 8px; resize: horizontal; height: 48px" *ngFor="let trip of this.trips | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTrip(trip)" [class.odd]="odd" [class.even]="even">
+          <label ng-class-odd="'odd'" flex><b>{{ trip.name }}</b><img *ngIf="user.username === this.trip.owner" style="vertical-align:middle; height: 20px; margin-left: 8px;" src="https://s3.eu-north-1.amazonaws.com/travelmanagerpictures/icon-owner"></label>
           <mat-icon flex style="
+          margin-left: 8px;
           background-position: center;
           background-repeat: no-repeat;
           background-size:cover;
-          height: 8vh; width: 8vh;"
+          height: 48px; width: 48px;"
           [ngStyle]="{'background-image': 'url(' + tripPictureUrl + trip.picture + ')'}">
           </mat-icon>
     </div>
+  </div>
 </div>
 

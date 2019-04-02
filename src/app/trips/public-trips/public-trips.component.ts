@@ -32,7 +32,8 @@ export class PublicTripsComponent implements OnInit {
     long: null,
     dateend: null,
     owner: null,
-    description: null
+    description: null,
+    public: null
   };
   private map;
   trips: Trip[];
@@ -73,6 +74,17 @@ export class PublicTripsComponent implements OnInit {
   }
 
   generateMap() {
+    try {
+      const head: any = document.getElementsByTagName('head')[0];
+
+      const insertBefore = head.insertBefore;
+      head.insertBefore = function (newElement, referenceElement) {
+          if (newElement.href && newElement.href.indexOf('https://fonts.googleapis.com/css?family=Roboto') === 0) {
+              return;
+          }
+          insertBefore.call(head, newElement, referenceElement);
+      };
+    } catch {}
     let mapProp = {
       center: new google.maps.LatLng(52.5200, 13.4050),
       zoom: 3,
@@ -88,7 +100,7 @@ export class PublicTripsComponent implements OnInit {
           west: -168.00,
           east: -168.01,
         },
-        strictBounds: false
+        strictBounds: true
       }
     });
     this.map.addListener('click', () => {
@@ -147,6 +159,10 @@ export class PublicTripsComponent implements OnInit {
     this.tripService.createNotification(notification);
     this._userData.setTripData(this.selectedTrip);
     this._userData.setView('trip');
+  }
+
+  goToLogin() {
+    this._userData.setView('login');
   }
 
   goToTrip(trip: Trip) {

@@ -1,9 +1,9 @@
 <div style="background-color: rgb(173, 203, 211); min-height: 100vh;">
-<mat-toolbar style="height: 10vh;" color="primary">
+<mat-toolbar style="height: 10vh; z-index: 1" color="primary">
   <div (click)="setView('start');">
       <img style="height: 8vh; resize: both" src="..\assets\appicon.png">
-    <span style="margin-left: 10px">
-      <b>Travel Manager</b>
+    <span fxHide.lt-md style="margin-left: 10px">
+      <b>TravelManager</b>
     </span>
   </div>
 
@@ -11,7 +11,7 @@
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
       <li>
         <a (click)="setView('findtrips');">
-          <mat-icon class="icon" >map</mat-icon>
+          <mat-icon class="icon">public</mat-icon>
           <span fxHide.lt-md class="label">Find Trips</span>
         </a>
       </li>
@@ -39,6 +39,7 @@
           <span fxHide.lt-md class="label">Log In</span>
         </a>
       </li>
+      <span style="width: 5vh" *ngIf="this._userData.getUserData() != null" ></span>
     </ul>
 
   </div>
@@ -47,12 +48,12 @@
             background-repeat: no-repeat;
             background-size:cover;
             height: 9vh; width: 9vh;
-            margin-right: -13px;
+            position: absolute;
+            right: 0.25%;
             "
             [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
   </div>
 </mat-toolbar>
-
 <div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
   <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
 </div>
@@ -73,7 +74,7 @@
   <app-my-trips></app-my-trips>
 </div>
 
-<div *ngIf="this._userData.getView() == 'createtrip'">
+<div style="width: 100%" *ngIf="this._userData.getView() == 'createtrip'">
   <app-trip-create></app-trip-create>
 </div>
 
@@ -82,6 +83,9 @@
 </div>
 
 <div *ngIf="this._userData.getView() == 'myprofile'">
-    <app-profile-options>
-    </app-profile-options>
-  </div>
+    <app-profile-options></app-profile-options>
+</div>
+
+<div *ngIf="this._userData.getView() == 'profile'">
+    <app-profile-options></app-profile-options>
+</div>

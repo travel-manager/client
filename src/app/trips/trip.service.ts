@@ -13,6 +13,7 @@ import { Notification } from './trip-hub/trip-feed/notification';
 export class TripService {
     private tripsUrl = '/api/trips';
     private tripsDatesUrl = '/dates';
+    private tripsCoordsUrl = '/coords';
     private transactionsUrl = '/api/transactions';
     private messagesUrl = '/api/messages';
     private membershipsUrl = '/api/memberships';
@@ -38,14 +39,6 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    // delete("/api/trips/:id")
-    deleteTrip(delTripId: String): Promise<String> {
-      return this.http.delete(this.tripsUrl + '/' + delTripId)
-                 .toPromise()
-                 .then(response => response.json() as String)
-                 .catch(this.handleError);
-    }
-
     // put("/api/trips/:id")
     updateTrip(putTrip: Trip): Promise<Trip> {
       const putUrl = this.tripsUrl + '/' + putTrip._id;
@@ -64,6 +57,12 @@ export class TripService {
 
     public getTripsByDates(startdate: Date, enddate: Date): Promise<Trip[]> {
       const callString: string = this.tripsUrl + this.tripsDatesUrl + '/' + startdate.toISOString() + 'to' + enddate.toISOString();
+      return this.http.get(callString).toPromise()
+      .then(response => response.json() as Trip[])
+    }
+
+    public getTripsByCoords(lat: number, lng: number): Promise<Trip[]> {
+      const callString: string = this.tripsUrl + this.tripsCoordsUrl + '/' + lat + 'and' + lng;
       return this.http.get(callString).toPromise()
       .then(response => response.json() as Trip[])
     }
@@ -124,6 +123,44 @@ export class TripService {
       return this.http.post(this.markersUrl, newMarker)
                  .toPromise()
                  .then(response => response.json() as Marker)
+                 .catch(this.handleError);
+    }
+
+    deleteMarker(delMarkerId: String): Promise<String> {
+      return this.http.delete(this.markersUrl + '/' + delMarkerId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
+
+    deleteMembershipsByTripId(delTripId: String): Promise<String> {
+      return this.http.delete(this.membershipsUrl + '/tripId/' + delTripId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
+
+    deleteMarkersByTripId(delTripId: String): Promise<String> {
+      return this.http.delete(this.markersUrl + '/tripId/' + delTripId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
+
+    deleteMessagesByTripId(delTripId: String): Promise<String> {
+      return this.http.delete(this.messagesUrl + '/tripId/' + delTripId)
+                 .toPromise()
+                 .then(response => response.json() as String)
+                 .catch(this.handleError);
+    }
+
+    deleteTrip(delTripId: String): Promise<String> {
+      this.http.delete(this.membershipsUrl + '/tripId/' + delTripId);
+      this.http.delete(this.markersUrl + '/tripId/' + delTripId);
+      this.http.delete(this.messagesUrl + '/tripId/' + delTripId);
+      return this.http.delete(this.tripsUrl + '/' + delTripId)
+                 .toPromise()
+                 .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 

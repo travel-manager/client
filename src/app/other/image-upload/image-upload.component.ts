@@ -22,6 +22,7 @@ class ImageSnippet {
 })
 export class ImageUploadComponent {
 
+  uploadsuccess = 0;
   selectedFile: ImageSnippet;
 
   constructor(
@@ -50,28 +51,37 @@ export class ImageUploadComponent {
       this.selectedFile = new ImageSnippet(event.target.result, file);
 
       this.selectedFile.pending = true;
-      this.imageService.uploadImage(this.selectedFile.file).then(
-        (res) => {
-          this.onSuccess();
-          if (this._userData.getView() === 'myprofile') {
-            const user: Traveller = this._userData.getUserData();
-            if (user.picture !== 'profile-default') {
-              this.imageService.deleteImage(user.picture);
+      if ((this.selectedFile.file.type === 'image/jpeg' || this.selectedFile.file.type === 'image/png')
+       && this.selectedFile.file.size < 200000) {
+        this.imageService.uploadImage(this.selectedFile.file).then(
+          (res) => {
+            this.onSuccess();
+            if (this._userData.getView() === 'myprofile') {
+              const user: Traveller = this._userData.getUserData();
+              if (user.picture !== 'profile-default') {
+                this.imageService.deleteImage(user.picture);
+              }
+              user.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
+              this.travellerService.updateTraveller(user);
+            } else {
+              const trip: Trip = this._userData.getTripData();
+              if (trip.picture !== 'trip-default') {
+                this.imageService.deleteImage(trip.picture);
+              }
+              trip.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
+              this.tripService.updateTrip(trip);
             }
-            user.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
-            this.travellerService.updateTraveller(user);
-          } else {
-            const trip: Trip = this._userData.getTripData();
-            if (trip.picture !== 'trip-default') {
-              this.imageService.deleteImage(trip.picture);
-            }
-            trip.picture = res['imageUrl'].replace('https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/', '');
-            this.tripService.updateTrip(trip);
-          }
-        },
-        (err) => {
-          this.onError();
-        })
+          },
+          (err) => {
+            this.onError();
+          })
+      } else {
+        this.selectedFile.pending = false;
+          this.uploadsuccess = -1;
+          setTimeout(function() {
+            this.uploadsuccess = 0;
+            }.bind(this), 5000);
+      }
     });
 
     reader.readAsDataURL(file);

@@ -2,12 +2,12 @@
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
-      <li>
+      <!-- <li>
         <a>
           <mat-icon class="icon" (click)="changeTab('feed');" >speaker_notes</mat-icon>
           <span class="label" fxHide.lt-md (click)="changeTab('feed');" >Feed</span>
         </a>
-      </li>
+      </li> -->
       <li>
         <a>
           <mat-icon class="icon" (click)="changeTab('map');"  >map</mat-icon>
@@ -23,7 +23,7 @@
       <li>
         <a>
           <mat-icon class="icon" (click)="changeTab('transactions');"  >attach_money</mat-icon>
-          <span class="label" fxHide.lt-md (click)="changeTab('transactions');" >Transactions</span>
+          <span class="label" fxHide.lt-md (click)="changeTab('transactions');" >Split the Bill</span>
         </a>
       </li>
       <li>
@@ -50,36 +50,64 @@
 </div>
 
 <div *ngIf="this.selectedTab === 'transactions'"> <app-create-transaction></app-create-transaction> </div>
-<div *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end">
-  <div class="col-md-1" id="googleMap" style="height:83vh; width: 500px"></div>
-  <div class="col-md-1" style="width:200px; background-color: rgb(94, 155, 255)" *ngIf="targetMarker.getPosition() != null">
-  <h4>Add New Marker</h4>
+<div fxLayout="row" *ngIf="this.selectedTab === 'map'" fxFlex fxLayout fxLayoutAlign="flex-end">
+  <div [ngStyle]="{'width': targetMarker.getPosition() == null && selectedMarker == null ? '100%' : 'calc(100% - 200px)' }" id="googleMap" style="height:83vh;"></div>
+  <div style="background-color: rgb(94, 155, 255)">
+    <div class="col-md-8" style="width: 200px" *ngIf="targetMarker.getPosition() != null">
+      <h4>Add New Marker</h4>
+      <form #addMarkerForm="ngForm">
+        <div class="form-group">
+          <label for="marker-note">Note</label>
+          <input [disabled]="inputsEnabled === false" type="text" class="form-control" #note="ngModel" name="marker-note" [(ngModel)]="markerNote"/>
+        </div>
 
-  <form #addMarkerForm="ngForm">
+        <div class="form-group">
+          <label for="marker-type">Type  </label>
 
-    <div class="form-group">
-      <label for="marker-note">Note</label>
-      <input type="text" class="form-control" #note="ngModel" name="marker-note" [(ngModel)]="markerNote"/>
+          <select [disabled]="inputsEnabled === false" #type="ngModel" [(ngModel)]="markerType"  name="marker-type">
+            <option>Lodging</option>
+            <option>Dining</option>
+            <option>Drinking</option>
+            <option>Shopping</option>
+            <option>Sightseeing</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <button [disabled]="inputsEnabled === false" class="btn btn-success column" (click)="confirmMarker();">Add</button>
+          <button [disabled]="inputsEnabled === false" style="margin-left: 30px" class="btn btn-danger column" (click)="cancelMarker();">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8" style="width: 200px" *ngIf="selectedMarker != null">
+
+      <mat-card style="margin-top: 12px">
+        <mat-card-header>
+            <div style="
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            height: 10vh; width: 10vh;"
+          [ngStyle]="{'background-image': 'url(' + selectedMarkerIcon + ')'}">
+          </div>
+        </mat-card-header>
+          <br>
+          <mat-card-subtitle>Added by {{ selectedMarker.creator }}</mat-card-subtitle>
+          <mat-card-content>
+            {{ selectedMarker.note }}
+          </mat-card-content>
+
+        <mat-card-actions fxLayoutAlign="flex-end">
+          <button style="margin-right: 24px" *ngIf="userCanDeleteMarker === true" (click)="deleteMarker(selectedMarker._id)" class="btn btn-danger">Delete</button>
+          <button (click)="closeMarker()" class="btn">Close</button>
+        </mat-card-actions>
+
+      </mat-card>
     </div>
 
-    <div class="form-group">
-      <label for="marker-type">Type  </label>
-
-      <select #type="ngModel" [(ngModel)]="markerType"  name="marker-type">
-        <option>Lodging</option>
-        <option>Dining</option>
-        <option>Drinking</option>
-        <option>Shopping</option>
-        <option>Sightseeing</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div>
-      <button class="btn btn-success column" (click)="confirmMarker();">Add</button>
-      <button style="margin-left: 30px" class="btn btn-danger column" (click)="cancelMarker();">Cancel</button>
-    </div>
-  </form>
 </div>
 </div>
-<app-member-sidebar></app-member-sidebar>
+<app-member-sidebar #sidebar
+  [changeHubTab]="changeTab"
+></app-member-sidebar>
 </div>

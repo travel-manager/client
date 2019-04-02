@@ -4,6 +4,6 @@ export class Message {
   tripId: string;
   content: string;
   sender: string;
-  timestamp: string;
+  timestamp: Date;
 }
 

@@ -1,11 +1,35 @@
-<div style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 200px">
-  <div class="col-md-8">
+<div class="col-md-8" style="background-color: rgb(94, 155, 255) ; padding-top: 1vh; height: 90vh; width: 250px">
+  <div>
       <h4>Upload picture</h4>
       <app-image-upload></app-image-upload>
   </div>
-  <div style="margin-top: 50px" class="col-md-8">
+  <br>
+  <div>
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select (selectionChange)="updateCountry()" [(value)]="selectedCountry">
+        <mat-option *ngFor="let country of objectKeys(countries.isoCountries)" [value]="countries.isoCountries[country]">
+          {{ countries.isoCountries[country] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div style="height: 200px">
+    <form name="bioForm" #f="ngForm" (ngSubmit)="updateBio()">
+      <h4>Bio</h4>
+      <textarea  name="bioBox" rows="4" #bio="ngModel" type= "text" [(ngModel)]="userBio" class="form-control"></textarea>
+      <div style="margin-top: 2px" fxLayout="row">
+        <button style="height: fit-content;" class="btn btn-primary">Save</button>
+        <div *ngIf="savesuccess === 1" class="alert alert-success">
+            Saved
+        </div>
+      </div>
+    </form>
+  </div>
+  <div>
     <h4>Log Out</h4>
     <button class="btn btn-danger" (click)="logOut()">Log Out</button>
   </div>
+
 </div>
 
