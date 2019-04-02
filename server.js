@@ -4,6 +4,7 @@ var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
 var MESSAGES_COLLECTION = "messages";
+var NOTIFICATIONS_COLLECTION = "notifications";
 var TRAVELLERS_COLLECTION = "travellers";
 var TRIPS_COLLECTION = "trips";
 var TRANSACTIONS_COLLECTION = "transactions";
@@ -260,6 +261,17 @@ app.get("/api/messages/tripId/:tripid", function(req, res) {
   });
 });
 
+app.get("/api/notifications/tripId/:tripid", function(req, res) {
+  let tripID = req.params.tripid;
+  db.collection(NOTIFICATIONS_COLLECTION).find({tripId:tripID}).toArray(function(err, docs) {
+    if (err) {
+      handleError(res, err.message, "Failed to get notifications.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 
 app.post("/api/messages", function(req, res) {
   var newMessage = req.body;
@@ -267,6 +279,17 @@ app.post("/api/messages", function(req, res) {
   db.collection(MESSAGES_COLLECTION).insertOne(newMessage, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to post a message.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+});
+
+app.post("/api/notifications", function(req, res) {
+  var newNotification = req.body;
+  db.collection(NOTIFICATIONS_COLLECTION).insertOne(newNotification, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to post a notification.");
     } else {
       res.status(201).json(doc.ops[0]);
     }

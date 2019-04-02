@@ -5,13 +5,15 @@ import { Trip } from 'app/trips/trip';
 import { Membership } from 'app/trips/membership';
 import { Traveller } from 'app/travellers/traveller';
 import { UserDataService } from 'app/app.component.service';
+import { Notification } from '../trip-feed/notification';
+import { DatePipe } from '@angular/common';
 import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-trip-options',
   templateUrl: './trip-options.component.html',
   styleUrls: ['./trip-options.component.css'],
-  providers: [TripService, TravellerService]
+  providers: [TripService, TravellerService, DatePipe]
 })
 export class TripOptionsComponent implements OnInit {
 
@@ -49,7 +51,6 @@ export class TripOptionsComponent implements OnInit {
         this.deleteEnabled = true;
       }
     })
-
   }
 
   createMembership() {
@@ -62,6 +63,14 @@ export class TripOptionsComponent implements OnInit {
                   travellerId: traveller._id,
                   tripId: this.trip._id
                 }
+                const notification: Notification = {
+                  content: traveller.username + ' was invited to trip',
+                  tripId: this.tripId,
+                  type: 'invite',
+                  timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+                  icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
+                }
+                this.tripService.createNotification(notification);
                 this.tripService.createMembership(membership);
                 this.addsuccess = 1;
                 this.usernametoAdd = '';
@@ -85,6 +94,14 @@ export class TripOptionsComponent implements OnInit {
             this.tripService.deleteMembership(membership._id);
         }
       })
+      const notification: Notification = {
+        content: user.username + ' left trip',
+        tripId: this.tripId,
+        type: 'left',
+        timestamp: this.datepipe.transform(new Date(), 'HH:mm:ss: dd.MM.yy').toString(),
+        icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-left'
+      }
+      this.tripService.createNotification(notification);
       this._userData.setTripData(null);
       this._userData.setView('start');
   }
