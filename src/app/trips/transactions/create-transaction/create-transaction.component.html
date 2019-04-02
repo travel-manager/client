@@ -3,7 +3,7 @@
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(128, 255, 217)" (click)="setTab('create')">New</div>
     <div fxLayoutAlign="center center" class="btn" style="border-radius: 0px; height:100px; background-color: rgb(212, 157, 218)" (click)="setTab('show')">Pending</div>
   </div>
-  <div class="col-md-12"   style="height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
+  <div class="col-md-12" style=" height: 83vh; background-color: rgb(128, 255, 217);" fxLayout="column" *ngIf="selectedTab === 'create'">
       <form style="margin-top: -9px" #createForm="ngForm" (ngSubmit)="createTransactions();">
 
         <div fxLayoutAlign="flex-end" class="form-group">
@@ -41,7 +41,7 @@
 
     </div>
 
-    <div class="col-md-12" [ngStyle.lt-md]="{'width.px': 250 }" style="font-size: 10px; height:83vh; width: 360px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
+    <div class="col-md-12" style="font-size: 10px; height:83vh; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
             <div  id="transactions"  style="overflow-y: auto; ">
                 <mat-card style="background-color: rgb(255, 140, 111); margin: 8px" *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
                     <mat-card-content>
