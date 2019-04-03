@@ -72,7 +72,7 @@ export class CreateTransactionComponent implements OnInit {
         unit: this.selectedUnit,
         subject: this.selectedSubject,
         freeloader: freeloader,
-        date: null
+        timestamp: null
       };
       this.tripService.createTransaction(transaction).then(result => {
         this.updateTransactionsList();

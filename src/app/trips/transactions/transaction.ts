@@ -7,5 +7,5 @@ export class Transaction {
   amount: number;
   unit: string;
   subject: string;
-  date: Date;
+  timestamp: Date;
 }
