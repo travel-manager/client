@@ -47,10 +47,9 @@
                     <mat-card-content>
                         <div fxLayoutAlign="center center" fxLayout="row">
                             <div style="font-size: 12px; margin-right: auto">
-                                <span style="font-size: 16px"><b>{{ transaction.amount }} {{ transaction.unit }}</b></span> to <b>{{ transaction.freeloader }}</b><br>
+                                <span style="font-size: 16px"><b>{{ transaction.amount }} {{ transaction.unit }}</b></span> to <b>{{ transaction.payer }}</b><br>
                                 {{ transaction.subject }}
                             </div>
-                            <button style="margin-left: auto" class="btn btn-success" (click)="deleteTransaction(transaction._id)">Paid</button>
                           </div>
                     </mat-card-content>
                 </mat-card>

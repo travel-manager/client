@@ -6,6 +6,7 @@ import { Transaction } from '../transaction';
 import { TravellerService } from 'app/travellers/traveller.service';
 import { Membership } from 'app/trips/membership';
 import { Subject } from 'rxjs';
+import { Trip } from 'app/trips/trip';
 
 
 @Component({
@@ -23,8 +24,9 @@ export class CreateTransactionComponent implements OnInit {
   public selectedSubject = '';
   selectedUnit = '€';
   public tripMembers: Traveller[] = [];
-  public selectedTab = 'create';
+  public selectedTab = 'show';
   private user: Traveller;
+  private trip: Trip;
   public toPayTransactions: Transaction [] = [];
   public toReceiveTransactions : Transaction [] = [];
   unitOptions: string[] = [ '€', '$' ];
@@ -33,8 +35,9 @@ export class CreateTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.user = this._userData.getUserData();
+    this.trip = this._userData.getTripData();
     this.tripService
-      .getMembershipsByTripId(this._userData.getTripData()._id)
+      .getMembershipsByTripId(this.trip._id)
       .then((memberships: Membership[]) => {
         for (const membership of memberships) {
           if (membership.travellerId !== this.user._id) {
@@ -72,7 +75,8 @@ export class CreateTransactionComponent implements OnInit {
         unit: this.selectedUnit,
         subject: this.selectedSubject,
         freeloader: freeloader,
-        timestamp: null
+        timestamp: null,
+        tripId: this.trip._id
       };
       this.tripService.createTransaction(transaction).then(result => {
         this.updateTransactionsList();
@@ -81,7 +85,7 @@ export class CreateTransactionComponent implements OnInit {
     }
   }
   updateTransactionsList()  {
-    this.tripService.getTransactionsByFreeloader(this.user.username).then(transactions => {
+    this.tripService.getTransactionsByFreeloaderAndTripId(this.user.username, this.trip._id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';
@@ -89,7 +93,7 @@ export class CreateTransactionComponent implements OnInit {
       }
       this.toPayTransactions = transactions
     });
-    this.tripService.getTransactionsByPayer(this.user.username).then(transactions => {
+    this.tripService.getTransactionsByPayerAndTripId(this.user.username, this.trip._id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';

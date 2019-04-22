@@ -25,7 +25,7 @@
     </div>
     <div *ngIf="loadingStatus === false">
       <div fxLayoutAlign="end center" style="resize: none; width:96px; height: 48px" *ngFor="let member of this.members | orderBy: '_id'; let odd = odd; let even = even" (click)="selectTraveller(member)" [class.odd]="odd" [class.even]="even">
-            <label ng-class-odd="'odd'" flex style="margin-left: auto; margin-right: auto"><b>{{ member.firstname.slice(0,2) + member.lastname.slice(0,2) }}</b></label>
+            <label ng-class-odd="'odd'" flex style="margin-left: auto; margin-right: auto"><b>{{ member.username.slice(0,4) }}</b></label>
               <mat-icon flex style="
               z-index: 1;
               background-position: center;

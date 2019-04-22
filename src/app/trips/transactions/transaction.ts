@@ -8,4 +8,5 @@ export class Transaction {
   unit: string;
   subject: string;
   timestamp: Date;
+  tripId: string;
 }

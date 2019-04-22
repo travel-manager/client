@@ -212,15 +212,15 @@ export class TripService {
                  .then(response => response.json() as Transaction)
                  .catch(this.handleError);
     }
-    getTransactionsByFreeloader(freeloader: String): Promise<Transaction[]> {
-      const callString: string = this.transactionsUrl + '/freeloader/' + freeloader;
+    getTransactionsByFreeloaderAndTripId(freeloader: String, tripId: String): Promise<Transaction[]> {
+      const callString: string = this.transactionsUrl + '/freeloader/' + freeloader + 'OnTrip' + tripId;
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Transaction[])
                  .catch(this.handleError);
     }
-    getTransactionsByPayer(payer: String): Promise<Transaction[]> {
-      const callString: string = this.transactionsUrl + '/payer/' + payer;
+    getTransactionsByPayerAndTripId(payer: String, tripId: String): Promise<Transaction[]> {
+      const callString: string = this.transactionsUrl + '/payer/' + payer + 'OnTrip' + tripId;
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Transaction[])

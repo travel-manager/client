@@ -455,9 +455,11 @@ app.get("/api/keys/:type", function(req, res) {
   });
 });
 
-app.get("/api/transactions/freeloader/:freeloader", function(req, res) {
-  let freeloader = req.params.freeloader;
-  db.collection(TRANSACTIONS_COLLECTION).find({freeloader: freeloader}).toArray(function(err, docs) {
+app.get("/api/transactions/freeloader/:freeloaderAndTrip", function(req, res) {
+  var paramsplit = req.params.freeloaderAndTrip.toString().split('OnTrip');
+  let freeloader = paramsplit[0];
+  let tripId = paramsplit[1];
+  db.collection(TRANSACTIONS_COLLECTION).find({freeloader: freeloader, tripId: tripId}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get transactions.");
     } else {
@@ -466,9 +468,11 @@ app.get("/api/transactions/freeloader/:freeloader", function(req, res) {
   });
 });
 
-app.get("/api/transactions/payer/:payer", function(req, res) {
-  let payer = req.params.payer;
-  db.collection(TRANSACTIONS_COLLECTION).find({payer: payer}).toArray(function(err, docs) {
+app.get("/api/transactions/payer/:payerAndTrip", function(req, res) {
+  var paramsplit = req.params.payerAndTrip.toString().split('OnTrip');
+  let payer = paramsplit[0];
+  let tripId = paramsplit[1];
+  db.collection(TRANSACTIONS_COLLECTION).find({payer: payer, tripId: tripId}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get transactions.");
     } else {
