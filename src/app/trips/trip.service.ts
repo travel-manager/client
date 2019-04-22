@@ -3,7 +3,7 @@ import { Trip } from './trip';
 import { Membership } from './membership';
 import { Traveller } from '../travellers/traveller';
 import { Http, Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Transaction } from './transactions/transaction';
 import { Message } from './trip-hub/trip-chat/message';
 import { Marker } from './trip-hub/marker';

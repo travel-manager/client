@@ -1,29 +1,46 @@
 import { Injectable } from '@angular/core';
 import { Traveller } from './traveller';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+
+
+@Injectable()
+export class APIInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const url = 'http://51.77.195.120';
+    req = req.clone({
+      url: url + req.url
+    });
+    req.headers.append
+    console.log(req);
+    return next.handle(req);
+  }
+}
 
 @Injectable()
 export class TravellerService {
-    private travellersUrl = '/api/travellers';
+    private travellersUrl = '/travellers';
     private usernameUrl = '/username';
     private idUrl = '/id';
 
-    constructor (private http: Http) {}
+    //private travellersUrl = '/api/travellers';
+
+    constructor (private http: HttpClient) { }
 
     // get("/api/travellers")
     getTravellers(): Promise<Traveller[]> {
       return this.http.get(this.travellersUrl)
                  .toPromise()
-                 .then(response => response.json() as Traveller[])
+                 .then(response => response as Traveller[])
                  .catch(this.handleError);
     }
 
 
     // post("/api/travellers")
     createTraveller(newTraveller: Traveller): Promise<Traveller> {
-      return this.http.post(this.travellersUrl, newTraveller)
+      return this.http.post(this.travellersUrl + '/register', newTraveller)
                  .toPromise()
-                 .then(response => response.json() as Traveller)
+                 .then(response => response as Traveller)
                  .catch(this.handleError);
     }
 
@@ -31,14 +48,14 @@ export class TravellerService {
     getTravellerByUsername(getTravellerUsername: String): Promise<Traveller> {
       return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
                  .toPromise()
-                 .then(response => response.json() as Traveller[])
+                 .then(response => response as Traveller[])
                  .catch(this.handleError);
     }
 
     getTravellerById(getTravellerId: String): Promise<Traveller> {
       return this.http.get(this.travellersUrl + this.idUrl + '/' + getTravellerId)
                  .toPromise()
-                 .then(response => response.json() as Traveller[])
+                 .then(response => response as Traveller[])
                  .catch(this.handleError);
     }
 
@@ -46,7 +63,7 @@ export class TravellerService {
     deleteTraveller(delTravellerId: String): Promise<String> {
       return this.http.delete(this.travellersUrl + '/' + delTravellerId)
                  .toPromise()
-                 .then(response => response.json() as String)
+                 .then(response => response as String)
                  .catch(this.handleError);
     }
 
@@ -55,7 +72,7 @@ export class TravellerService {
       const putUrl = this.travellersUrl + '/' + putTraveller._id;
       return this.http.put(putUrl, putTraveller)
                  .toPromise()
-                 .then(response => response.json() as Traveller)
+                 .then(response => response as Traveller)
                  .catch(this.handleError);
     }
 

@@ -28,8 +28,8 @@ export class TravellerCreateComponent implements OnInit {
   }
 
   createTraveller(traveller: Traveller) {
-    this.travellerService.getTravellerByUsername(traveller.username).then((dbreturn: Traveller) => {
-      if (dbreturn == null) {
+    //this.travellerService.getTravellerByUsername(traveller.username).then((dbreturn: Traveller) => {
+     // if (dbreturn == null) {
         const bcrypt = require('bcryptjs');
         let salt = bcrypt.genSaltSync(10);
         traveller.password = bcrypt.hashSync(traveller.password, salt);
@@ -47,11 +47,11 @@ export class TravellerCreateComponent implements OnInit {
           bio: '',
           country: ''
         };
-      } else {
+      /*} else {
         this.traveller.username = '';
         this.createsuccess = -1;
       }
-    });
+    });*/
     setTimeout(function() {
       this.createsuccess = false;
       }.bind(this), 3000);
