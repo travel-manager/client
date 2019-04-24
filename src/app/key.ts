@@ -1,5 +1,5 @@
 export class Key {
-  _id?: string;
+  id?: string;
   type: string;
   value: string;
 }

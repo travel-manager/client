@@ -37,10 +37,10 @@ export class CreateTransactionComponent implements OnInit {
     this.user = this._userData.getUserData();
     this.trip = this._userData.getTripData();
     this.tripService
-      .getMembershipsByTripId(this.trip._id)
+      .getMembershipsByTripId(this.trip.id)
       .then((memberships: Membership[]) => {
         for (const membership of memberships) {
-          if (membership.travellerId !== this.user._id) {
+          if (membership.travellerId !== this.user.id) {
             this.travellerService
             .getTravellerById(membership.travellerId)
             .then((traveller: Traveller) => {
@@ -76,7 +76,7 @@ export class CreateTransactionComponent implements OnInit {
         subject: this.selectedSubject,
         freeloader: freeloader,
         timestamp: null,
-        tripId: this.trip._id
+        tripId: this.trip.id
       };
       this.tripService.createTransaction(transaction).then(result => {
         this.updateTransactionsList();
@@ -85,7 +85,7 @@ export class CreateTransactionComponent implements OnInit {
     }
   }
   updateTransactionsList()  {
-    this.tripService.getTransactionsByFreeloaderAndTripId(this.user.username, this.trip._id).then(transactions => {
+    this.tripService.getTransactionsByFreeloaderAndTripId(this.user.username, this.trip.id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';
@@ -93,7 +93,7 @@ export class CreateTransactionComponent implements OnInit {
       }
       this.toPayTransactions = transactions
     });
-    this.tripService.getTransactionsByPayerAndTripId(this.user.username, this.trip._id).then(transactions => {
+    this.tripService.getTransactionsByPayerAndTripId(this.user.username, this.trip.id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';

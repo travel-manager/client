@@ -9,7 +9,7 @@
         <div fxLayoutAlign="flex-end" class="form-group">
 
           <mat-selection-list (selectionChange)="updateAmountPer()" name="freeloadersList" #freeloadersList="ngModel" [(ngModel)]="freeloaders">
-              <mat-list-option style="height: 48px" *ngFor="let member of tripMembers | orderBy: '_id'" [value]="member.username">
+              <mat-list-option style="height: 48px" *ngFor="let member of tripMembers | orderBy: 'id'" [value]="member.username">
                   {{ member.username }}
               </mat-list-option>
           </mat-selection-list>
@@ -43,7 +43,7 @@
 
     <div class="col-md-12" [ngStyle.lt-md]="{'width.px': 200 }" style="font-size: 10px; height:83vh; width: 360px; background-color: rgb(212, 157, 218)" fxLayout="column" *ngIf="selectedTab === 'show'">
             <div  id="transactions"  style="overflow-y: auto; ">
-                <mat-card style="background-color: rgb(255, 140, 111); margin: 8px" *ngFor="let transaction of toPayTransactions | orderBy: '_id';">
+                <mat-card style="background-color: rgb(255, 140, 111); margin: 8px" *ngFor="let transaction of toPayTransactions | orderBy: 'id';">
                     <mat-card-content>
                         <div fxLayoutAlign="center center" fxLayout="row">
                             <div style="font-size: 12px; margin-right: auto">
@@ -53,7 +53,7 @@
                           </div>
                     </mat-card-content>
                 </mat-card>
-                <mat-card style="background-color: rgb(124, 235, 148); margin: 8px" *ngFor="let transaction of toReceiveTransactions | orderBy: '_id';">
+                <mat-card style="background-color: rgb(124, 235, 148); margin: 8px" *ngFor="let transaction of toReceiveTransactions | orderBy: 'id';">
 
                     <mat-card-content>
                       <div fxLayoutAlign="center center" fxLayout="row">
@@ -61,7 +61,7 @@
                             <span style="font-size: 16px"><b>{{ transaction.amount }} {{transaction.unit}}</b></span> from <b>{{ transaction.freeloader }}</b><br>
                             {{ transaction.subject }}
                         </div>
-                        <button style="height: 36px;height: 36px; margin-left: auto" class="btn btn-success" (click)="deleteTransaction(transaction._id)">Paid</button>
+                        <button style="height: 36px;height: 36px; margin-left: auto" class="btn btn-success" (click)="deleteTransaction(transaction.id)">Paid</button>
                       </div>
                     </mat-card-content>
                   </mat-card>

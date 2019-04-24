@@ -1,10 +1,10 @@
 import { Traveller } from 'app/travellers/traveller';
 
 export class Marker {
-  _id?: number;
+  id?: number;
   tripId: number;
-  lat: number;
-  long: number;
+  latitude: number;
+  longitude: number;
   note: string;
   creator: string;
   type: string

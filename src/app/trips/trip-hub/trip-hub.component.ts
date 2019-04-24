@@ -67,16 +67,16 @@ export class TripHubComponent implements OnInit {
   }
   confirmMarker() {
     const marker: Marker = {
-      lat: this.targetMarker.getPosition().lat(),
-      long: this.targetMarker.getPosition().lng(),
+      latitude: this.targetMarker.getPosition().lat(),
+      longitude: this.targetMarker.getPosition().lng(),
       type: this.markerType,
       creator: this.user.username,
-      tripId: this.trip._id,
+      tripId: this.trip.id,
       note: this.markerNote
     };
     const notification: Notification = {
       content: this._userData.getUserData().username + ' added a marker: "' + marker.note + '"',
-      tripId: this.trip._id,
+      tripId: this.trip.id,
       type: 'marker',
       timestamp: null,
       icon: this.icons[marker.type].icon
@@ -92,7 +92,7 @@ export class TripHubComponent implements OnInit {
 
   placeMarker(markerParam: Marker) {
     const marker = new google.maps.Marker({
-      position: { lat: markerParam.lat, lng: markerParam.long },
+      position: { lat: markerParam.latitude, lng: markerParam.longitude },
       map: this.map,
       icon: this.icons[markerParam.type].icon,
     });
@@ -154,9 +154,9 @@ export class TripHubComponent implements OnInit {
           insertBefore.call(head, newElement, referenceElement);
       };
     } catch {}
-     this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
+     this.tripService.getMarkersByTripId(this.trip.id).then (markers => {
           const mapProp = {
-          center: new google.maps.LatLng(this.trip.lat, this.trip.long),
+          center: new google.maps.LatLng(this.trip.latitude, this.trip.longitude),
           zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };

@@ -35,12 +35,12 @@ export class TripCreateComponent implements OnInit {
     name: null,
     picture: null,
     datestart: null,
-    lat: null,
-    long: null,
+    latitude: null,
+    longitude: null,
     dateend: null,
     owner: null,
     description: '',
-    public: false
+    isPublic: false
   };
 
   constructor (
@@ -65,23 +65,23 @@ export class TripCreateComponent implements OnInit {
     if (this.trip.datestart != null && this.trip.dateend != null) {
       this.tripService.getTripsByCoords(lat, lng).then(trips => {
         if (trips.length > 0) {
-          this.trip.lat = this.shuffleCoord(lat);
-          this.trip.long = this.shuffleCoord(lng);
+          this.trip.latitude = this.shuffleCoord(lat);
+          this.trip.longitude = this.shuffleCoord(lng);
         } else {
-          this.trip.lat = lat;
-          this.trip.long = lng;
+          this.trip.latitude = lat;
+          this.trip.longitude = lng;
         }
         this.trip.owner = this._userData.getUserData().username;
         const membership = new Membership;
         this.trip.picture = 'trip-default';
         this.tripService.createTrip(this.trip).then(createdTrip => {
           this._userData.setTripData(createdTrip);
-          membership.travellerId = this._userData.getUserData()._id;
-          membership.tripId = createdTrip._id;
+          membership.travellerId = this._userData.getUserData().id;
+          membership.tripId = createdTrip.id;
           this.tripService.createMembership(membership);
           const notification: Notification = {
             content: this.trip.owner + ' created ' + this.trip.name + '!',
-            tripId: createdTrip._id,
+            tripId: createdTrip.id,
             type: 'created',
             timestamp: null,
             icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-created'

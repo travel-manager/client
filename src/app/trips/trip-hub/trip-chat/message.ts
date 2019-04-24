@@ -1,6 +1,6 @@
 
 export class Message {
-  _id?: number;
+  id?: number;
   tripId: number;
   content: string;
   sender: string;

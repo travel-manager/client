@@ -20,7 +20,7 @@ export class TripFeedComponent implements OnInit, OnDestroy {
   constructor(private tripService: TripService, private _userData: UserDataService, public datepipe: DatePipe) { }
 
   ngOnInit() {
-    this.tripId = this._userData.getTripData()._id;
+    this.tripId = this._userData.getTripData().id;
     this.updateFeed();
     this.updateInterval = setInterval(() => {this.updateFeed()}, 3000);
     this.scrollFeed();

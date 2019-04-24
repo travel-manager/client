@@ -1,5 +1,5 @@
 export class Login {
-  _id?: string;
+  id?: string;
   username: string;
   password: string;
 }

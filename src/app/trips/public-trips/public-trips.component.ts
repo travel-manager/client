@@ -28,12 +28,12 @@ export class PublicTripsComponent implements OnInit {
     name: null,
     picture: null,
     datestart: null,
-    lat: null,
-    long: null,
+    latitude: null,
+    longitude: null,
     dateend: null,
     owner: null,
     description: null,
-    public: null
+    isPublic: null
   };
   private map;
   trips: Trip[];
@@ -46,7 +46,7 @@ export class PublicTripsComponent implements OnInit {
   ngOnInit() {
     try {
       this.myId = null;
-      this.myId = this._userData.getUserData()._id; } catch (e) {}
+      this.myId = this._userData.getUserData().id; } catch (e) {}
     if (this._userData.getView() === 'findtrips') {
       setTimeout(function() {
         this.generateMap();
@@ -116,15 +116,15 @@ export class PublicTripsComponent implements OnInit {
     this.markers = [];
     for (let trip of this.trips) {
       let marker = new google.maps.Marker({
-        position: { lat: trip.lat, lng: trip.long },
+        position: { lat: trip.latitude, lng: trip.longitude },
           map: this.map,
           icon: 'http://maps.google.com/mapfiles/kml/paddle/red-stars_maps.png'
       });
       marker.addListener('click', () => {
         this.selectedTrip = trip;
-        this.selectedId = trip._id;
+        this.selectedId = trip.id;
         if (this.myId !== null) {
-          this.tripService.getMembershipsByTravellerAndTripId(this.myId, trip._id).then(memberships => {
+          this.tripService.getMembershipsByTravellerAndTripId(this.myId, trip.id).then(memberships => {
             if (memberships.length > 0) {
               this.joinStatus = 1;
             } else {

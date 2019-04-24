@@ -1,6 +1,6 @@
 <div [ngStyle.lt-md]="{'width':'100%' }" id="notifications" style="height:83vh; background-color: rgb(94, 155, 255); width:600px; overflow-y: auto; height:83vh">
 
-    <mat-card *ngFor="let notification of notifications | orderBy: '_id'" style="margin: 12px">
+    <mat-card *ngFor="let notification of notifications | orderBy: 'id'" style="margin: 12px">
 
 
       <mat-card-subtitle>

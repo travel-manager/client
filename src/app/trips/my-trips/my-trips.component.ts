@@ -30,7 +30,7 @@ export class MyTripsComponent implements OnInit {
   }
   updateMemberships() {
     this.tripService
-      .getMembershipsByTravellerId(this.user._id)
+      .getMembershipsByTravellerId(this.user.id)
       .then((memberships: Membership[]) => {
         if (memberships.length === 0) {
           this.loadingStatus = false;

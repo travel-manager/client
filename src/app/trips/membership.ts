@@ -1,5 +1,5 @@
 export class Membership {
-  _id?: number;
+  id?: number;
   travellerId: number;
   tripId: number;
 }

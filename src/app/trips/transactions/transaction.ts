@@ -1,7 +1,7 @@
 import { Traveller } from 'app/travellers/traveller';
 
 export class Transaction {
-  _id?: number;
+  id?: number;
   payer: string;
   freeloader: string;
   amount: number;
