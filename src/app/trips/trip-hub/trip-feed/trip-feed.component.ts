@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 })
 export class TripFeedComponent implements OnInit, OnDestroy {
 
-  private tripId: string;
+  private tripId: number;
   private updateInterval;
 
   notifications: Notification[] = [];

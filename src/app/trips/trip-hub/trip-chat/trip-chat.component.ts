@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   providers: [TripService, DatePipe]
 })
 export class TripChatComponent implements OnInit, OnDestroy {
-  private tripId: string;
+  private tripId: number;
   private updateInterval;
   message: Message = {
     sender: null,

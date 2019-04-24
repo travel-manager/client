@@ -4,7 +4,7 @@ import { Url } from 'url';
 
 
 export class Trip {
-  _id?: string;
+  _id?: number;
   location: string;
   lat: number;
   long: number;

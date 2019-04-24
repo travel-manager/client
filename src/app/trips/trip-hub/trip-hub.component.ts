@@ -127,7 +127,7 @@ export class TripHubComponent implements OnInit {
     this.selectedMarker = null;
   }
 
-  deleteMarker(id: string) {
+  deleteMarker(id: number) {
     this.tripService.deleteMarker(id).then(res => {
       this.generateMap();
       this.selectedMarker = null;

@@ -1,6 +1,6 @@
 export class Membership {
-  _id?: string;
-  travellerId: string;
-  tripId: string;
+  _id?: number;
+  travellerId: number;
+  tripId: number;
 }
 

@@ -109,7 +109,7 @@ export class CreateTransactionComponent implements OnInit {
     transactionBox.scrollTop =  transactionBox.scrollHeight;
   }
 
-  deleteTransaction(id: string) {
+  deleteTransaction(id: number) {
     this.tripService.deleteTransaction(id).then(response => {
       this.updateTransactionsList()
     });

@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://51.77.195.120';
+    const url = 'http://835488de.ngrok.io';
     req = req.clone({
       url: url + req.url
     });
@@ -46,22 +46,22 @@ export class TravellerService {
 
     // get("/api/travellers/username/:username")
     getTravellerByUsername(getTravellerUsername: String): Promise<Traveller> {
-      return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
+      return this.http.get(this.travellersUrl + '/get?username=' + getTravellerUsername)
                  .toPromise()
                  .then(response => response as Traveller[])
                  .catch(this.handleError);
     }
 
-    getTravellerById(getTravellerId: String): Promise<Traveller> {
-      return this.http.get(this.travellersUrl + this.idUrl + '/' + getTravellerId)
+    getTravellerById(getTravellerId: number): Promise<Traveller> {
+      return this.http.get(this.travellersUrl + '/' + getTravellerId)
                  .toPromise()
                  .then(response => response as Traveller[])
                  .catch(this.handleError);
     }
 
     // delete("/api/travellers/:id")
-    deleteTraveller(delTravellerId: String): Promise<String> {
-      return this.http.delete(this.travellersUrl + '/' + delTravellerId)
+    deleteTraveller(delTravellerId: number): Promise<String> {
+      return this.http.delete(this.travellersUrl + '/delete/' + delTravellerId)
                  .toPromise()
                  .then(response => response as String)
                  .catch(this.handleError);
@@ -69,7 +69,7 @@ export class TravellerService {
 
     // put("/api/travellers/:id")
     updateTraveller(putTraveller: Traveller): Promise<Traveller> {
-      const putUrl = this.travellersUrl + '/' + putTraveller._id;
+      const putUrl = this.travellersUrl + '/put/' + putTraveller._id;
       return this.http.put(putUrl, putTraveller)
                  .toPromise()
                  .then(response => response as Traveller)

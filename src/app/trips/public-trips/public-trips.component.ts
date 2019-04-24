@@ -19,9 +19,9 @@ export class PublicTripsComponent implements OnInit {
 
   public testString = 'test';
   public joinStatus;
-  private myId: string = null;
+  private myId: number = null;
   selectedPictureUrl: string = null;
-  selectedId: string = null;
+  selectedId: number = null;
   selectedDatesString: string = null;
   selectedTrip: Trip = {
     location: null,
@@ -143,7 +143,7 @@ export class PublicTripsComponent implements OnInit {
     }
   }
 
-  joinTrip(tripId: string) {
+  joinTrip(tripId: number) {
     const membership: Membership = {
       travellerId: this.myId,
       tripId: tripId
