@@ -17,7 +17,6 @@ import { TravellerLoginComponent } from './travellers/traveller-login/traveller-
 import { TripCreateComponent } from './trips/trip-create/trip-create.component';
 import { UserDataService } from './app.component.service';
 import { DatepickerComponent } from './trips/trip-create/datepicker.component';
-import { HttpClientModule } from '@angular/common/http';
 import { TripHubComponent } from './trips/trip-hub/trip-hub.component';
 import { PublicTripsComponent } from './trips/public-trips/public-trips.component';
 import { MyTripsComponent } from './trips/my-trips/my-trips.component';
@@ -30,6 +29,10 @@ import { ProfileOptionsComponent } from './travellers/profile-options/profile-op
 import { USE_VALUE } from '@angular/core/src/di/injector';
 import { TripFeedComponent } from './trips/trip-hub/trip-feed/trip-feed.component';
 import { TravellerProfileComponent } from './travellers/traveller-profile/traveller-profile.component';
+import { APIInterceptor } from './travellers/traveller.service';
+import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +67,8 @@ import { TravellerProfileComponent } from './travellers/traveller-profile/travel
   ],
   providers: [UserDataService, DatePipe,
      {provide: MAT_DATE_LOCALE, useValue: 'en-FI' },
-    ],
+     AppComponent, { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true }]
+    ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }
