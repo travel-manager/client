@@ -41,7 +41,7 @@ export class TripService {
 
     // put("/api/trips/:id")
     updateTrip(putTrip: Trip): Promise<Trip> {
-      const putUrl = this.tripsUrl + '/' + putTrip._id;
+      const putUrl = this.tripsUrl + '/' + putTrip.id;
       return this.http.put(putUrl, putTrip)
                  .toPromise()
                  .then(response => response.json() as Trip)
@@ -88,7 +88,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getMembershipsByTravellerId(travellerId: String): Promise<Membership[]> {
+    getMembershipsByTravellerId(travellerId: number): Promise<Membership[]> {
       const callString: string = this.membershipsUrl + '/travellerId/' + travellerId;
       return this.http2.get(callString)
                  .toPromise()
@@ -96,14 +96,14 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    deleteMembership(delMShipId: String): Promise<String> {
+    deleteMembership(delMShipId: number): Promise<number> {
       return this.http.delete(this.membershipsUrl + '/' + delMShipId)
                  .toPromise()
-                 .then(response => response.json() as String)
+                 .then(response => response.json() as number)
                  .catch(this.handleError);
     }
 
-    getMembershipsByTripId(tripId: String): Promise<Membership[]> {
+    getMembershipsByTripId(tripId: number): Promise<Membership[]> {
       const callString: string = this.membershipsUrl + '/tripId/' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -111,7 +111,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getMembershipsByTravellerAndTripId(travellerId: string, tripId: string): Promise<Membership[]> {
+    getMembershipsByTravellerAndTripId(travellerId: number, tripId: number): Promise<Membership[]> {
       const callString: string = this.membershipsUrl + '/' + travellerId + '&' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -126,35 +126,35 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    deleteMarker(delMarkerId: String): Promise<String> {
+    deleteMarker(delMarkerId: number): Promise<String> {
       return this.http.delete(this.markersUrl + '/' + delMarkerId)
                  .toPromise()
                  .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 
-    deleteMembershipsByTripId(delTripId: String): Promise<String> {
+    deleteMembershipsByTripId(delTripId: number): Promise<String> {
       return this.http.delete(this.membershipsUrl + '/tripId/' + delTripId)
                  .toPromise()
                  .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 
-    deleteMarkersByTripId(delTripId: String): Promise<String> {
+    deleteMarkersByTripId(delTripId: number): Promise<String> {
       return this.http.delete(this.markersUrl + '/tripId/' + delTripId)
                  .toPromise()
                  .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 
-    deleteMessagesByTripId(delTripId: String): Promise<String> {
+    deleteMessagesByTripId(delTripId: number): Promise<String> {
       return this.http.delete(this.messagesUrl + '/tripId/' + delTripId)
                  .toPromise()
                  .then(response => response.json() as String)
                  .catch(this.handleError);
     }
 
-    deleteTrip(delTripId: String): Promise<String> {
+    deleteTrip(delTripId: number): Promise<String> {
       this.http.delete(this.membershipsUrl + '/tripId/' + delTripId);
       this.http.delete(this.markersUrl + '/tripId/' + delTripId);
       this.http.delete(this.messagesUrl + '/tripId/' + delTripId);
@@ -165,7 +165,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getMessagesByTripId(tripId: String): Promise<Message[]> {
+    getMessagesByTripId(tripId: number): Promise<Message[]> {
       const callString: string = this.messagesUrl + '/tripId/' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -173,7 +173,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getNotificationsByTripId(tripId: String): Promise<Notification[]> {
+    getNotificationsByTripId(tripId: number): Promise<Notification[]> {
       const callString: string = this.notificationsUrl + '/tripId/' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -182,7 +182,7 @@ export class TripService {
     }
 
 
-    getMarkersByTripId(tripId: String): Promise<Marker[]> {
+    getMarkersByTripId(tripId: number): Promise<Marker[]> {
       const callString: string = this.markersUrl + '/tripId/' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -190,7 +190,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getMarkerById(id: String): Promise<Marker> {
+    getMarkerById(id: number): Promise<Marker> {
       const callString: string = this.markersUrl + '/' + id;
       return this.http2.get(callString)
                  .toPromise()
@@ -198,7 +198,7 @@ export class TripService {
                  .catch(this.handleError);
     }
 
-    getTripById(tripId: String): Promise<Trip> {
+    getTripById(tripId: number): Promise<Trip> {
       const callString: string = this.tripsUrl + '/' + tripId;
       return this.http2.get(callString)
                  .toPromise()
@@ -212,21 +212,21 @@ export class TripService {
                  .then(response => response.json() as Transaction)
                  .catch(this.handleError);
     }
-    getTransactionsByFreeloader(freeloader: String): Promise<Transaction[]> {
+    getTransactionsByFreeloader(freeloader: number): Promise<Transaction[]> {
       const callString: string = this.transactionsUrl + '/freeloader/' + freeloader;
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Transaction[])
                  .catch(this.handleError);
     }
-    getTransactionsByPayer(payer: String): Promise<Transaction[]> {
+    getTransactionsByPayer(payer: number): Promise<Transaction[]> {
       const callString: string = this.transactionsUrl + '/payer/' + payer;
       return this.http2.get(callString)
                  .toPromise()
                  .then(response => response as Transaction[])
                  .catch(this.handleError);
     }
-    deleteTransaction(delTransactionId: String): Promise<String> {
+    deleteTransaction(delTransactionId: number): Promise<String> {
       return this.http.delete(this.transactionsUrl + '/' + delTransactionId)
                  .toPromise()
                  .then(response => response.json() as String)

@@ -52,7 +52,7 @@ export class TravellerService {
                  .catch(this.handleError);
     }
 
-    getTravellerById(getTravellerId: String): Promise<Traveller> {
+    getTravellerById(getTravellerId: number): Promise<Traveller> {
       return this.http.get(this.travellersUrl + this.idUrl + '/' + getTravellerId)
                  .toPromise()
                  .then(response => response as Traveller[])
@@ -60,7 +60,7 @@ export class TravellerService {
     }
 
     // delete("/api/travellers/:id")
-    deleteTraveller(delTravellerId: String): Promise<String> {
+    deleteTraveller(delTravellerId: number): Promise<String> {
       return this.http.delete(this.travellersUrl + '/' + delTravellerId)
                  .toPromise()
                  .then(response => response as String)
@@ -69,7 +69,7 @@ export class TravellerService {
 
     // put("/api/travellers/:id")
     updateTraveller(putTraveller: Traveller): Promise<Traveller> {
-      const putUrl = this.travellersUrl + '/' + putTraveller._id;
+      const putUrl = this.travellersUrl + '/' + putTraveller.id;
       return this.http.put(putUrl, putTraveller)
                  .toPromise()
                  .then(response => response as Traveller)

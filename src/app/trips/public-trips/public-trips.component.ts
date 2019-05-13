@@ -19,11 +19,12 @@ export class PublicTripsComponent implements OnInit {
 
   public testString = 'test';
   public joinStatus;
-  private myId: string = null;
+  private myId: number = null;
   selectedPictureUrl: string = null;
-  selectedId: string = null;
+  selectedId: number = null;
   selectedDatesString: string = null;
   selectedTrip: Trip = {
+    id: null,
     location: null,
     name: null,
     picture: null,
@@ -46,7 +47,7 @@ export class PublicTripsComponent implements OnInit {
   ngOnInit() {
     try {
       this.myId = null;
-      this.myId = this._userData.getUserData()._id; } catch (e) {}
+      this.myId = this._userData.getUserData().id; } catch (e) {}
     if (this._userData.getView() === 'findtrips') {
       setTimeout(function() {
         this.generateMap();
@@ -122,9 +123,9 @@ export class PublicTripsComponent implements OnInit {
       });
       marker.addListener('click', () => {
         this.selectedTrip = trip;
-        this.selectedId = trip._id;
+        this.selectedId = trip.id;
         if (this.myId !== null) {
-          this.tripService.getMembershipsByTravellerAndTripId(this.myId, trip._id).then(memberships => {
+          this.tripService.getMembershipsByTravellerAndTripId(this.myId, trip.id).then(memberships => {
             if (memberships.length > 0) {
               this.joinStatus = 1;
             } else {
@@ -143,7 +144,7 @@ export class PublicTripsComponent implements OnInit {
     }
   }
 
-  joinTrip(tripId: string) {
+  joinTrip(tripId: number) {
     const membership: Membership = {
       travellerId: this.myId,
       tripId: tripId

@@ -71,12 +71,12 @@ export class TripHubComponent implements OnInit {
       long: this.targetMarker.getPosition().lng(),
       type: this.markerType,
       creator: this.user.username,
-      tripId: this.trip._id,
+      tripId: this.trip.id,
       note: this.markerNote
     };
     const notification: Notification = {
       content: this._userData.getUserData().username + ' added a marker: "' + marker.note + '"',
-      tripId: this.trip._id,
+      tripId: this.trip.id,
       type: 'marker',
       timestamp: null,
       icon: this.icons[marker.type].icon
@@ -127,7 +127,7 @@ export class TripHubComponent implements OnInit {
     this.selectedMarker = null;
   }
 
-  deleteMarker(id: string) {
+  deleteMarker(id: number) {
     this.tripService.deleteMarker(id).then(res => {
       this.generateMap();
       this.selectedMarker = null;
@@ -154,7 +154,7 @@ export class TripHubComponent implements OnInit {
           insertBefore.call(head, newElement, referenceElement);
       };
     } catch {}
-     this.tripService.getMarkersByTripId(this.trip._id).then (markers => {
+     this.tripService.getMarkersByTripId(this.trip.id).then (markers => {
           const mapProp = {
           center: new google.maps.LatLng(this.trip.lat, this.trip.long),
           zoom: 12,

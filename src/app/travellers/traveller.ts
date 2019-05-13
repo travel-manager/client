@@ -1,5 +1,5 @@
 export class Traveller {
-  _id?: string;
+  id?: number;
   firstname: string;
   lastname: string;
   username: string;

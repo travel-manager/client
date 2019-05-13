@@ -34,10 +34,10 @@ export class CreateTransactionComponent implements OnInit {
   ngOnInit() {
     this.user = this._userData.getUserData();
     this.tripService
-      .getMembershipsByTripId(this._userData.getTripData()._id)
+      .getMembershipsByTripId(this._userData.getTripData().id)
       .then((memberships: Membership[]) => {
         for (const membership of memberships) {
-          if (membership.travellerId !== this.user._id) {
+          if (membership.travellerId !== this.user.id) {
             this.travellerService
             .getTravellerById(membership.travellerId)
             .then((traveller: Traveller) => {
@@ -81,7 +81,7 @@ export class CreateTransactionComponent implements OnInit {
     }
   }
   updateTransactionsList()  {
-    this.tripService.getTransactionsByFreeloader(this.user.username).then(transactions => {
+    this.tripService.getTransactionsByFreeloader(this.user.id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';
@@ -89,7 +89,7 @@ export class CreateTransactionComponent implements OnInit {
       }
       this.toPayTransactions = transactions
     });
-    this.tripService.getTransactionsByPayer(this.user.username).then(transactions => {
+    this.tripService.getTransactionsByPayer(this.user.id).then(transactions => {
       for (const transaction of transactions) {
         if (transaction.subject.length > 0) {
           transaction.subject = '"' + transaction.subject + '"';
@@ -105,7 +105,7 @@ export class CreateTransactionComponent implements OnInit {
     transactionBox.scrollTop =  transactionBox.scrollHeight;
   }
 
-  deleteTransaction(id: string) {
+  deleteTransaction(id: number) {
     this.tripService.deleteTransaction(id).then(response => {
       this.updateTransactionsList()
     });

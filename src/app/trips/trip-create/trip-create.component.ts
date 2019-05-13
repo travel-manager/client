@@ -31,6 +31,7 @@ export class TripCreateComponent implements OnInit {
   });
   public createsuccess = 0;
   public trip: Trip = {
+    id: null,
     location: null,
     name: null,
     picture: null,
@@ -76,12 +77,12 @@ export class TripCreateComponent implements OnInit {
         this.trip.picture = 'trip-default';
         this.tripService.createTrip(this.trip).then(createdTrip => {
           this._userData.setTripData(createdTrip);
-          membership.travellerId = this._userData.getUserData()._id;
-          membership.tripId = createdTrip._id;
+          membership.travellerId = this._userData.getUserData().id;
+          membership.tripId = createdTrip.id;
           this.tripService.createMembership(membership);
           const notification: Notification = {
             content: this.trip.owner + ' created ' + this.trip.name + '!',
-            tripId: createdTrip._id,
+            tripId: createdTrip.id,
             type: 'created',
             timestamp: null,
             icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-created'

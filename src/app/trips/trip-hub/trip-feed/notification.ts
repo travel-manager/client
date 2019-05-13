@@ -1,7 +1,7 @@
 
 export class Notification {
-  _id?: string;
-  tripId: string;
+  id?: number;
+  tripId: number;
   content: string;
   timestamp: Date;
   type: string;

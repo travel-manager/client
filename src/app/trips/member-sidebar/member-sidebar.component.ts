@@ -48,11 +48,11 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   }
 
   updateMemberships() {
-    this.tripService.getTripById(this.trip._id).then(trip => {
+    this.tripService.getTripById(this.trip.id).then(trip => {
       this.trip = trip;
     })
     this.tripService
-      .getMembershipsByTripId(this.trip._id)
+      .getMembershipsByTripId(this.trip.id)
       .then((memberships: Membership[]) => {
         if (memberships.length <= 1) {
           this.loadingStatus = false;
@@ -70,7 +70,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
     this.tripService.updateTrip(this.trip);
     const notification: Notification = {
       content: newLeader + ' is now the trip leader!',
-      tripId: this.trip._id,
+      tripId: this.trip.id,
       type: 'leader',
       timestamp: null,
       icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-owner'
@@ -82,7 +82,7 @@ export class MemberSidebarComponent implements OnInit, OnDestroy {
   updateMembers() {
     this.members = [];
     for (const membership of this.memberships) {
-      if (membership.travellerId !== this.user._id) {
+      if (membership.travellerId !== this.user.id) {
         this.travellerService
         .getTravellerById(membership.travellerId)
         .then((traveller: Traveller) => {

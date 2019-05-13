@@ -48,7 +48,7 @@ export class TripOptionsComponent implements OnInit {
     } else {
       this.userIsOwner = false;
     }
-    this.tripService.getMembershipsByTripId(this.trip._id).then(memberships => {
+    this.tripService.getMembershipsByTripId(this.trip.id).then(memberships => {
       if (memberships.length > 1) {
         this.deleteEnabled = false;
       } else {
@@ -61,15 +61,15 @@ export class TripOptionsComponent implements OnInit {
     this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
-            this.tripService.getMembershipsByTravellerAndTripId(traveller._id, this.trip._id).then(memberships => {
+            this.tripService.getMembershipsByTravellerAndTripId(traveller.id, this.trip.id).then(memberships => {
               if (memberships.length === 0) {
                 const membership: Membership = {
-                  travellerId: traveller._id,
-                  tripId: this.trip._id
+                  travellerId: traveller.id,
+                  tripId: this.trip.id
                 }
                 const notification: Notification = {
                   content: traveller.username + ' was invited to trip',
-                  tripId: this.trip._id,
+                  tripId: this.trip.id,
                   type: 'invite',
                   timestamp: null,
                   icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-joined'
@@ -92,15 +92,15 @@ export class TripOptionsComponent implements OnInit {
   }
 
   leaveTrip() {
-      this.tripService.getMembershipsByTravellerAndTripId(this.user._id, this.trip._id)
+      this.tripService.getMembershipsByTravellerAndTripId(this.user.id, this.trip.id)
       .then(memberships => {
         for (const membership of memberships) {
-            this.tripService.deleteMembership(membership._id);
+            this.tripService.deleteMembership(membership.id);
         }
       })
       const notification: Notification = {
         content: this.user.username + ' left trip',
-        tripId: this.trip._id,
+        tripId: this.trip.id,
         type: 'left',
         timestamp: null,
         icon: 'https://travelmanagerpictures.s3.eu-north-1.amazonaws.com/icon-left'
@@ -111,16 +111,16 @@ export class TripOptionsComponent implements OnInit {
   }
 
   deleteTrip() {
-    this.tripService.deleteMarkersByTripId(this.trip._id);
-    this.tripService.deleteMembershipsByTripId(this.trip._id);
-    this.tripService.deleteMessagesByTripId(this.trip._id);
-    this.tripService.deleteTrip(this.trip._id);
+    this.tripService.deleteMarkersByTripId(this.trip.id);
+    this.tripService.deleteMembershipsByTripId(this.trip.id);
+    this.tripService.deleteMessagesByTripId(this.trip.id);
+    this.tripService.deleteTrip(this.trip.id);
     this._userData.setView('start');
     this._userData.setTripData(null);
   }
 
   updateDesc() {
-    this.tripService.getTripById(this.trip._id).then(trip => {
+    this.tripService.getTripById(this.trip.id).then(trip => {
       this.trip = trip;
       this.trip.description = this.tripDesc;
     this.tripService.updateTrip(this.trip);
@@ -133,7 +133,7 @@ export class TripOptionsComponent implements OnInit {
   }
 
   updatePublic(toggle: MatSlideToggleChange) {
-    this.tripService.getTripById(this.trip._id).then(trip => {
+    this.tripService.getTripById(this.trip.id).then(trip => {
       this.trip = trip;
       this.trip.public = toggle.checked;
       if (this.trip.public === true) {
