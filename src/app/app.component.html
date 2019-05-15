@@ -1,91 +1,92 @@
-<div style="background-color: rgb(173, 203, 211); min-height: 100vh;">
-<mat-toolbar style="height: 10vh; z-index: 1" color="primary">
-  <div (click)="setView('start');">
-      <img style="height: 8vh; resize: both" src="..\assets\appicon.png">
-    <span fxHide.lt-md style="margin-left: 10px">
-      <b>TravelManager</b>
-    </span>
+<div style="background-color: red; min-height: 100vh;" >
+  <mat-toolbar style="height: 10vh; z-index: 1" color="primary">
+    <div (click)="setView('start');">
+        <img style="height: 8vh; resize: both" src="..\assets\appicon.png">
+      <span fxHide.lt-md style="margin-left: 10px">
+        <b>TravelManager</b>
+      </span>
+    </div>
+
+    <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
+      <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+        <li>
+          <a (click)="setView('findtrips');">
+            <mat-icon class="icon">public</mat-icon>
+            <span fxHide.lt-md class="label">Find Trips</span>
+          </a>
+        </li>
+        <li *ngIf="this._userData.getUserData() != null">
+          <a (click)="setView('mytrips');">
+            <mat-icon class="icon">flight_takeoff</mat-icon>
+            <span fxHide.lt-md class="label">My Trips</span>
+          </a>
+        </li>
+        <li *ngIf="this._userData.getUserData() != null">
+          <a (click)="setView('createtrip');">
+            <mat-icon class="icon">add_circle_outline</mat-icon>
+            <span fxHide.lt-md class="label" >Create Trip</span>
+          </a>
+        </li>
+        <li *ngIf="this._userData.getUserData() == null">
+          <a (click)="setView('createtraveller');">
+            <mat-icon class="icon">person_add</mat-icon>
+            <span fxHide.lt-md class="label">Create Account</span>
+          </a>
+        </li>
+        <li *ngIf="this._userData.getUserData() == null">
+          <a (click)="setView('login');">
+            <mat-icon class="icon">lock_open</mat-icon>
+            <span fxHide.lt-md class="label">Log In</span>
+          </a>
+        </li>
+        <span style="width: 5vh" *ngIf="this._userData.getUserData() != null" ></span>
+      </ul>
+
+    </div>
+    <div (click)="setView('myprofile');" *ngIf="this._userData.getUserData() != null" style="
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size:cover;
+              height: 9vh; width: 9vh;
+              position: absolute;
+              right: 0.25%;
+              "
+              [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
+    </div>
+  </mat-toolbar>
+  <div id="wrapper">
+      <div [ngStyle]="{'width': selectedId === null ? '100%' : 'calc(100% - 300px)' }" id="googleMap" style="height:90vh;"></div>
+      <div id="over_map" class="">
+          <div  *ngIf="this._userData.getView() == 'login'" >
+              <app-traveller-login></app-traveller-login>
+          </div>
+          <div *ngIf="this._userData.getView() == 'createtraveller'">
+              <app-traveller-create></app-traveller-create>
+          </div>
+      </div>
   </div>
+  <div fxLayoutAlign="end" fxLayoutAlign="center center">
 
-  <div fxFlex fxLayout fxLayoutAlign="flex-end"  >
-    <ul fxLayout fxLayoutGap="20px" class="navigation-items">
-      <li>
-        <a (click)="setView('findtrips');">
-          <mat-icon class="icon">public</mat-icon>
-          <span fxHide.lt-md class="label">Find Trips</span>
-        </a>
-      </li>
-      <li *ngIf="this._userData.getUserData() != null">
-        <a (click)="setView('mytrips');">
-          <mat-icon class="icon">flight_takeoff</mat-icon>
-          <span fxHide.lt-md class="label">My Trips</span>
-        </a>
-      </li>
-      <li *ngIf="this._userData.getUserData() != null">
-        <a (click)="setView('createtrip');">
-          <mat-icon class="icon">add_circle_outline</mat-icon>
-          <span fxHide.lt-md class="label" >Create Trip</span>
-        </a>
-      </li>
-      <li *ngIf="this._userData.getUserData() == null">
-        <a (click)="setView('createtraveller');">
-          <mat-icon class="icon">person_add</mat-icon>
-          <span fxHide.lt-md class="label">Create Account</span>
-        </a>
-      </li>
-      <li *ngIf="this._userData.getUserData() == null">
-        <a (click)="setView('login');">
-          <mat-icon class="icon">lock_open</mat-icon>
-          <span fxHide.lt-md class="label">Log In</span>
-        </a>
-      </li>
-      <span style="width: 5vh" *ngIf="this._userData.getUserData() != null" ></span>
-    </ul>
+    <div style="width: 100%" *ngIf="this._userData.getView() == 'findtrips'">
+        <app-public-trips></app-public-trips>
+    </div>
+    <div style="width: 100%" *ngIf="this._userData.getView() == 'trip'">
+      <app-trip-hub></app-trip-hub>
+    </div>
+    <div *ngIf="this._userData.getView() == 'mytrips'">
+      <app-my-trips></app-my-trips>
+    </div>
 
+    <div style="height: 90vh; width: 100%" *ngIf="this._userData.getView() == 'createtrip'">
+      <app-trip-create></app-trip-create>
+    </div>
+
+    <div *ngIf="this._userData.getView() == 'myprofile'">
+        <app-profile-options></app-profile-options>
+    </div>
+
+    <div *ngIf="this._userData.getView() == 'profile'">
+        <app-profile-options></app-profile-options>
+    </div>
   </div>
-  <div (click)="setView('myprofile');" *ngIf="this._userData.getUserData() != null" style="
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size:cover;
-            height: 9vh; width: 9vh;
-            position: absolute;
-            right: 0.25%;
-            "
-            [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
-  </div>
-</mat-toolbar>
-<div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
-  <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
-</div>
-<div fxLayoutAlign="end">
-
-<div style="width: 100%" *ngIf="this._userData.getView() == 'findtrips'">
-    <app-public-trips></app-public-trips>
-</div>
-<div style="width: 100%" *ngIf="this._userData.getView() == 'trip'">
-  <app-trip-hub></app-trip-hub>
-</div>
-
-<div *ngIf="this._userData.getView() == 'createtraveller'">
-  <app-traveller-create></app-traveller-create>
-</div>
-
-<div *ngIf="this._userData.getView() == 'mytrips'">
-  <app-my-trips></app-my-trips>
-</div>
-
-<div style="height: 90vh; width: 100%" *ngIf="this._userData.getView() == 'createtrip'">
-  <app-trip-create></app-trip-create>
-</div>
-
-<div  *ngIf="this._userData.getView() == 'login'">
-  <app-traveller-login></app-traveller-login>
-</div>
-
-<div *ngIf="this._userData.getView() == 'myprofile'">
-    <app-profile-options></app-profile-options>
-</div>
-
-<div *ngIf="this._userData.getView() == 'profile'">
-    <app-profile-options></app-profile-options>
 </div>

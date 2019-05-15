@@ -18,13 +18,13 @@ export class TravellerLoginComponent {
   };
 
   dbTraveller: Traveller = {
-    firstname: '',
-    lastname: '',
-    username: '',
-    password: '',
+    firstname: 'test',
+    lastname: 'test',
+    username: 'test',
+    password: 'test',
     picture: null,
-    bio: '',
-    country: ''
+    bio: 'test',
+    country: 'test'
   };
   loginsuccess = 0;
   constructor(
@@ -32,7 +32,7 @@ export class TravellerLoginComponent {
     public _userData: UserDataService) { }
 
   loginAttempt(loginTraveller: Login) {
-      this.travellerService.loginTraveller(loginTraveller).then((dbtraveller: Traveller) => {
+      /*this.travellerService.loginTraveller(loginTraveller).then((dbtraveller: Traveller) => {
         // const bcrypt = require('bcryptjs');
         if (dbtraveller == null) {
           this.loginsuccess = -1;
@@ -56,6 +56,10 @@ export class TravellerLoginComponent {
                 }.bind(this), 3000);
           // });
         }
-      });
+      });*/
+      this._userData.setUserData(this.dbTraveller);
+      this._userData.setView('start');
   }
+  
+
 }

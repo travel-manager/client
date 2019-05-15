@@ -31,3 +31,15 @@ a:active {
   margin: 0;
   width: 85%;
 }
+
+#wrapper { 
+  position: relative; 
+}
+   
+#over_map { 
+  position: absolute; 
+  top: 10%; 
+  left: 42vw; 
+  z-index: 99; 
+  margin: auto;
+}
