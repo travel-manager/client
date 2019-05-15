@@ -3,11 +3,14 @@ import { UserDataService } from './app.component.service';
 import { Traveller } from 'app/travellers/traveller';
 import { Trip } from 'app/trips/trip'
 
+declare var google: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 
 export class AppComponent implements OnInit{
 
