@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Traveller } from './travellers/traveller';
-import { Trip } from './trips/trip';
+import { Traveller } from './models/traveller';
+import { Trip } from './models/trip';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

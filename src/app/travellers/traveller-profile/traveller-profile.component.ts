@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Traveller } from '../traveller';
+import { Traveller } from '../../models/traveller';
 import { UserDataService } from 'app/app.component.service';
-import { Countries } from '../countries'
+import { Countries } from '../../models/countries'
 
 @Component({
   selector: 'app-traveller-profile',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from 'app/app.component.service';
-import { Countries } from '../countries';
+import { Countries } from '../../models/countries';
 import { TravellerService } from '../traveller.service'
-import { Traveller } from '../traveller';
+import { Traveller } from '../../models/traveller';
 
 @Component({
   selector: 'app-profile-options',

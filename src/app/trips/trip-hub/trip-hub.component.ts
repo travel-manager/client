@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Trip } from 'app/trips/trip';
-import { Traveller } from 'app/travellers/traveller';
-import { Marker } from './marker';
+import { Trip } from 'app/models/trip';
+import { Traveller } from 'app/models/traveller';
+import { Marker } from '../../models/marker';
 import { TripService } from '../trip.service';
 import {UserDataService} from 'app/app.component.service';
-import { Notification } from 'app/trips/trip-hub/trip-feed/notification';
+import { Notification } from 'app/models/notification';
 import { DatePipe } from '@angular/common';
 import { MemberSidebarComponent } from '../member-sidebar/member-sidebar.component';
 
@@ -154,7 +154,7 @@ export class TripHubComponent implements OnInit {
           insertBefore.call(head, newElement, referenceElement);
       };
     } catch {}
-     this.tripService.getMarkersByTripId(this.trip.id).then (markers => {
+     this.tripService.getMarkersByTripId(this.trip. id).then (markers => {
           const mapProp = {
           center: new google.maps.LatLng(this.trip.lat, this.trip.long),
           zoom: 12,

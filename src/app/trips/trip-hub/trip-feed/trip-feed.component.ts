@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Notification } from './notification';
+import { Notification } from '../../../models/notification';
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
 import { DatePipe } from '@angular/common';

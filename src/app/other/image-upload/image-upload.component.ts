@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ImageService } from './image.service';
 import { TravellerService } from 'app/travellers/traveller.service';
 import { TripService } from 'app/trips/trip.service';
-import { Traveller } from 'app/travellers/traveller';
-import { Trip } from 'app/trips/trip';
+import { Traveller } from 'app/models/traveller';
+import { Trip } from 'app/models/trip';
 import { UserDataService } from 'app/app.component.service';
 
 

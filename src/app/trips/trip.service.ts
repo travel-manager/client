@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Trip } from './trip';
-import { Membership } from './membership';
-import { Traveller } from '../travellers/traveller';
+import { Trip } from '../models/trip';
+import { Membership } from '../models/membership';
+import { Traveller } from '../models/traveller';
 import { Http, Response } from '@angular/http';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Transaction } from './transactions/transaction';
-import { Message } from './trip-hub/trip-chat/message';
-import { Marker } from './trip-hub/marker';
-import { Notification } from './trip-hub/trip-feed/notification';
+import { Transaction } from '../models/transaction';
+import { Message } from '../models/message';
+import { Marker } from '../models/marker';
+import { Notification } from '../models/notification';
 
 @Injectable()
 export class TripService {

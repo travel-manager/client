@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Traveller } from 'app/travellers/traveller';
-import { Trip } from '../trip';
+import { Traveller } from 'app/models/traveller';
+import { Trip } from '../../models/trip';
 import { TripService } from '../trip.service';
 import { TravellerService } from 'app/travellers/traveller.service';
 import {UserDataService} from 'app/app.component.service';
-import { Membership } from '../membership';
-import { Notification } from '../trip-hub/trip-feed/notification'
+import { Membership } from '../../models/membership';
+import { Notification } from '../../models/notification'
 
 @Component({
   selector: 'app-member-sidebar',

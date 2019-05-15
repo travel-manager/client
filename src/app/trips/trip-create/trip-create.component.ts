@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Trip } from '../trip';
+import { Trip } from '../../models/trip';
 import { TripService } from '../trip.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { GeoProvider } from './geoProvider';
 import { UserDataService } from 'app/app.component.service';
-import { Membership } from '../membership';
-import { Notification } from '../trip-hub/trip-feed/notification'
+import { Membership } from '../../models/membership';
+import { Notification } from '../../models/notification'
 
 declare var google: any;
 

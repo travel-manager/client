@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Message } from './message'
+import { Message } from '../../../models/message'
 import { TripService } from 'app/trips/trip.service';
 import {UserDataService} from 'app/app.component.service';
 import { DatePipe } from '@angular/common';

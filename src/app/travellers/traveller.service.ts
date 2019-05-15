@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Traveller } from './traveller';
+import { Traveller } from '../models/traveller';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 

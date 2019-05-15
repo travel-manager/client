@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from './app.component.service';
-import { Traveller } from 'app/travellers/traveller';
+import { Traveller } from 'app/models/traveller';
 
 @Component({
   selector: 'app-root',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Traveller } from 'app/travellers/traveller';
+import { Traveller } from 'app/models/traveller';
 import { TripService } from 'app/trips/trip.service';
 import { UserDataService } from 'app/app.component.service';
-import { Transaction } from '../transaction';
+import { Transaction } from '../../../models/transaction';
 import { TravellerService } from 'app/travellers/traveller.service';
-import { Membership } from 'app/trips/membership';
+import { Membership } from 'app/models/membership';
 import { Subject } from 'rxjs';
 
 

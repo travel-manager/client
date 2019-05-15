@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TripService } from 'app/trips/trip.service';
 import { TravellerService } from 'app/travellers/traveller.service';
-import { Trip } from 'app/trips/trip';
-import { Membership } from 'app/trips/membership';
-import { Traveller } from 'app/travellers/traveller';
+import { Trip } from 'app/models/trip';
+import { Membership } from 'app/models/membership';
+import { Traveller } from 'app/models/traveller';
 import { UserDataService } from 'app/app.component.service';
-import { Notification } from '../trip-feed/notification';
+import { Notification } from '../../../models/notification';
 import { DatePipe } from '@angular/common';
 import { MatSlideToggleChange } from '@angular/material';
 

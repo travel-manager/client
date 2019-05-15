@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TravellerService } from '../traveller.service';
-import { Traveller } from '../traveller';
-import { Login } from '../login';
+import { Traveller } from '../../models/traveller';
+import { Login } from '../../models/login';
 import {UserDataService} from 'app/app.component.service';
 
 @Component({
