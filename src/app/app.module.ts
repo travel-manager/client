@@ -31,6 +31,7 @@ import { TripFeedComponent } from './trips/trip-hub/trip-feed/trip-feed.componen
 import { TravellerProfileComponent } from './travellers/traveller-profile/traveller-profile.component';
 import { APIInterceptor } from './travellers/traveller.service';
 import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MapsComponent } from './maps/maps.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
     ProfileOptionsComponent,
     TripFeedComponent,
     TravellerProfileComponent,
+    MapsComponent,
   ],
   imports: [
     BrowserModule,

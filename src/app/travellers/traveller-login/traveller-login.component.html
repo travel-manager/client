@@ -1,16 +1,20 @@
-<div>
-  <form class="align-middle" style="background-color: palevioletred ; padding-top: 1vh; height: 600px; width: 400px; text-align: center; padding-top:50%; border-radius: 20px;" #loginForm="ngForm" (ngSubmit)="loginAttempt(loginTraveller);">
-    <h2>Log In</h2>
-    <div class="form-group">
-      <label for="login-username">Username</label>
+<div style="font-family: Verdana, Geneva, sans-serif; background-color: rgb(247, 250, 255); text-align: center; border-radius: 20px;" >
+  <form style="padding: 35px;" class="align-middle" #loginForm="ngForm" (ngSubmit)="loginAttempt(loginTraveller);">
+    
+    <img style="height: 15vh; resize: both" src="..\assets\appicon.png">
+    
+    <h2 style="font-size: 42px;">Login</h2>
+    
+    <div style="padding-top: 10px;" class="form-group">
+      <label for="login-username">Username:</label>
       <input type="text" class="form-control input-form" #loginusername="ngModel" required name="login-username" [(ngModel)]="loginTraveller.username" placeholder="Username"/>
     </div>
 
     <div class="form-group">
-      <label for="login-password">Password</label>
-      <input type="password" #loginpassword="ngModel" class="form-control input-form" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
+      <label for="login-password">Password:</label>
+      <input placeholder="Password" type="password" #loginpassword="ngModel" class="form-control input-form" #loginpassword="ngModel" required name="login-password" [(ngModel)]="loginTraveller.password" placeholder="Password"/>
     </div>
-    <button class="btn btn-success" [disabled]="!loginForm.valid">Log in</button>
+    <button class="btn-lg btn-success" [disabled]="!loginForm.valid">Log in</button>
     <div *ngIf="loginsuccess === -1" class="alert alert-danger">
     Incorrect password
     </div>
