@@ -54,12 +54,6 @@
               [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
     </div>
   </mat-toolbar>
-<!--
-  <div style="height: 90vh;" fxLayoutAlign="center center" *ngIf="this._userData.getView() == 'start'">
-    <img style="height: 30vh; resize: both" src="..\assets\appicon.png">
-  </div>
-  -->
-
 <div id="wrapper">
   <div *ngIf="this._userData.getView() == 'login' || this._userData.getView() == 'createtraveller' || this._userData.getView() == 'start'">
     <app-maps></app-maps>

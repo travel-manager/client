@@ -38,8 +38,9 @@ a:active {
    
 #over_map { 
   position: absolute; 
-  top: 10%; 
-  left: 42vw; 
+  top: 5vh; 
+  width: 15vw;
   z-index: 99; 
   margin: auto;
+  left:42.5vw;
 }
