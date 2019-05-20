@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from 'app/trips/trip';
 
+declare var google: any;
+
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.css']
 })
 export class MapsComponent implements OnInit {
-
+  
   selectedTrip: Trip = {
     location: null,
     name: null,
@@ -31,6 +33,7 @@ export class MapsComponent implements OnInit {
   }
 
   generateMap() {
+    
     try {
       const head: any = document.getElementsByTagName('head')[0];
 
