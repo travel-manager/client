@@ -39,8 +39,7 @@ a:active {
 #over_map { 
   position: absolute; 
   top: 5vh; 
-  width: 15vw;
+  width: 290px;
   z-index: 99; 
-  margin: auto;
   left:42.5vw;
 }
