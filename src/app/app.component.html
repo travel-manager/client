@@ -54,8 +54,9 @@
               [ngStyle]="{'background-image': 'url(' + profilePictureUrl + this._userData.getUserData().picture + ')'}">
     </div>
   </mat-toolbar>
-<div id="wrapper">
-  <div *ngIf="this._userData.getView() == 'login' || this._userData.getView() == 'createtraveller' || this._userData.getView() == 'start'">
+
+<div *ngIf="this._userData.getView() == 'login' || this._userData.getView() == 'createtraveller' || this._userData.getView() == 'start'" id="wrapper">
+  <div>
     <app-maps></app-maps>
   </div>
   <div id="over_map" class="">

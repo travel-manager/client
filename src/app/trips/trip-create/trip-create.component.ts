@@ -5,7 +5,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { GeoProvider } from './geoProvider';
 import { UserDataService } from 'app/app.component.service';
 import { Membership } from '../membership';
-import { Notification } from '../trip-hub/trip-feed/notification'
+import { Notification } from '../trip-hub/trip-feed/notification';
 
 declare var google: any;
 
