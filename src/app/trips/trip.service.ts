@@ -11,14 +11,15 @@ import { Notification } from '../models/notification';
 
 @Injectable()
 export class TripService {
-    private tripsUrl = '/api/trips';
+    private apiUrl= 'http://51.77.195.120:8090';
+    private tripsUrl = this.apiUrl + '/trips';
     private tripsDatesUrl = '/dates';
     private tripsCoordsUrl = '/coords';
-    private transactionsUrl = '/api/transactions';
-    private messagesUrl = '/api/messages';
-    private membershipsUrl = '/api/memberships';
-    private markersUrl = '/api/markers';
-    private notificationsUrl = '/api/notifications';
+    private transactionsUrl = this.apiUrl + '/transactions';
+    private messagesUrl = this.apiUrl + '/messages';
+    private membershipsUrl = this.apiUrl + '/memberships';
+    private markersUrl = this.apiUrl + '/markers';
+    private notificationsUrl = this.apiUrl + '/notifications';
 
     constructor (private http: Http, private http2: HttpClient) {}
 

@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import { Traveller } from '../models/traveller';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import { Login } from 'app/models/login';
 
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://51.77.195.120';
-    req = req.clone({
-      url: url + req.url
-    });
-    req.headers.append
+    const url = 'http://51.77.195.120:8090';
+    if (!req.url.includes('googleapis') && !req.url.includes('/keys/') && !req.url.includes('/image-upload/')) {
+      req = req.clone({
+        url: url + req.url
+      });
+    }
     console.log(req);
     return next.handle(req);
   }
@@ -19,8 +21,8 @@ export class APIInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class TravellerService {
-    private travellersUrl = '/travellers';
-    private usernameUrl = '/username';
+    private travellersUrl ='/travellers';
+    private loginUrl ='/authentication';
     private idUrl = '/id';
 
     //private travellersUrl = '/api/travellers';
@@ -45,10 +47,10 @@ export class TravellerService {
     }
 
     // get("/api/travellers/username/:username")
-    getTravellerByUsername(getTravellerUsername: String): Promise<Traveller> {
-      return this.http.get(this.travellersUrl + this.usernameUrl + '/' + getTravellerUsername)
+    loginTraveller(loginTraveller: Login): Promise<Traveller> {
+      return this.http.post(this.loginUrl + '/login' , loginTraveller )
                  .toPromise()
-                 .then(response => response as Traveller[])
+                 .then(response => response as Traveller)
                  .catch(this.handleError);
     }
 

@@ -58,7 +58,7 @@ export class TripOptionsComponent implements OnInit {
   }
 
   createMembership() {
-    this.travellerService.getTravellerByUsername(this.usernametoAdd)
+    /*this.travellerService.getTravellerByUsername(this.usernametoAdd)
         .then((traveller: Traveller) => {
           if (traveller !== null) {
             this.tripService.getMembershipsByTravellerAndTripId(traveller.id, this.trip.id).then(memberships => {
@@ -88,7 +88,7 @@ export class TripOptionsComponent implements OnInit {
     });
     setTimeout(function() {
       this.addsuccess = 0;
-      }.bind(this), 3000);
+      }.bind(this), 3000);*/
   }
 
   leaveTrip() {
