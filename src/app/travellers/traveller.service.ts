@@ -3,12 +3,14 @@ import { Traveller } from '../models/traveller';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import { Login } from 'app/models/login';
+import { HateoasResponse } from 'app/models/hateoasresponse';
 
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
+  //51.77.195.120
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url = 'http://51.77.195.120:8090';
+    const url = 'http://localhost:8090';
     if (!req.url.includes('googleapis') && !req.url.includes('/keys/') && !req.url.includes('/image-upload/')) {
       req = req.clone({
         url: url + req.url
@@ -22,7 +24,7 @@ export class APIInterceptor implements HttpInterceptor {
 @Injectable()
 export class TravellerService {
     private travellersUrl ='/travellers';
-    private loginUrl ='/authentication';
+    private authUrl ='/authentication';
     private idUrl = '/id';
 
     //private travellersUrl = '/api/travellers';
@@ -38,17 +40,15 @@ export class TravellerService {
     }
 
 
-    // post("/api/travellers")
-    createTraveller(newTraveller: Traveller): Promise<Traveller> {
-      return this.http.post(this.travellersUrl + '/register', newTraveller)
+    createTraveller(newTraveller: Traveller): Promise<HateoasResponse> {
+      return this.http.post(this.authUrl + '/register', newTraveller)
                  .toPromise()
-                 .then(response => response as Traveller)
+                 .then(response => response as HateoasResponse)
                  .catch(this.handleError);
     }
 
-    // get("/api/travellers/username/:username")
     loginTraveller(loginTraveller: Login): Promise<Traveller> {
-      return this.http.post(this.loginUrl + '/login' , loginTraveller )
+      return this.http.post(this.authUrl + '/login' , loginTraveller )
                  .toPromise()
                  .then(response => response as Traveller)
                  .catch(this.handleError);

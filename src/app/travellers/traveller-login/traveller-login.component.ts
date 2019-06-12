@@ -14,7 +14,8 @@ export class TravellerLoginComponent {
 
   loginTraveller: Login = {
     username: '',
-    password: ''
+    password: '',
+    role: 2
   };
 
   dbTraveller: Traveller = {
@@ -33,7 +34,7 @@ export class TravellerLoginComponent {
 
   loginAttempt(loginTraveller: Login) {
       this.travellerService.loginTraveller(loginTraveller).then((dbtraveller: Traveller) => {
-    
+        alert(dbtraveller);
       });
   }
 }

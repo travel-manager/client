@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Traveller } from '../../models/traveller';
 import { TravellerService } from '../traveller.service';
+import { HateoasResponse } from 'app/models/hateoasresponse';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -28,8 +29,15 @@ export class TravellerCreateComponent implements OnInit {
   }
 
   createTraveller(traveller: Traveller) {
-    //this.travellerService.getTravellerByUsername(traveller.username).then((dbreturn: Traveller) => {
-     // if (dbreturn == null) {
+    this.travellerService.createTraveller(traveller).then((result: HateoasResponse) => {
+      console.log(result.content);
+      if(result.content){
+        this.createsuccess = 1;
+      }else{
+        this.createsuccess = -2;
+      }
+      /*
+     if (dbreturn == null) {
         const bcrypt = require('bcryptjs');
         let salt = bcrypt.genSaltSync(10);
         traveller.password = bcrypt.hashSync(traveller.password, salt);
@@ -47,11 +55,11 @@ export class TravellerCreateComponent implements OnInit {
           bio: '',
           country: ''
         };
-      /*} else {
+      } else {
         this.traveller.username = '';
         this.createsuccess = -1;
-      }
-    });*/
+      }*/
+    });
     setTimeout(function() {
       this.createsuccess = false;
       }.bind(this), 3000);
